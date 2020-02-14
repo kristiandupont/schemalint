@@ -25,6 +25,9 @@ module.exports = {
     database: 'acme',
     charset: 'utf8',
   },
+
+  plugins: ['./custom-rules'],
+
   rules: {
     'table-name-casing': ['error', 'snake'],
     'column-name-casing': ['error', 'snake'],

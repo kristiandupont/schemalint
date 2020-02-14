@@ -1,3 +1,4 @@
+import path from 'path';
 import { keys, indexBy, prop, values } from 'ramda';
 import knex from 'knex';
 import chalk from 'chalk';
@@ -5,21 +6,31 @@ import { extractSchema } from 'extract-pg-schema';
 
 import * as builtinRules from './rules';
 
-const registeredRules = indexBy(prop('name'), values(builtinRules));
-
 let anyIssues = false;
 const suggestedMigrations = [];
 
 function report({ rule, identifier, message, suggestedMigration = null }) {
-  console.log(`${chalk.yellow(identifier)}: error ${chalk.red(rule)} : ${message}`);
+  console.log(
+    `${chalk.yellow(identifier)}: error ${chalk.red(rule)} : ${message}`
+  );
   if (suggestedMigration) {
     suggestedMigrations.push(suggestedMigration);
   }
   anyIssues = true;
 }
 
-export async function processDatabase({ connection, rules, schemas }) {
-  console.log(`Connecting to ${chalk.greenBright(connection.database)} on ${connection.host}`);
+export async function processDatabase({ connection, plugins, rules, schemas }) {
+  const pluginRules = plugins.map(p => require(path.join(process.cwd(), p)));
+  const allRules = [builtinRules, ...pluginRules].reduce((acc, elem) => {
+    return { ...acc, ...elem };
+  }, {});
+  const registeredRules = indexBy(prop('name'), values(allRules));
+
+  console.log(
+    `Connecting to ${chalk.greenBright(connection.database)} on ${
+      connection.host
+    }`
+  );
   const knexConfig = {
     client: 'pg',
     connection,
@@ -44,7 +55,7 @@ export async function processDatabase({ connection, rules, schemas }) {
     };
 
     for (const ruleKey of keys(mergedRules)) {
-      if (!ruleKey in registeredRules) {
+      if (!(ruleKey in registeredRules)) {
         throw new Error(`Unknown rule: "${ruleKey}"`);
       }
       const [state, ...options] = mergedRules[ruleKey];
