@@ -46,6 +46,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -57,12 +64,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var path_1 = __importDefault(require("path"));
 var ramda_1 = require("ramda");
 var knex_1 = __importDefault(require("knex"));
 var chalk_1 = __importDefault(require("chalk"));
 var extract_pg_schema_1 = require("extract-pg-schema");
 var builtinRules = __importStar(require("./rules"));
-var registeredRules = ramda_1.indexBy(ramda_1.prop('name'), ramda_1.values(builtinRules));
 var anyIssues = false;
 var suggestedMigrations = [];
 function report(_a) {
@@ -74,12 +81,17 @@ function report(_a) {
     anyIssues = true;
 }
 function processDatabase(_a) {
-    var connection = _a.connection, rules = _a.rules, schemas = _a.schemas;
+    var connection = _a.connection, plugins = _a.plugins, rules = _a.rules, schemas = _a.schemas;
     return __awaiter(this, void 0, void 0, function () {
-        var knexConfig, db, _i, schemas_1, schema, extractedSchemaObject, schemaObject, mergedRules, _b, _c, ruleKey, _d, state, options;
+        var pluginRules, allRules, registeredRules, knexConfig, db, _i, schemas_1, schema, extractedSchemaObject, schemaObject, mergedRules, _b, _c, ruleKey, _d, state, options;
         return __generator(this, function (_e) {
             switch (_e.label) {
                 case 0:
+                    pluginRules = plugins.map(function (p) { return require(path_1.default.join(process.cwd(), p)); });
+                    allRules = __spreadArrays([builtinRules], pluginRules).reduce(function (acc, elem) {
+                        return __assign(__assign({}, acc), elem);
+                    }, {});
+                    registeredRules = ramda_1.indexBy(ramda_1.prop('name'), ramda_1.values(allRules));
                     console.log("Connecting to " + chalk_1.default.greenBright(connection.database) + " on " + connection.host);
                     knexConfig = {
                         client: 'pg',
@@ -98,7 +110,7 @@ function processDatabase(_a) {
                     mergedRules = __assign(__assign({}, rules), (schema.rules || {}));
                     for (_b = 0, _c = ramda_1.keys(mergedRules); _b < _c.length; _b++) {
                         ruleKey = _c[_b];
-                        if (!ruleKey in registeredRules) {
+                        if (!(ruleKey in registeredRules)) {
                             throw new Error("Unknown rule: \"" + ruleKey + "\"");
                         }
                         _d = mergedRules[ruleKey], state = _d[0], options = _d.slice(1);
