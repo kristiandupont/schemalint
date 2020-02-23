@@ -81,11 +81,11 @@ function report(_a) {
     anyIssues = true;
 }
 function processDatabase(_a) {
-    var connection = _a.connection, plugins = _a.plugins, rules = _a.rules, schemas = _a.schemas;
+    var connection = _a.connection, _b = _a.plugins, plugins = _b === void 0 ? [] : _b, rules = _a.rules, schemas = _a.schemas;
     return __awaiter(this, void 0, void 0, function () {
-        var pluginRules, allRules, registeredRules, knexConfig, db, _i, schemas_1, schema, extractedSchemaObject, schemaObject, mergedRules, _b, _c, ruleKey, _d, state, options;
-        return __generator(this, function (_e) {
-            switch (_e.label) {
+        var pluginRules, allRules, registeredRules, knexConfig, db, _i, schemas_1, schema, extractedSchemaObject, schemaObject, mergedRules, _c, _d, ruleKey, _e, state, options;
+        return __generator(this, function (_f) {
+            switch (_f.label) {
                 case 0:
                     pluginRules = plugins.map(function (p) { return require(path_1.default.join(process.cwd(), p)); });
                     allRules = __spreadArrays([builtinRules], pluginRules).reduce(function (acc, elem) {
@@ -99,26 +99,26 @@ function processDatabase(_a) {
                     };
                     db = knex_1.default(knexConfig);
                     _i = 0, schemas_1 = schemas;
-                    _e.label = 1;
+                    _f.label = 1;
                 case 1:
                     if (!(_i < schemas_1.length)) return [3 /*break*/, 4];
                     schema = schemas_1[_i];
-                    return [4 /*yield*/, extract_pg_schema_1.extractSchema(schema.name, schema.tablesToIgnore, db)];
+                    return [4 /*yield*/, extract_pg_schema_1.extractSchema(schema.name, schema.tablesToIgnore || [], db)];
                 case 2:
-                    extractedSchemaObject = _e.sent();
+                    extractedSchemaObject = _f.sent();
                     schemaObject = __assign({ name: schema.name }, extractedSchemaObject);
                     mergedRules = __assign(__assign({}, rules), (schema.rules || {}));
-                    for (_b = 0, _c = ramda_1.keys(mergedRules); _b < _c.length; _b++) {
-                        ruleKey = _c[_b];
+                    for (_c = 0, _d = ramda_1.keys(mergedRules); _c < _d.length; _c++) {
+                        ruleKey = _d[_c];
                         if (!(ruleKey in registeredRules)) {
                             throw new Error("Unknown rule: \"" + ruleKey + "\"");
                         }
-                        _d = mergedRules[ruleKey], state = _d[0], options = _d.slice(1);
+                        _e = mergedRules[ruleKey], state = _e[0], options = _e.slice(1);
                         if (state === 'error') {
                             registeredRules[ruleKey].process({ schemaObject: schemaObject, report: report, options: options });
                         }
                     }
-                    _e.label = 3;
+                    _f.label = 3;
                 case 3:
                     _i++;
                     return [3 /*break*/, 1];

@@ -19,7 +19,7 @@ function report({ rule, identifier, message, suggestedMigration = null }) {
   anyIssues = true;
 }
 
-export async function processDatabase({ connection, plugins, rules, schemas }) {
+export async function processDatabase({ connection, plugins = [], rules, schemas }) {
   const pluginRules = plugins.map(p => require(path.join(process.cwd(), p)));
   const allRules = [builtinRules, ...pluginRules].reduce((acc, elem) => {
     return { ...acc, ...elem };
@@ -40,7 +40,7 @@ export async function processDatabase({ connection, plugins, rules, schemas }) {
   for (const schema of schemas) {
     const extractedSchemaObject = await extractSchema(
       schema.name,
-      schema.tablesToIgnore,
+      schema.tablesToIgnore || [],
       db
     );
 
