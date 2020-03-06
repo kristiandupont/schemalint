@@ -4,6 +4,11 @@ Run linting rules on your database schema.
 
 _Works with Postgres databases._
 
+This will give you errors like these:
+```
+public.actor.first_name: error prefer-text-to-varchar : Prefer TEXT to varchar types
+```
+
 ## Usage
 Install with:
 ```
