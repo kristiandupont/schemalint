@@ -17,36 +17,30 @@ You should see output like this:
 ```
 schema-lint
 Connecting to dvdrental on localhost
-public.actor.first_name: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.actor.last_name: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.address.address: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.address.address2: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.address.district: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.address.postal_code: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.address.phone: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.category.name: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.city.city: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.country.country: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.customer.first_name: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.customer.last_name: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.customer.email: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.film.title: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.staff.first_name: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.staff.last_name: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.staff.email: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.staff.username: error prefer-text-to-varchar : Prefer TEXT to varchar types
-public.staff.password: error prefer-text-to-varchar : Prefer TEXT to varchar types
+public.address.address: error prefer-text-to-varchar : Prefer text to varchar types
+public.address.address2: error prefer-text-to-varchar : Prefer text to varchar types
+public.address.district: error prefer-text-to-varchar : Prefer text to varchar types
+public.address.postal_code: error prefer-text-to-varchar : Prefer text to varchar types
+public.address.phone: error prefer-text-to-varchar : Prefer text to varchar types
+public.category.name: error prefer-text-to-varchar : Prefer text to varchar types
+public.country.country: error prefer-text-to-varchar : Prefer text to varchar types
+public.customer.first_name: error prefer-text-to-varchar : Prefer text to varchar types
+public.customer.last_name: error prefer-text-to-varchar : Prefer text to varchar types
+public.customer.email: error prefer-text-to-varchar : Prefer text to varchar types
+public.film.title: error prefer-text-to-varchar : Prefer text to varchar types
+public.staff.first_name: error prefer-text-to-varchar : Prefer text to varchar types
+public.staff.last_name: error prefer-text-to-varchar : Prefer text to varchar types
+public.staff.email: error prefer-text-to-varchar : Prefer text to varchar types
+public.staff.username: error prefer-text-to-varchar : Prefer text to varchar types
+public.staff.password: error prefer-text-to-varchar : Prefer text to varchar types
 
 Suggested fix
-ALTER TABLE "actor" ALTER COLUMN "first_name" TYPE TEXT;
-ALTER TABLE "actor" ALTER COLUMN "last_name" TYPE TEXT;
 ALTER TABLE "address" ALTER COLUMN "address" TYPE TEXT;
 ALTER TABLE "address" ALTER COLUMN "address2" TYPE TEXT;
 ALTER TABLE "address" ALTER COLUMN "district" TYPE TEXT;
 ALTER TABLE "address" ALTER COLUMN "postal_code" TYPE TEXT;
 ALTER TABLE "address" ALTER COLUMN "phone" TYPE TEXT;
 ALTER TABLE "category" ALTER COLUMN "name" TYPE TEXT;
-ALTER TABLE "city" ALTER COLUMN "city" TYPE TEXT;
 ALTER TABLE "country" ALTER COLUMN "country" TYPE TEXT;
 ALTER TABLE "customer" ALTER COLUMN "first_name" TYPE TEXT;
 ALTER TABLE "customer" ALTER COLUMN "last_name" TYPE TEXT;

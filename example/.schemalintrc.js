@@ -5,7 +5,7 @@ module.exports = {
     password: 'postgres',
     database: 'dvdrental',
     charset: 'utf8',
-    port: 54321
+    port: 54321,
   },
 
   plugins: ['./example/custom-rules'],
@@ -21,7 +21,11 @@ module.exports = {
   schemas: [
     {
       name: 'public',
-      tablesToIgnore: [],
     },
+  ],
+
+  ignores: [
+    { identifier: 'public.city.city', rule: 'prefer-text-to-varchar' },
+    { identifierPattern: '^public\\.actor.*', rulePattern: '.*' }
   ],
 };

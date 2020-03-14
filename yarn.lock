@@ -579,10 +579,10 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-extract-pg-schema@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/extract-pg-schema/-/extract-pg-schema-1.1.0.tgz#6f562a3baa523052c0bcb8f487d24b92392bfa50"
-  integrity sha512-8h6E2TlxG7Fv1lWvGHjeHCGY2UcHgUVnU/jl0wyYRIIRqdM2k4EHXOIQy+zu+JJjmox0dtqL+7CoLA0zVzLDrw==
+extract-pg-schema@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/extract-pg-schema/-/extract-pg-schema-1.2.0.tgz#190442ce81bd6c657b0d57dbbfb5f97f3f1fef59"
+  integrity sha512-EUyt+nCnn/xaFx5RTlvUltF58WI3g5yFTOgakMjn+aUbLR1stel6eYfVQ7NmtwEJkOJuSvbbbmO4SkRlNmdGvQ==
   dependencies:
     ramda "^0.26.1"
 
