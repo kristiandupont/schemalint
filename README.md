@@ -34,8 +34,8 @@ module.exports = {
   plugins: ['./custom-rules'],
 
   rules: {
-    'table-name-casing': ['error', 'snake'],
-    'column-name-casing': ['error', 'snake'],
+    'name-casing': ['error', 'snake'],
+    'name-inflection': ['error', 'singular'],
     'prefer-jsonb-to-json': ['error'],
     'prefer-text-to-varchar': ['error'],
   },
