@@ -46,6 +46,10 @@ module.exports = {
       tablesToIgnore: ['knex_migrations', 'knex_migrations_lock'],
     },
   ],
+
+  ignores: [
+    { identifierPattern: 'public\\..knex_migrations.*', rulePattern: '.*' },
+  ]
 };
 
 ```
