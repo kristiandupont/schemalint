@@ -6,7 +6,7 @@ _Works with Postgres databases._
 
 This will give you errors like these:
 ```
-public.actor.first_name: error prefer-text-to-varchar : Prefer TEXT to varchar types
+public.actor.first_name: error prefer-text-to-varchar : Prefer text to varchar types
 ```
 
 ## Usage
@@ -48,7 +48,7 @@ module.exports = {
   ],
 
   ignores: [
-    { identifierPattern: 'public\\..knex_migrations.*', rulePattern: '.*' },
+    { identifierPattern: 'public\\.knex_migrations.*', rulePattern: '.*' },
   ]
 };
 
