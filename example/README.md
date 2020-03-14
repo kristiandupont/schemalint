@@ -5,7 +5,7 @@ If you want to try this, you can run it on the [Sample Database](https://www.pos
 I've created a Docker image that hosts it so if you have Docker installed, you can easily set up such a database locally by running
 
 ```
-npm run start-example-db`
+npm run start-example-db
 ```
 
 Then, run the config file in this folder with:
@@ -60,3 +60,4 @@ ALTER TABLE "staff" ALTER COLUMN "password" TYPE TEXT;
 error Command failed with exit code 1.
 ```
 
+You can play around with the configuration options in `.schemalintrc.js` file to experiment.

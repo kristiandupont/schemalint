@@ -8,13 +8,14 @@ module.exports = {
     port: 54321
   },
 
-  // plugins: ['./schemalint-rules'],
+  plugins: ['./example/custom-rules'],
 
   rules: {
-    'table-name-casing': ['error', 'snake'],
-    'column-name-casing': ['error', 'snake'],
+    'identifier-naming': ['error'],
+    'name-casing': ['error', 'snake'],
     'prefer-jsonb-to-json': ['error'],
     'prefer-text-to-varchar': ['error'],
+    'name-inflection': ['error', 'singular'],
   },
 
   schemas: [
