@@ -41,10 +41,7 @@ module.exports = {
   },
 
   schemas: [
-    {
-      name: 'public',
-      tablesToIgnore: ['knex_migrations', 'knex_migrations_lock'],
-    },
+    { name: 'public' },
   ],
 
   ignores: [
