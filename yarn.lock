@@ -579,10 +579,10 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-extract-pg-schema@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/extract-pg-schema/-/extract-pg-schema-1.0.0.tgz#1704c57777c2b4a42c8b853ef3ab6e4829b4a75e"
-  integrity sha512-sQfrkIkt/LZNhdLxIMe/Vn/9NdgOzBj01HnLIix3EUFJeakUQUFS6/gzJagV5+mfjts71Jdg1dMAXDapB/mgeA==
+extract-pg-schema@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/extract-pg-schema/-/extract-pg-schema-1.1.0.tgz#6f562a3baa523052c0bcb8f487d24b92392bfa50"
+  integrity sha512-8h6E2TlxG7Fv1lWvGHjeHCGY2UcHgUVnU/jl0wyYRIIRqdM2k4EHXOIQy+zu+JJjmox0dtqL+7CoLA0zVzLDrw==
   dependencies:
     ramda "^0.26.1"
 
@@ -864,6 +864,11 @@ interpret@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-2.0.0.tgz#b783ffac0b8371503e9ab39561df223286aa5433"
   integrity sha512-e0/LknJ8wpMMhTiWcjivB+ESwIuvHnBSlBbmP/pSb8CQJldoj1p2qv7xGZ/+BtbTziYRFSz8OsvdbiX45LtYQA==
+
+irregular-plurals@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/irregular-plurals/-/irregular-plurals-3.2.0.tgz#b19c490a0723798db51b235d7e39add44dab0822"
+  integrity sha512-YqTdPLfwP7YFN0SsD3QUVCkm9ZG2VzOXv3DOrw5G5mkMbVwptTwVcFv7/C0vOpBmgTxAeTG19XpUs1E522LW9Q==
 
 is-absolute@^1.0.0:
   version "1.0.0"
