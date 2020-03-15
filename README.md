@@ -1,6 +1,6 @@
 # Schemalint
 
-Run linting rules on your database schema.
+Run linting rules on your database schema. Read the intro to this idea in [this blog post](https://medium.com/@kristiandupont/database-schema-linting-5e83b18dc99a).
 
 _Works with Postgres databases._
 
