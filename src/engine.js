@@ -56,7 +56,6 @@ export async function processDatabase({
     client: 'pg',
     connection,
   };
-  const db = knex(knexConfig);
 
   const ignoreMatchers = ignores.map(i => (rule, identifier) => {
     let ruleMatch;
@@ -91,6 +90,7 @@ export async function processDatabase({
   for (const schema of schemas) {
     const report = createReportFunction(consoleReporter, ignoreMatchers);
 
+    const db = knex(knexConfig);
     const extractedSchemaObject = await extractSchema(schema.name, db);
 
     const schemaObject = {
