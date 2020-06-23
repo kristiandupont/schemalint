@@ -22,6 +22,9 @@ module.exports = {
     {
       name: 'public',
     },
+    {
+      name: 'information_schema',
+    },
   ],
 
   ignores: [
