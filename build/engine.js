@@ -91,7 +91,7 @@ var createReportFunction = function (reporter, ignoreMatchers) { return function
 function processDatabase(_a) {
     var connection = _a.connection, _b = _a.plugins, plugins = _b === void 0 ? [] : _b, rules = _a.rules, schemas = _a.schemas, _c = _a.ignores, ignores = _c === void 0 ? [] : _c;
     return __awaiter(this, void 0, void 0, function () {
-        var pluginRules, allRules, registeredRules, knexConfig, db, ignoreMatchers, _i, schemas_1, schema, report, extractedSchemaObject, schemaObject, mergedRules, _d, _e, ruleKey, _f, state, options;
+        var pluginRules, allRules, registeredRules, knexConfig, ignoreMatchers, _i, schemas_1, schema, report, db, extractedSchemaObject, schemaObject, mergedRules, _d, _e, ruleKey, _f, state, options;
         return __generator(this, function (_g) {
             switch (_g.label) {
                 case 0:
@@ -105,7 +105,6 @@ function processDatabase(_a) {
                         client: 'pg',
                         connection: connection,
                     };
-                    db = knex_1.default(knexConfig);
                     ignoreMatchers = ignores.map(function (i) { return function (rule, identifier) {
                         var ruleMatch;
                         if (i.rule) {
@@ -135,6 +134,7 @@ function processDatabase(_a) {
                     if (!(_i < schemas_1.length)) return [3 /*break*/, 4];
                     schema = schemas_1[_i];
                     report = createReportFunction(consoleReporter, ignoreMatchers);
+                    db = knex_1.default(knexConfig);
                     return [4 /*yield*/, extract_pg_schema_1.extractSchema(schema.name, db)];
                 case 2:
                     extractedSchemaObject = _g.sent();
