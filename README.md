@@ -1,8 +1,13 @@
 # Schemalint
 
-Run linting rules on your database schema.
+Run linting rules on your database schema. Read the intro to this idea in [this blog post](https://medium.com/@kristiandupont/database-schema-linting-5e83b18dc99a).
 
 _Works with Postgres databases._
+
+This will give you errors like these:
+```
+public.actor.first_name: error prefer-text-to-varchar : Prefer text to varchar types
+```
 
 ## Usage
 Install with:
@@ -29,18 +34,23 @@ module.exports = {
   plugins: ['./custom-rules'],
 
   rules: {
-    'table-name-casing': ['error', 'snake'],
-    'column-name-casing': ['error', 'snake'],
+    'name-casing': ['error', 'snake'],
+    'name-inflection': ['error', 'singular'],
     'prefer-jsonb-to-json': ['error'],
     'prefer-text-to-varchar': ['error'],
   },
 
   schemas: [
-    {
-      name: 'public',
-      tablesToIgnore: ['knex_migrations', 'knex_migrations_lock'],
-    },
+    { name: 'public' },
   ],
+
+  ignores: [
+    { identifierPattern: 'public\\.knex_migrations.*', rulePattern: '.*' },
+  ]
 };
 
 ```
+
+## Rules
+
+Schemalint includes a number of built-in rules, which you can read about [here](/src/rules). However, writing rules is easy and you will probably see the real value by doing so. The [example](/example) folder shows how to write these.

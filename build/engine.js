@@ -70,22 +70,30 @@ var knex_1 = __importDefault(require("knex"));
 var chalk_1 = __importDefault(require("chalk"));
 var extract_pg_schema_1 = require("extract-pg-schema");
 var builtinRules = __importStar(require("./rules"));
+function consoleReporter(_a) {
+    var rule = _a.rule, identifier = _a.identifier, message = _a.message;
+    console.log(chalk_1.default.yellow(identifier) + ": error " + chalk_1.default.red(rule) + " : " + message);
+}
 var anyIssues = false;
 var suggestedMigrations = [];
-function report(_a) {
-    var rule = _a.rule, identifier = _a.identifier, message = _a.message, _b = _a.suggestedMigration, suggestedMigration = _b === void 0 ? null : _b;
-    console.log(chalk_1.default.yellow(identifier) + ": error " + chalk_1.default.red(rule) + " : " + message);
+var createReportFunction = function (reporter, ignoreMatchers) { return function (_a) {
+    var rule = _a.rule, identifier = _a.identifier, message = _a.message, suggestedMigration = _a.suggestedMigration;
+    if (ignoreMatchers.find(function (im) { return im(rule, identifier); })) {
+        // This one is ignored.
+        return;
+    }
+    reporter({ rule: rule, identifier: identifier, message: message });
     if (suggestedMigration) {
         suggestedMigrations.push(suggestedMigration);
     }
     anyIssues = true;
-}
+}; };
 function processDatabase(_a) {
-    var connection = _a.connection, plugins = _a.plugins, rules = _a.rules, schemas = _a.schemas;
+    var connection = _a.connection, _b = _a.plugins, plugins = _b === void 0 ? [] : _b, rules = _a.rules, schemas = _a.schemas, _c = _a.ignores, ignores = _c === void 0 ? [] : _c;
     return __awaiter(this, void 0, void 0, function () {
-        var pluginRules, allRules, registeredRules, knexConfig, db, _i, schemas_1, schema, extractedSchemaObject, schemaObject, mergedRules, _b, _c, ruleKey, _d, state, options;
-        return __generator(this, function (_e) {
-            switch (_e.label) {
+        var pluginRules, allRules, registeredRules, knexConfig, ignoreMatchers, _i, schemas_1, schema, report, db, extractedSchemaObject, schemaObject, mergedRules, _d, _e, ruleKey, _f, state, options;
+        return __generator(this, function (_g) {
+            switch (_g.label) {
                 case 0:
                     pluginRules = plugins.map(function (p) { return require(path_1.default.join(process.cwd(), p)); });
                     allRules = __spreadArrays([builtinRules], pluginRules).reduce(function (acc, elem) {
@@ -97,28 +105,52 @@ function processDatabase(_a) {
                         client: 'pg',
                         connection: connection,
                     };
-                    db = knex_1.default(knexConfig);
+                    ignoreMatchers = ignores.map(function (i) { return function (rule, identifier) {
+                        var ruleMatch;
+                        if (i.rule) {
+                            ruleMatch = rule === i.rule;
+                        }
+                        else if (i.rulePattern) {
+                            ruleMatch = new RegExp(i.rulePattern).test(rule);
+                        }
+                        else {
+                            throw new Error("Ignore object is missing a rule or rulePattern property: " + JSON.stringify(i));
+                        }
+                        var identifierMatch;
+                        if (i.identifier) {
+                            identifierMatch = identifier === i.identifier;
+                        }
+                        else if (i.identifierPattern) {
+                            identifierMatch = new RegExp(i.identifierPattern).test(identifier);
+                        }
+                        else {
+                            throw new Error("Ignore object is missing an identifier or identifierPattern property: " + JSON.stringify(i));
+                        }
+                        return ruleMatch && identifierMatch;
+                    }; });
                     _i = 0, schemas_1 = schemas;
-                    _e.label = 1;
+                    _g.label = 1;
                 case 1:
                     if (!(_i < schemas_1.length)) return [3 /*break*/, 4];
                     schema = schemas_1[_i];
-                    return [4 /*yield*/, extract_pg_schema_1.extractSchema(schema.name, schema.tablesToIgnore, db)];
+                    report = createReportFunction(consoleReporter, ignoreMatchers);
+                    db = knex_1.default(knexConfig);
+                    return [4 /*yield*/, extract_pg_schema_1.extractSchema(schema.name, db)];
                 case 2:
-                    extractedSchemaObject = _e.sent();
+                    extractedSchemaObject = _g.sent();
                     schemaObject = __assign({ name: schema.name }, extractedSchemaObject);
                     mergedRules = __assign(__assign({}, rules), (schema.rules || {}));
-                    for (_b = 0, _c = ramda_1.keys(mergedRules); _b < _c.length; _b++) {
-                        ruleKey = _c[_b];
+                    for (_d = 0, _e = ramda_1.keys(mergedRules); _d < _e.length; _d++) {
+                        ruleKey = _e[_d];
                         if (!(ruleKey in registeredRules)) {
                             throw new Error("Unknown rule: \"" + ruleKey + "\"");
                         }
-                        _d = mergedRules[ruleKey], state = _d[0], options = _d.slice(1);
+                        _f = mergedRules[ruleKey], state = _f[0], options = _f.slice(1);
                         if (state === 'error') {
                             registeredRules[ruleKey].process({ schemaObject: schemaObject, report: report, options: options });
                         }
                     }
-                    _e.label = 3;
+                    _g.label = 3;
                 case 3:
                     _i++;
                     return [3 /*break*/, 1];
