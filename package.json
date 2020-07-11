@@ -1,15 +1,25 @@
 {
   "name": "schemalint",
+  "keywords": [
+    "postgresql",
+    "schema",
+    "lint"
+  ],
+  "author": {
+    "name": "Kristian Dupont",
+    "url": "http://www.kristiandupont.com"
+  },
   "version": "0.2.5",
+  "repository": "git@github.com:kristiandupont/schemalint.git",
   "license": "MIT",
   "main": "build/engine.js",
-  "repository": "git@github.com:kristiandupont/schemalint.git",
-  "author": "Kristian Dupont <kristian@kristiandupont.com>",
+  "types": "build/engine.d.ts",
   "bin": {
     "schemalint": "./bin/schemalint"
   },
   "scripts": {
     "build": "tsc",
+    "version": "yarn build",
     "start-example-db": "docker run -d --name dvd-rental -p 54321:5432 kristiandupont/dvdrental-image",
     "run-example": "node build/cli -c ./example/.schemalintrc",
     "stop-example-db": "docker stop dvd-rental"
@@ -17,7 +27,7 @@
   "dependencies": {
     "@kristiandupont/recase": "^1.1.0",
     "chalk": "^3.0.0",
-    "extract-pg-schema": "^1.5.0",
+    "extract-pg-schema": "^1.5.1",
     "irregular-plurals": "^3.2.0",
     "knex": "^0.20.9",
     "optionator": "^0.8.3",
@@ -25,15 +35,40 @@
     "ramda": "^0.27.0"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.4",
     "@types/knex": "^0.16.1",
     "@types/node": "^13.7.1",
-    "@types/ramda": "^0.26.41",
-    "eslint": "^6.8.0",
-    "prettier": "^2.0.2",
-    "typescript": "^3.7.5"
+    "@types/ramda": "^0.27.7",
+    "eslint": "^7.4.0",
+    "jest": "^26.1.0",
+    "np": "^6.3.0",
+    "pg": "^8.2.1",
+    "prettier": "^2.0.5",
+    "testcontainers": "^2.18.2",
+    "ts-jest": "^26.1.1",
+    "typescript": "^3.9.6"
+  },
+  "files": [
+    "build/"
+  ],
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "ts"
+    ],
+    "transform": {
+      "^.+\\.(ts|js)$": "ts-jest"
+    },
+    "testMatch": [
+      "<rootDir>/src/**/*.test.js"
+    ],
+    "testEnvironment": "node"
   },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "es5"
+  },
+  "np": {
+    "tests": false
   }
 }
