@@ -43,3 +43,27 @@ export const preferTextToVarchar = {
     );
   },
 };
+
+export const preferTimestamptz = {
+  name: 'prefer-timestamptz-to-timestamp',
+  docs: {
+    description: 'Prefer TIMESTAMPTZ to type TIMESTAMP because when you insert a value into a timestamptz column, PostgreSQL converts the timestamptz value into a UTC value and stores the UTC value in the table,\n' +
+        'and when you query timestamptz from the database, PostgreSQL converts the UTC value back to the time value of the timezone set by the database server, the user, or the current database connection',
+    url: 'https://www.postgresqltutorial.com/postgresql-timestamp/',
+  },
+  process({ schemaObject, report }) {
+    const validator = ({ name: tableName }) => ({ name: columnName, type }) => {
+      if (type === 'timestamp') {
+        report({
+          rule: this.name,
+          identifier: `${schemaObject.name}.${tableName}.${columnName}`,
+          message: 'Prefer TIMESTAMPTZ to type TIMESTAMP',
+          suggestedMigration: `ALTER TABLE "${tableName}" ALTER COLUMN "${columnName}" TYPE TIMESTAMPTZ;`,
+        });
+      }
+    };
+    schemaObject.tables.forEach(table =>
+        table.columns.forEach(validator(table))
+    );
+  },
+};
