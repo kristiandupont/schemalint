@@ -15,6 +15,7 @@ module.exports = {
     'name-casing': ['error', 'snake'],
     'prefer-jsonb-to-json': ['error'],
     'prefer-text-to-varchar': ['error'],
+    'prefer-timestamptz-to-timestamp': ['error'],
     'name-inflection': ['error', 'singular'],
   },
 

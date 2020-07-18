@@ -26,3 +26,10 @@ If you want to enforce singular or plural naming for your tables, this rule can 
 Which one to choose is a matter of great debate but in the end it comes down to personal preference. You can choose `'singular'`  or `'plural'`.
 
 
+## prefer-timestamp-to-timestamptz
+
+In Postgres when you insert a value into a `timestamptz` column, PostgreSQL converts the `timestamptz` value into a UTC value and stores the UTC value in the table, and when you query `timestamptz`
+from the database, PostgreSQL converts the UTC value back to the time value of the timezone set by the database server, the user, or the current database connection, whereas `timestamp` does not save any 
+timezone data. You can learn more here: [Understanding PostgreSQL Timestamp Data Types](https://www.postgresqltutorial.com/postgresql-timestamp/)
+
+    
