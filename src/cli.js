@@ -4,8 +4,7 @@ import chalk from 'chalk';
 import optionator from 'optionator';
 import { processDatabase } from './engine';
 // @ts-ignore
-// const { version } = require('../package.json');
-const version = '0.2.4';
+const { version } = require('../package.json');
 
 async function main() {
   const o = optionator({
