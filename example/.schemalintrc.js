@@ -16,6 +16,7 @@ module.exports = {
     'prefer-jsonb-to-json': ['error'],
     'prefer-text-to-varchar': ['error'],
     'prefer-timestamptz-to-timestamp': ['error'],
+    'prefer-identity-to-serial': ['error'],
     'name-inflection': ['error', 'singular'],
   },
 

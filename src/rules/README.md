@@ -33,3 +33,14 @@ from the database, PostgreSQL converts the UTC value back to the time value of t
 timezone data. You can learn more here: [Understanding PostgreSQL Timestamp Data Types](https://www.postgresqltutorial.com/postgresql-timestamp/)
 
     
+## prefer-identity-to-serial
+
+Identity columns are a SQL standard-conforming variant of PostgreSQL's serial columns. They fix a few usability 
+issues that serial columns have: 
+- CREATE TABLE / LIKE copies default but refers to same sequence
+- cannot add/drop serialness with ALTER TABLE
+- dropping default does not drop sequence
+- need to grant separate privileges to sequence
+- other slight weirdnesses because serial is some kind of special macro
+
+You can learn more here: [Identity Columns Explained](https://www.2ndquadrant.com/en/blog/postgresql-10-identity-columns/)
