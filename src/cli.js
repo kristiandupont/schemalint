@@ -18,6 +18,12 @@ async function main() {
         description: 'displays help',
       },
       {
+        option: 'version',
+        alias: 'v',
+        type: 'Boolean',
+        description: 'displays version',
+      },
+      {
         option: 'config',
         alias: 'c',
         type: 'path::String',
@@ -38,6 +44,11 @@ async function main() {
 
   if (options.help) {
     console.log(o.generateHelp());
+    process.exit(0);
+  }
+
+  if (options.version) {
+    console.log(version);
     process.exit(0);
   }
 
