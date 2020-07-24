@@ -1,4 +1,4 @@
-import {preferJsonbToJson, preferTextToVarchar} from "./types";
+import * as types from "./types";
 
 describe('types', () => {
     describe('prefer-jsonb-to-json', () => {
@@ -6,7 +6,7 @@ describe('types', () => {
             const mockReporter = jest.fn();
             const schemaObject = {tables: []};
 
-            preferJsonbToJson.process({schemaObject: schemaObject, report: mockReporter});
+            types.preferJsonbToJson.process({schemaObject: schemaObject, report: mockReporter});
 
             expect(mockReporter).toBeCalledTimes(0);
         });
@@ -25,7 +25,7 @@ describe('types', () => {
                 }]
             };
 
-            preferJsonbToJson.process({schemaObject: schemaObject, report: mockReporter});
+            types.preferJsonbToJson.process({schemaObject: schemaObject, report: mockReporter});
 
             expect(mockReporter).toBeCalledTimes(2);
             expect(mockReporter).toBeCalledWith(
@@ -56,7 +56,7 @@ describe('types', () => {
                 }]
             };
 
-            preferJsonbToJson.process({schemaObject: schemaObject, report: mockReporter});
+            types.preferJsonbToJson.process({schemaObject: schemaObject, report: mockReporter});
 
             expect(mockReporter).toBeCalledTimes(0);
         });
@@ -76,7 +76,7 @@ describe('types', () => {
                 }]
             };
 
-            preferJsonbToJson.process({schemaObject: schemaObject, report: mockReporter});
+            types.preferJsonbToJson.process({schemaObject: schemaObject, report: mockReporter});
 
             expect(mockReporter).toBeCalledTimes(2);
             expect(mockReporter).toBeCalledWith(
@@ -103,7 +103,7 @@ describe('types', () => {
             const mockReporter = jest.fn();
             const schemaObject = {tables: []};
 
-            preferTextToVarchar.process({schemaObject: schemaObject, report: mockReporter});
+            types.preferTextToVarchar.process({schemaObject: schemaObject, report: mockReporter});
 
             expect(mockReporter).toBeCalledTimes(0);
         });
@@ -121,7 +121,7 @@ describe('types', () => {
                 }]
             };
 
-            preferTextToVarchar.process({schemaObject: schemaObject, report: mockReporter});
+            types.preferTextToVarchar.process({schemaObject: schemaObject, report: mockReporter});
 
             expect(mockReporter).toBeCalledTimes(2);
             expect(mockReporter).toBeCalledWith(
@@ -152,7 +152,7 @@ describe('types', () => {
                 }]
             };
 
-            preferTextToVarchar.process({schemaObject: schemaObject, report: mockReporter});
+            types.preferTextToVarchar.process({schemaObject: schemaObject, report: mockReporter});
 
             expect(mockReporter).toBeCalledTimes(0);
         });
@@ -173,7 +173,7 @@ describe('types', () => {
                 }]
             };
 
-            preferTextToVarchar.process({schemaObject: schemaObject, report: mockReporter});
+            types.preferTextToVarchar.process({schemaObject: schemaObject, report: mockReporter});
 
             expect(mockReporter).toBeCalledTimes(2);
             expect(mockReporter).toBeCalledWith(
