@@ -97,4 +97,101 @@ describe('types', () => {
             );
         });
     });
+
+    describe('prefer-text-to-varchar', () => {
+        it("no tables has no errors", () => {
+            const mockReporter = jest.fn();
+            const schemaObject = {tables: []};
+
+            preferTextToVarchar.process({schemaObject: schemaObject, report: mockReporter});
+
+            expect(mockReporter).toBeCalledTimes(0);
+        });
+
+        it("one table, varchar columns has errors", () => {
+            const mockReporter = jest.fn();
+            const schemaObject = {
+                name: "schema",
+                tables: [{
+                    name: "one_table",
+                    columns: [
+                        {type: "varchar(10)", name: "bad_column"},
+                        {type: "varchar(5)", name: "bad_column2"},
+                    ]
+                }]
+            };
+
+            preferTextToVarchar.process({schemaObject: schemaObject, report: mockReporter});
+
+            expect(mockReporter).toBeCalledTimes(2);
+            expect(mockReporter).toBeCalledWith(
+                expect.objectContaining({
+                    rule: "prefer-text-to-varchar",
+                    identifier: "schema.one_table.bad_column",
+                    message: "Prefer text to varchar(10) types",
+                    suggestedMigration: 'ALTER TABLE "one_table" ALTER COLUMN "bad_column" TYPE TEXT;',
+                }),
+            );
+            expect(mockReporter).toBeCalledWith(
+                expect.objectContaining({
+                    rule: "prefer-text-to-varchar",
+                    identifier: "schema.one_table.bad_column2",
+                    message: "Prefer text to varchar(5) types",
+                    suggestedMigration: 'ALTER TABLE "one_table" ALTER COLUMN "bad_column2" TYPE TEXT;',
+                }),
+            );
+        });
+
+        it("one table, no varchar column has no errors", () => {
+            const mockReporter = jest.fn();
+            const schemaObject = {
+                name: "schema",
+                tables: [{
+                    name: "one_table",
+                    columns: [{type: "text", name: "not_relevant_column"}]
+                }]
+            };
+
+            preferTextToVarchar.process({schemaObject: schemaObject, report: mockReporter});
+
+            expect(mockReporter).toBeCalledTimes(0);
+        });
+
+        it("multiple tables with multiple varchar columns has multiple errors", () => {
+            const mockReporter = jest.fn();
+            const schemaObject = {
+                name: "schema",
+                tables: [{
+                    name: "one_table",
+                    columns: [{type: "varchar", name: "bad_column"}]
+                }, {
+                    name: "two_table",
+                    columns: [{type: "text", name: "not_relevant_column"}]
+                }, {
+                    name: "three_table",
+                    columns: [{type: "varchar(1)", name: "bad_column3"}]
+                }]
+            };
+
+            preferTextToVarchar.process({schemaObject: schemaObject, report: mockReporter});
+
+            expect(mockReporter).toBeCalledTimes(2);
+            expect(mockReporter).toBeCalledWith(
+                expect.objectContaining({
+                    rule: "prefer-text-to-varchar",
+                    identifier: "schema.one_table.bad_column",
+                    message: "Prefer text to varchar types",
+                    suggestedMigration: 'ALTER TABLE "one_table" ALTER COLUMN "bad_column" TYPE TEXT;',
+                }),
+            );
+            expect(mockReporter).toBeCalledWith(
+                expect.objectContaining({
+                    rule: "prefer-text-to-varchar",
+                    identifier: "schema.three_table.bad_column3",
+                    message: "Prefer text to varchar(1) types",
+                    suggestedMigration: 'ALTER TABLE "three_table" ALTER COLUMN "bad_column3" TYPE TEXT;',
+                }),
+            );
+        });
+    });
 });
