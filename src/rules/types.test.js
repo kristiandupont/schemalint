@@ -194,4 +194,101 @@ describe('types', () => {
             );
         });
     });
+
+    describe('prefer-timestamptz-to-timestamp', () => {
+        it("no tables has no errors", () => {
+            const mockReporter = jest.fn();
+            const schemaObject = {tables: []};
+
+            types.preferTimestamptz.process({schemaObject: schemaObject, report: mockReporter});
+
+            expect(mockReporter).toBeCalledTimes(0);
+        });
+
+        it("one table, timetamp columns has errors", () => {
+            const mockReporter = jest.fn();
+            const schemaObject = {
+                name: "schema",
+                tables: [{
+                    name: "one_table",
+                    columns: [
+                        {type: "timestamp", name: "bad_column"},
+                        {type: "timestamp", name: "bad_column2"},
+                    ]
+                }]
+            };
+
+            types.preferTimestamptz.process({schemaObject: schemaObject, report: mockReporter});
+
+            expect(mockReporter).toBeCalledTimes(2);
+            expect(mockReporter).toBeCalledWith(
+                expect.objectContaining({
+                    rule: "prefer-timestamptz-to-timestamp",
+                    identifier: "schema.one_table.bad_column",
+                    message: "Prefer TIMESTAMPTZ to type TIMESTAMP",
+                    suggestedMigration: 'ALTER TABLE "one_table" ALTER COLUMN "bad_column" TYPE TIMESTAMPTZ;',
+                }),
+            );
+            expect(mockReporter).toBeCalledWith(
+                expect.objectContaining({
+                    rule: "prefer-timestamptz-to-timestamp",
+                    identifier: "schema.one_table.bad_column2",
+                    message: "Prefer TIMESTAMPTZ to type TIMESTAMP",
+                    suggestedMigration: 'ALTER TABLE "one_table" ALTER COLUMN "bad_column2" TYPE TIMESTAMPTZ;',
+                }),
+            );
+        });
+
+        it("one table, no varchar column has no errors", () => {
+            const mockReporter = jest.fn();
+            const schemaObject = {
+                name: "schema",
+                tables: [{
+                    name: "one_table",
+                    columns: [{type: "text", name: "not_relevant_column"}]
+                }]
+            };
+
+            types.preferTimestamptz.process({schemaObject: schemaObject, report: mockReporter});
+
+            expect(mockReporter).toBeCalledTimes(0);
+        });
+
+        it("multiple tables with multiple varchar columns has multiple errors", () => {
+            const mockReporter = jest.fn();
+            const schemaObject = {
+                name: "schema",
+                tables: [{
+                    name: "one_table",
+                    columns: [{type: "timestamp", name: "bad_column"}]
+                }, {
+                    name: "two_table",
+                    columns: [{type: "text", name: "not_relevant_column"}]
+                }, {
+                    name: "three_table",
+                    columns: [{type: "timestamp", name: "bad_column3"}]
+                }]
+            };
+
+            types.preferTimestamptz.process({schemaObject: schemaObject, report: mockReporter});
+
+            expect(mockReporter).toBeCalledTimes(2);
+            expect(mockReporter).toBeCalledWith(
+                expect.objectContaining({
+                    rule: "prefer-timestamptz-to-timestamp",
+                    identifier: "schema.one_table.bad_column",
+                    message: "Prefer TIMESTAMPTZ to type TIMESTAMP",
+                    suggestedMigration: 'ALTER TABLE "one_table" ALTER COLUMN "bad_column" TYPE TIMESTAMPTZ;',
+                }),
+            );
+            expect(mockReporter).toBeCalledWith(
+                expect.objectContaining({
+                    rule: "prefer-timestamptz-to-timestamp",
+                    identifier: "schema.three_table.bad_column3",
+                    message: "Prefer TIMESTAMPTZ to type TIMESTAMP",
+                    suggestedMigration: 'ALTER TABLE "three_table" ALTER COLUMN "bad_column3" TYPE TIMESTAMPTZ;',
+                }),
+            );
+        });
+    });
 });
