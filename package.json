@@ -54,6 +54,7 @@
     "bin/"
   ],
   "jest": {
+    "setupFiles": ["<rootDir>/test/helpers.js"],
     "moduleFileExtensions": [
       "js",
       "ts"

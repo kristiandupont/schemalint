@@ -28,21 +28,13 @@ describe('types', () => {
             types.preferJsonbToJson.process({schemaObject: schemaObject, report: mockReporter});
 
             expect(mockReporter).toBeCalledTimes(2);
-            expect(mockReporter).toBeCalledWith(
-                expect.objectContaining({
-                    rule: "prefer-jsonb-to-json",
-                    identifier: "schema.one_table.bad_column",
-                    message: 'Prefer JSONB to JSON types',
-                    suggestedMigration: 'ALTER TABLE "one_table" ALTER COLUMN "bad_column" TYPE JSONB;',
-                }),
+            assertJSONBReport(mockReporter,
+                "schema.one_table.bad_column",
+                'ALTER TABLE "one_table" ALTER COLUMN "bad_column" TYPE JSONB;'
             );
-            expect(mockReporter).toBeCalledWith(
-                expect.objectContaining({
-                    rule: "prefer-jsonb-to-json",
-                    identifier: "schema.one_table.bad_column2",
-                    message: 'Prefer JSONB to JSON types',
-                    suggestedMigration: 'ALTER TABLE "one_table" ALTER COLUMN "bad_column2" TYPE JSONB;',
-                }),
+            assertJSONBReport(mockReporter,
+                "schema.one_table.bad_column2",
+                'ALTER TABLE "one_table" ALTER COLUMN "bad_column2" TYPE JSONB;'
             );
         });
 
@@ -79,21 +71,13 @@ describe('types', () => {
             types.preferJsonbToJson.process({schemaObject: schemaObject, report: mockReporter});
 
             expect(mockReporter).toBeCalledTimes(2);
-            expect(mockReporter).toBeCalledWith(
-                expect.objectContaining({
-                    rule: "prefer-jsonb-to-json",
-                    identifier: "schema.one_table.bad_column",
-                    message: 'Prefer JSONB to JSON types',
-                    suggestedMigration: 'ALTER TABLE "one_table" ALTER COLUMN "bad_column" TYPE JSONB;',
-                }),
+            assertJSONBReport(mockReporter,
+                "schema.one_table.bad_column",
+                'ALTER TABLE "one_table" ALTER COLUMN "bad_column" TYPE JSONB;'
             );
-            expect(mockReporter).toBeCalledWith(
-                expect.objectContaining({
-                    rule: "prefer-jsonb-to-json",
-                    identifier: "schema.three_table.bad_column3",
-                    message: 'Prefer JSONB to JSON types',
-                    suggestedMigration: 'ALTER TABLE "three_table" ALTER COLUMN "bad_column3" TYPE JSONB;',
-                }),
+            assertJSONBReport(mockReporter,
+                "schema.three_table.bad_column3",
+                'ALTER TABLE "three_table" ALTER COLUMN "bad_column3" TYPE JSONB;',
             );
         });
     });
@@ -124,21 +108,15 @@ describe('types', () => {
             types.preferTextToVarchar.process({schemaObject: schemaObject, report: mockReporter});
 
             expect(mockReporter).toBeCalledTimes(2);
-            expect(mockReporter).toBeCalledWith(
-                expect.objectContaining({
-                    rule: "prefer-text-to-varchar",
-                    identifier: "schema.one_table.bad_column",
-                    message: "Prefer text to varchar(10) types",
-                    suggestedMigration: 'ALTER TABLE "one_table" ALTER COLUMN "bad_column" TYPE TEXT;',
-                }),
+            assertTextReport(mockReporter,
+                "schema.one_table.bad_column",
+                "varchar(10)",
+                'ALTER TABLE "one_table" ALTER COLUMN "bad_column" TYPE TEXT;'
             );
-            expect(mockReporter).toBeCalledWith(
-                expect.objectContaining({
-                    rule: "prefer-text-to-varchar",
-                    identifier: "schema.one_table.bad_column2",
-                    message: "Prefer text to varchar(5) types",
-                    suggestedMigration: 'ALTER TABLE "one_table" ALTER COLUMN "bad_column2" TYPE TEXT;',
-                }),
+            assertTextReport(mockReporter,
+                "schema.one_table.bad_column2",
+                "varchar(5)",
+                'ALTER TABLE "one_table" ALTER COLUMN "bad_column2" TYPE TEXT;'
             );
         });
 
@@ -176,22 +154,17 @@ describe('types', () => {
             types.preferTextToVarchar.process({schemaObject: schemaObject, report: mockReporter});
 
             expect(mockReporter).toBeCalledTimes(2);
-            expect(mockReporter).toBeCalledWith(
-                expect.objectContaining({
-                    rule: "prefer-text-to-varchar",
-                    identifier: "schema.one_table.bad_column",
-                    message: "Prefer text to varchar types",
-                    suggestedMigration: 'ALTER TABLE "one_table" ALTER COLUMN "bad_column" TYPE TEXT;',
-                }),
+            assertTextReport(mockReporter,
+                "schema.one_table.bad_column",
+                "varchar",
+                'ALTER TABLE "one_table" ALTER COLUMN "bad_column" TYPE TEXT;'
             );
-            expect(mockReporter).toBeCalledWith(
-                expect.objectContaining({
-                    rule: "prefer-text-to-varchar",
-                    identifier: "schema.three_table.bad_column3",
-                    message: "Prefer text to varchar(1) types",
-                    suggestedMigration: 'ALTER TABLE "three_table" ALTER COLUMN "bad_column3" TYPE TEXT;',
-                }),
+            assertTextReport(mockReporter,
+                "schema.three_table.bad_column3",
+                "varchar(1)",
+                'ALTER TABLE "three_table" ALTER COLUMN "bad_column3" TYPE TEXT;'
             );
+
         });
     });
 
@@ -318,27 +291,19 @@ describe('types', () => {
             types.preferIdentity.process({schemaObject: schemaObject, report: mockReporter});
 
             expect(mockReporter).toBeCalledTimes(2);
-            expect(mockReporter).toBeCalledWith(
-                expect.objectContaining({
-                    rule: "prefer-identity-to-serial",
-                    identifier: "schema.one_table.bad_column",
-                    message: "Prefer IDENTITY to type SERIAL",
-                    suggestedMigration: `ALTER TABLE "one_table" ALTER "bad_column" DROP DEFAULT;
+            assertIdentityReport(mockReporter,
+                "schema.one_table.bad_column",
+        `ALTER TABLE "one_table" ALTER "bad_column" DROP DEFAULT;
 DROP SEQUENCE "table_name_column_1_seq";
 ALTER TABLE "one_table" ALTER "bad_column" ADD GENERATED BY DEFAULT AS IDENTITY;
-SELECT setval('"table_name_column_1_seq"', max("bad_column")) FROM "one_table";`,
-                }),
+SELECT setval('"table_name_column_1_seq"', max("bad_column")) FROM "one_table";`
             );
-            expect(mockReporter).toBeCalledWith(
-                expect.objectContaining({
-                    rule: "prefer-identity-to-serial",
-                    identifier: "schema.one_table.bad_column2",
-                    message: "Prefer IDENTITY to type SERIAL",
-                    suggestedMigration: `ALTER TABLE "one_table" ALTER "bad_column2" DROP DEFAULT;
+            assertIdentityReport(mockReporter,
+                "schema.one_table.bad_column2",
+        `ALTER TABLE "one_table" ALTER "bad_column2" DROP DEFAULT;
 DROP SEQUENCE "table_name_column_2_seq";
 ALTER TABLE "one_table" ALTER "bad_column2" ADD GENERATED BY DEFAULT AS IDENTITY;
-SELECT setval('"table_name_column_2_seq"', max("bad_column2")) FROM "one_table";`,
-                }),
+SELECT setval('"table_name_column_2_seq"', max("bad_column2")) FROM "one_table";`
             );
         });
 
@@ -376,27 +341,19 @@ SELECT setval('"table_name_column_2_seq"', max("bad_column2")) FROM "one_table";
             types.preferIdentity.process({schemaObject: schemaObject, report: mockReporter});
 
             expect(mockReporter).toBeCalledTimes(2);
-            expect(mockReporter).toBeCalledWith(
-                expect.objectContaining({
-                    rule: "prefer-identity-to-serial",
-                    identifier: "schema.one_table.bad_column",
-                    message: "Prefer IDENTITY to type SERIAL",
-                    suggestedMigration: `ALTER TABLE "one_table" ALTER "bad_column" DROP DEFAULT;
+            assertIdentityReport(mockReporter,
+                "schema.one_table.bad_column",
+        `ALTER TABLE "one_table" ALTER "bad_column" DROP DEFAULT;
 DROP SEQUENCE "table_name_column_1_seq";
 ALTER TABLE "one_table" ALTER "bad_column" ADD GENERATED BY DEFAULT AS IDENTITY;
-SELECT setval('"table_name_column_1_seq"', max("bad_column")) FROM "one_table";`,
-                }),
+SELECT setval('"table_name_column_1_seq"', max("bad_column")) FROM "one_table";`
             );
-            expect(mockReporter).toBeCalledWith(
-                expect.objectContaining({
-                    rule: "prefer-identity-to-serial",
-                    identifier: "schema.three_table.bad_column3",
-                    message: "Prefer IDENTITY to type SERIAL",
-                    suggestedMigration: `ALTER TABLE "three_table" ALTER "bad_column3" DROP DEFAULT;
+            assertIdentityReport(mockReporter,
+                "schema.three_table.bad_column3",
+        `ALTER TABLE "three_table" ALTER "bad_column3" DROP DEFAULT;
 DROP SEQUENCE "table_name_column_3_seq";
 ALTER TABLE "three_table" ALTER "bad_column3" ADD GENERATED BY DEFAULT AS IDENTITY;
-SELECT setval('"table_name_column_3_seq"', max("bad_column3")) FROM "three_table";`,
-                }),
+SELECT setval('"table_name_column_3_seq"', max("bad_column3")) FROM "three_table";`
             );
         });
     });
