@@ -19,6 +19,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "test": "jest",
     "version": "yarn build",
     "start-example-db": "docker run -d --name dvd-rental -p 54321:5432 kristiandupont/dvdrental-image",
     "run-example": "node build/src/cli -c ./example/.schemalintrc",
