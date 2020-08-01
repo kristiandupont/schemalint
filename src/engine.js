@@ -1,12 +1,12 @@
 import path from 'path';
-import { keys, indexBy, prop, values } from 'ramda';
+import {indexBy, keys, prop, values} from 'ramda';
 import knex from 'knex';
 import chalk from 'chalk';
-import { extractSchema } from 'extract-pg-schema';
+import {extractSchema} from 'extract-pg-schema';
 
 import * as builtinRules from './rules';
 
-function consoleReporter({ rule, identifier, message }) {
+function consoleReporter({rule, identifier, message}) {
   console.log(
     `${chalk.yellow(identifier)}: error ${chalk.red(rule)} : ${message}`
   );
@@ -16,17 +16,17 @@ let anyIssues = false;
 const suggestedMigrations = [];
 
 const createReportFunction = (reporter, ignoreMatchers) => ({
-  rule,
-  identifier,
-  message,
-  suggestedMigration,
-}) => {
+                                                              rule,
+                                                              identifier,
+                                                              message,
+                                                              suggestedMigration,
+                                                            }) => {
   if (ignoreMatchers.find(im => im(rule, identifier))) {
     // This one is ignored.
     return;
   }
 
-  reporter({ rule, identifier, message });
+  reporter({rule, identifier, message});
 
   if (suggestedMigration) {
     suggestedMigrations.push(suggestedMigration);
@@ -35,15 +35,15 @@ const createReportFunction = (reporter, ignoreMatchers) => ({
 };
 
 export async function processDatabase({
-  connection,
-  plugins = [],
-  rules,
-  schemas,
-  ignores = [],
-}) {
+                                        connection,
+                                        plugins = [],
+                                        rules,
+                                        schemas,
+                                        ignores = [],
+                                      }) {
   const pluginRules = plugins.map(p => require(path.join(process.cwd(), p)));
   const allRules = [builtinRules, ...pluginRules].reduce((acc, elem) => {
-    return { ...acc, ...elem };
+    return {...acc, ...elem};
   }, {});
   const registeredRules = indexBy(prop('name'), values(allRules));
 
@@ -109,7 +109,7 @@ export async function processDatabase({
       }
       const [state, ...options] = mergedRules[ruleKey];
       if (state === 'error') {
-        registeredRules[ruleKey].process({ schemaObject, report, options });
+        registeredRules[ruleKey].process({schemaObject, report, options});
       }
     }
   }

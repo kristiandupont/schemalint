@@ -1,4 +1,4 @@
-import { recase, detectCasing } from '@kristiandupont/recase';
+import {detectCasing, recase} from '@kristiandupont/recase';
 
 export const nameCasing = {
   name: 'name-casing',
@@ -7,9 +7,9 @@ export const nameCasing = {
     url:
       'https://github.com/kristiandupont/schemalint/tree/master/src/rules#name-casing',
   },
-  process({ options, schemaObject, report }) {
+  process({options, schemaObject, report}) {
     const expectedCasing = (options.length && options[0]) || 'snake';
-    const validator = entityType => ({ name: entityName }) => {
+    const validator = entityType => ({name: entityName}) => {
       const casing = detectCasing(entityName);
       const matches = casing === null || casing === expectedCasing;
       if (!matches) {
@@ -25,9 +25,9 @@ export const nameCasing = {
         });
       }
     };
-    const columnValidator = entityType => ({ name: entityName }) => ({
-      name: columnName,
-    }) => {
+    const columnValidator = entityType => ({name: entityName}) => ({
+                                                                     name: columnName,
+                                                                   }) => {
       const casing = detectCasing(columnName);
       const matches = casing === null || casing === expectedCasing;
       if (!matches) {

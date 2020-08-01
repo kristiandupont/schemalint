@@ -44,9 +44,9 @@ export const nameInflection = {
     url:
       'https://github.com/kristiandupont/schemalint/tree/master/src/rules#name-inflection',
   },
-  process({ options, schemaObject, report }) {
+  process({options, schemaObject, report}) {
     const expectedPlurality = (options.length && options[0]) || 'singular';
-    const validator = entityType => ({ name: entityName }) => {
+    const validator = entityType => ({name: entityName}) => {
       const plurality = detectInflection(entityName);
       const matches = plurality === expectedPlurality || plurality === 'unknown';
       if (!matches) {
