@@ -44,3 +44,15 @@ issues that serial columns have:
 - other slight weirdnesses because serial is some kind of special macro
 
 You can learn more here: [Identity Columns Explained](https://www.2ndquadrant.com/en/blog/postgresql-10-identity-columns/)
+
+## require-primary-key
+
+Identity tables that do not have a primary key defined. Tables can be ignored by passing the `ignorePattern` rule argument.
+
+```json
+ rules: {
+    'require-primary-key': ['error', {
+      ignorePattern: 'information_schema.*'
+    }],
+  },
+  ```
