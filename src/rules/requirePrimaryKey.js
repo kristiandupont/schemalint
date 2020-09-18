@@ -10,7 +10,6 @@ export const requirePrimaryKey = {
       options[0] && options[0].ignorePattern
         ? new RegExp(options[0].ignorePattern)
         : null;
-    console.log(`IGNORE PATTERN: ${JSON.stringify(options[0].ignorePattern)}`);
     const validator = ({ tags, columns, name: tableName }) => {
       const idColumns = columns.filter((c) => c.isPrimary);
 
