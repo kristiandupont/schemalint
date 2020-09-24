@@ -57,9 +57,9 @@ async function main() {
     process.cwd(),
     options.config || '.schemalintrc.js'
   );
-  const config = require(configFile);
-
+  
   try {
+    const config = require(configFile);
     const exitCode = await processDatabase(config);
     process.exit(exitCode);
   } catch (error) {
