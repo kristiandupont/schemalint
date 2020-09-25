@@ -9,7 +9,7 @@
     "name": "Kristian Dupont",
     "url": "http://www.kristiandupont.com"
   },
-  "version": "0.5.0",
+  "version": "0.5.1",
   "repository": "git@github.com:kristiandupont/schemalint.git",
   "license": "MIT",
   "main": "build/engine.js",
