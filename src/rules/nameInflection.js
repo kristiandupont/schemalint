@@ -3,9 +3,9 @@ const irregularPlurals = require('irregular-plurals/irregular-plurals.json');
 
 const singulars = R.keys(irregularPlurals);
 const plurals = R.values(irregularPlurals);
-const trimSeparators = s => s.replace(/^(\-|_)+|(\-|_)+$/g, '');
+const trimSeparators = (s) => s.replace(/^(\-|_)+|(\-|_)+$/g, '');
 
-const detectInflection = word => {
+const detectInflection = (word) => {
   const words = word
     .split(/(?=[A-Z\-_])/)
     .map(trimSeparators)
@@ -46,9 +46,10 @@ export const nameInflection = {
   },
   process({ options, schemaObject, report }) {
     const expectedPlurality = (options.length && options[0]) || 'singular';
-    const validator = entityType => ({ name: entityName }) => {
+    const validator = (entityType) => ({ name: entityName }) => {
       const plurality = detectInflection(entityName);
-      const matches = plurality === expectedPlurality || plurality === 'unknown';
+      const matches =
+        plurality === expectedPlurality || plurality === 'unknown';
       if (!matches) {
         report({
           rule: this.name,

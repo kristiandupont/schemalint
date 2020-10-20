@@ -7,16 +7,21 @@ I've created a Docker image that hosts it so if you have Docker installed, you c
 ```
 npm run start-example-db
 ```
+
 First, run the build script in this folder with:
+
 ```
 npm run build
 ```
+
 Then, run the config file in this folder with:
+
 ```
 npm run run-example
 ```
 
 You should see output like this:
+
 ```
 schema-lint
 Connecting to dvdrental on localhost

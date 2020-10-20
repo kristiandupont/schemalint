@@ -9,7 +9,7 @@ export const nameCasing = {
   },
   process({ options, schemaObject, report }) {
     const expectedCasing = (options.length && options[0]) || 'snake';
-    const validator = entityType => ({ name: entityName }) => {
+    const validator = (entityType) => ({ name: entityName }) => {
       const casing = detectCasing(entityName);
       const matches = casing === null || casing === expectedCasing;
       if (!matches) {
@@ -25,7 +25,7 @@ export const nameCasing = {
         });
       }
     };
-    const columnValidator = entityType => ({ name: entityName }) => ({
+    const columnValidator = (entityType) => ({ name: entityName }) => ({
       name: columnName,
     }) => {
       const casing = detectCasing(columnName);
@@ -43,11 +43,11 @@ export const nameCasing = {
         });
       }
     };
-    schemaObject.tables.forEach(entity => {
+    schemaObject.tables.forEach((entity) => {
       validator('table')(entity);
       entity.columns.forEach(columnValidator('table')(entity));
     });
-    schemaObject.views.forEach(entity => {
+    schemaObject.views.forEach((entity) => {
       validator('view')(entity);
       entity.columns.forEach(columnValidator('view')(entity));
     });
