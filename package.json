@@ -1,75 +1,78 @@
 {
   "name": "schemalint",
+  "version": "0.5.1",
   "keywords": [
     "postgresql",
     "schema",
     "lint"
   ],
+  "repository": "git@github.com:kristiandupont/schemalint.git",
+  "license": "MIT",
   "author": {
     "name": "Kristian Dupont",
     "url": "http://www.kristiandupont.com"
   },
-  "version": "0.4.2",
-  "repository": "git@github.com:kristiandupont/schemalint.git",
-  "license": "MIT",
   "main": "build/engine.js",
   "types": "build/engine.d.ts",
   "bin": {
     "schemalint": "./bin/schemalint"
   },
-  "scripts": {
-    "build": "tsc",
-    "test": "jest",
-    "version": "yarn build",
-    "start-example-db": "docker run -d --name dvd-rental -p 54321:5432 kristiandupont/dvdrental-image",
-    "run-example": "node build/src/cli -c ./example/.schemalintrc",
-    "stop-example-db": "docker stop dvd-rental"
-  },
-  "dependencies": {
-    "@kristiandupont/recase": "^1.1.0",
-    "chalk": "^3.0.0",
-    "extract-pg-schema": "^1.5.1",
-    "irregular-plurals": "^3.2.0",
-    "knex": "^0.20.9",
-    "optionator": "^0.8.3",
-    "pg": "^7.18.2",
-    "ramda": "^0.27.0"
-  },
-  "devDependencies": {
-    "@types/jest": "^26.0.4",
-    "@types/knex": "^0.16.1",
-    "@types/node": "^13.7.1",
-    "@types/ramda": "^0.27.7",
-    "eslint": "^7.4.0",
-    "jest": "^26.1.0",
-    "np": "^6.3.0",
-    "pg": "^8.2.1",
-    "prettier": "^2.0.5",
-    "testcontainers": "^2.18.2",
-    "ts-jest": "^26.1.1",
-    "typescript": "^3.9.6"
-  },
   "files": [
     "build/",
     "bin/"
   ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "yarn eslint . -f visualstudio --report-unused-disable-directives --ext .js,.ts",
+    "run-example": "node build/src/cli -c ./example/.schemalintrc",
+    "start-example-db": "docker run -d --name dvd-rental -p 54321:5432 kristiandupont/dvdrental-image",
+    "stop-example-db": "docker stop dvd-rental",
+    "test": "jest",
+    "version": "yarn build"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
   "jest": {
     "setupFiles": ["<rootDir>/test/helpers.js"],
     "moduleFileExtensions": [
       "js",
       "ts"
     ],
-    "transform": {
-      "^.+\\.(ts|js)$": "ts-jest"
-    },
+    "testEnvironment": "node",
     "testMatch": [
       "<rootDir>/src/**/*.test.js"
     ],
-    "testEnvironment": "node"
+    "transform": {
+      "^.+\\.(ts|js)$": "ts-jest"
+    }
   },
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "es5"
+  "dependencies": {
+    "@kristiandupont/recase": "^1.1.1",
+    "chalk": "^4.1.0",
+    "extract-pg-schema": "^1.6.0",
+    "irregular-plurals": "^3.2.0",
+    "knex": "^0.21.5",
+    "optionator": "^0.9.1",
+    "pg": "^8.3.3",
+    "ramda": "^0.27.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.12",
+    "@types/knex": "^0.16.1",
+    "@types/node": "^14.6.2",
+    "@types/ramda": "^0.27.18",
+    "@typescript-eslint/parser": "^4.5.0",
+    "eslint": "^7.8.1",
+    "eslint-config-prettier": "^6.13.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.4.2",
+    "np": "^6.5.0",
+    "prettier": "^2.1.2",
+    "testcontainers": "^3.4.0",
+    "ts-jest": "^26.3.0",
+    "typescript": "^4.0.2"
   },
   "np": {
     "tests": false

@@ -15,7 +15,7 @@ export const preferJsonbToJson = {
         });
       }
     };
-    schemaObject.tables.forEach(table =>
+    schemaObject.tables.forEach((table) =>
       table.columns.forEach(validator(table))
     );
   },
@@ -38,7 +38,7 @@ export const preferTextToVarchar = {
         });
       }
     };
-    schemaObject.tables.forEach(table =>
+    schemaObject.tables.forEach((table) =>
       table.columns.forEach(validator(table))
     );
   },
@@ -47,7 +47,8 @@ export const preferTextToVarchar = {
 export const preferTimestamptz = {
   name: 'prefer-timestamptz-to-timestamp',
   docs: {
-    description: 'Prefer TIMESTAMPTZ to type TIMESTAMP because when you insert a value into a timestamptz column, PostgreSQL converts the timestamptz value into a UTC value and stores the UTC value in the table,\n' +
+    description:
+      'Prefer TIMESTAMPTZ to type TIMESTAMP because when you insert a value into a timestamptz column, PostgreSQL converts the timestamptz value into a UTC value and stores the UTC value in the table,\n' +
       'and when you query timestamptz from the database, PostgreSQL converts the UTC value back to the time value of the timezone set by the database server, the user, or the current database connection',
     url: 'https://www.postgresqltutorial.com/postgresql-timestamp/',
   },
@@ -62,7 +63,7 @@ export const preferTimestamptz = {
         });
       }
     };
-    schemaObject.tables.forEach(table =>
+    schemaObject.tables.forEach((table) =>
       table.columns.forEach(validator(table))
     );
   },
@@ -71,14 +72,23 @@ export const preferTimestamptz = {
 export const preferIdentity = {
   name: 'prefer-identity-to-serial',
   docs: {
-    description: 'The serial types have some weird behaviors that make schema, dependency, and permission management unnecessarily cumbersome.',
+    description:
+      'The serial types have some weird behaviors that make schema, dependency, and permission management unnecessarily cumbersome.',
     url: 'https://www.2ndquadrant.com/en/blog/postgresql-10-identity-columns/',
   },
-  process({schemaObject, report}) {
-    const validator = ({name: tableName}) => ({name: columnName, rawInfo, defaultValue}) => {
-      if (rawInfo.is_identity === 'NO' && defaultValue !== null && defaultValue.indexOf("nextval") >= 0) {
+  process({ schemaObject, report }) {
+    const validator = ({ name: tableName }) => ({
+      name: columnName,
+      rawInfo,
+      defaultValue,
+    }) => {
+      if (
+        rawInfo.is_identity === 'NO' &&
+        defaultValue !== null &&
+        defaultValue.indexOf('nextval') >= 0
+      ) {
         let sequenceName = defaultValue.match("'(.*)'")[1];
-        sequenceName = sequenceName.replace(/"/g, "");
+        sequenceName = sequenceName.replace(/"/g, '');
 
         report({
           rule: this.name,
@@ -91,7 +101,7 @@ SELECT setval('"${sequenceName}"', max("${columnName}")) FROM "${tableName}";`,
         });
       }
     };
-    schemaObject.tables.forEach(table =>
+    schemaObject.tables.forEach((table) =>
       table.columns.forEach(validator(table))
     );
   },

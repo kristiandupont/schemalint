@@ -6,9 +6,9 @@ const identifierNaming = {
     description: 'Identifier columns should follow "tablename_id" convention',
     url: '...',
   },
-  process({schemaObject, report}) {
-    const validator = ({tags, columns, name: tableName}) => {
-      const idColumns = columns.filter(c => c.isPrimary);
+  process({ schemaObject, report }) {
+    const validator = ({ tags, columns, name: tableName }) => {
+      const idColumns = columns.filter((c) => c.isPrimary);
 
       // There might be 2 or more, or there might be 0. In both cases, skip this table.
       if (idColumns.length === 1) {

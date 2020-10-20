@@ -16,12 +16,12 @@ let anyIssues = false;
 const suggestedMigrations = [];
 
 const createReportFunction = (reporter, ignoreMatchers) => ({
-                                                              rule,
-                                                              identifier,
-                                                              message,
-                                                              suggestedMigration,
-                                                            }) => {
-  if (ignoreMatchers.find(im => im(rule, identifier))) {
+  rule,
+  identifier,
+  message,
+  suggestedMigration,
+}) => {
+  if (ignoreMatchers.find((im) => im(rule, identifier))) {
     // This one is ignored.
     return;
   }
@@ -35,13 +35,13 @@ const createReportFunction = (reporter, ignoreMatchers) => ({
 };
 
 export async function processDatabase({
-                                        connection,
-                                        plugins = [],
-                                        rules,
-                                        schemas,
-                                        ignores = [],
-                                      }) {
-  const pluginRules = plugins.map(p => require(path.join(process.cwd(), p)));
+  connection,
+  plugins = [],
+  rules,
+  schemas,
+  ignores = [],
+}) {
+  const pluginRules = plugins.map((p) => require(path.join(process.cwd(), p)));
   const allRules = [builtinRules, ...pluginRules].reduce((acc, elem) => {
     return {...acc, ...elem};
   }, {});
@@ -57,7 +57,7 @@ export async function processDatabase({
     connection,
   };
 
-  const ignoreMatchers = ignores.map(i => (rule, identifier) => {
+  const ignoreMatchers = ignores.map((i) => (rule, identifier) => {
     let ruleMatch;
     if (i.rule) {
       ruleMatch = rule === i.rule;
@@ -118,7 +118,7 @@ export async function processDatabase({
     if (suggestedMigrations.length) {
       console.log('');
       console.log('Suggested fix');
-      suggestedMigrations.forEach(sf => console.log(sf));
+      suggestedMigrations.forEach((sf) => console.log(sf));
     }
     return 1;
   }

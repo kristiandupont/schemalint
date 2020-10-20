@@ -5,22 +5,27 @@ Run linting rules on your database schema. Read the intro to this idea in [this 
 _Works with Postgres databases._
 
 This will give you errors like these:
+
 ```
 public.actor.first_name: error prefer-text-to-varchar : Prefer text to varchar types
 ```
 
 ## Usage
+
 Install with:
+
 ```
 $ npm i -g schemalint
 ```
 
 To run, make sure you are in a folder that has a `.schemalintrc.js` configuration file, and type:
+
 ```
 $ schemalint
 ```
 
 Here is an example configuration file:
+
 ```javascript
 module.exports = {
   connection: {
@@ -40,15 +45,12 @@ module.exports = {
     'prefer-text-to-varchar': ['error'],
   },
 
-  schemas: [
-    { name: 'public' },
-  ],
+  schemas: [{ name: 'public' }],
 
   ignores: [
     { identifierPattern: 'public\\.knex_migrations.*', rulePattern: '.*' },
-  ]
+  ],
 };
-
 ```
 
 ## Rules

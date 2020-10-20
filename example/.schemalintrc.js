@@ -30,7 +30,7 @@ module.exports = {
   ],
 
   ignores: [
-    {identifier: 'public.city.city', rule: 'prefer-text-to-varchar'},
-    {identifierPattern: '^public\\.actor.*', rulePattern: '.*'}
+    { identifier: 'public.city.city', rule: 'prefer-text-to-varchar' },
+    { identifierPattern: '^public\\.actor.*', rulePattern: '.*' },
   ],
 };
