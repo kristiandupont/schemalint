@@ -4,8 +4,8 @@ export const preferJsonbToJson = {
     description: 'Prefer JSONB to JSON types',
     url: '...',
   },
-  process({schemaObject, report}) {
-    const validator = ({name: tableName}) => ({name: columnName, type}) => {
+  process({ schemaObject, report }) {
+    const validator = ({ name: tableName }) => ({ name: columnName, type }) => {
       if (type === 'json') {
         report({
           rule: this.name,
@@ -27,8 +27,8 @@ export const preferTextToVarchar = {
     description: 'Prefer the text type over varchar',
     url: '...',
   },
-  process({schemaObject, report}) {
-    const validator = ({name: tableName}) => ({name: columnName, type}) => {
+  process({ schemaObject, report }) {
+    const validator = ({ name: tableName }) => ({ name: columnName, type }) => {
       if (type.startsWith('varchar')) {
         report({
           rule: this.name,
@@ -52,8 +52,8 @@ export const preferTimestamptz = {
       'and when you query timestamptz from the database, PostgreSQL converts the UTC value back to the time value of the timezone set by the database server, the user, or the current database connection',
     url: 'https://www.postgresqltutorial.com/postgresql-timestamp/',
   },
-  process({schemaObject, report}) {
-    const validator = ({name: tableName}) => ({name: columnName, type}) => {
+  process({ schemaObject, report }) {
+    const validator = ({ name: tableName }) => ({ name: columnName, type }) => {
       if (type === 'timestamp') {
         report({
           rule: this.name,

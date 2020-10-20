@@ -1,12 +1,12 @@
 import path from 'path';
-import {indexBy, keys, prop, values} from 'ramda';
+import { indexBy, keys, prop, values } from 'ramda';
 import knex from 'knex';
 import chalk from 'chalk';
-import {extractSchema} from 'extract-pg-schema';
+import { extractSchema } from 'extract-pg-schema';
 
 import * as builtinRules from './rules';
 
-function consoleReporter({rule, identifier, message}) {
+function consoleReporter({ rule, identifier, message }) {
   console.log(
     `${chalk.yellow(identifier)}: error ${chalk.red(rule)} : ${message}`
   );
@@ -26,7 +26,7 @@ const createReportFunction = (reporter, ignoreMatchers) => ({
     return;
   }
 
-  reporter({rule, identifier, message});
+  reporter({ rule, identifier, message });
 
   if (suggestedMigration) {
     suggestedMigrations.push(suggestedMigration);
@@ -43,7 +43,7 @@ export async function processDatabase({
 }) {
   const pluginRules = plugins.map((p) => require(path.join(process.cwd(), p)));
   const allRules = [builtinRules, ...pluginRules].reduce((acc, elem) => {
-    return {...acc, ...elem};
+    return { ...acc, ...elem };
   }, {});
   const registeredRules = indexBy(prop('name'), values(allRules));
 
@@ -109,7 +109,7 @@ export async function processDatabase({
       }
       const [state, ...options] = mergedRules[ruleKey];
       if (state === 'error') {
-        registeredRules[ruleKey].process({schemaObject, report, options});
+        registeredRules[ruleKey].process({ schemaObject, report, options });
       }
     }
   }

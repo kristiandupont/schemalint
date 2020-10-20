@@ -2,9 +2,9 @@ import path from 'path';
 import chalk from 'chalk';
 // @ts-ignore
 import optionator from 'optionator';
-import {processDatabase} from './engine';
+import { processDatabase } from './engine';
 // @ts-ignore
-const {version} = require('../package.json');
+const { version } = require('../package.json');
 
 async function main() {
   const o = optionator({

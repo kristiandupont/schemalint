@@ -35,7 +35,9 @@
     "trailingComma": "es5"
   },
   "jest": {
-    "setupFiles": ["<rootDir>/test/helpers.js"],
+    "setupFiles": [
+      "<rootDir>/test/helpers.js"
+    ],
     "moduleFileExtensions": [
       "js",
       "ts"
