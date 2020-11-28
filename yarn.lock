@@ -5865,10 +5865,10 @@ test-exclude@^6.0.0:
     glob "^7.1.4"
     minimatch "^3.0.4"
 
-testcontainers@6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-6.2.0.tgz#65843844d0c92bd1a6f2f21d158a963ba856b15e"
-  integrity sha512-fH0QXxGlGEPbLvPggesyxSGBfGOBiiblrwoG9Tjn66efkMFCjOOq+BqOtMOtrFd6AyI19KsxaknU3Ub6h+D++A==
+testcontainers@6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-6.3.0.tgz#75ed96bf121dbf39a03d0369628fc6c5b33595d8"
+  integrity sha512-mVoi6nn0DFYnpVU0aYU/226+rYyFHbixKckIRGYfaohKMUZs3kMH5d+D5ijQorUhpYSLoPd4gPmVRy25VWmkww==
   dependencies:
     "@types/dockerode" "^2.5.34"
     byline "^5.0.0"
