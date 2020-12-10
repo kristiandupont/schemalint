@@ -61,7 +61,7 @@
     "ramda": "^0.27.1"
   },
   "devDependencies": {
-    "@types/jest": "26.0.18",
+    "@types/jest": "26.0.19",
     "@types/knex": "0.16.1",
     "@types/node": "14.14.11",
     "@types/ramda": "0.27.32",
