@@ -5927,10 +5927,10 @@ test-exclude@^6.0.0:
     glob "^7.1.4"
     minimatch "^3.0.4"
 
-testcontainers@6.4.1:
-  version "6.4.1"
-  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-6.4.1.tgz#3f1b2dd08a0019b5028f3f7d77e171dcacd119e7"
-  integrity sha512-MNO0t7AOCFtMJBGCRGPBGgm3Xs0k0prVXiIDQ6YLkP/+1XWJeKIeEmi60HBme03mxv5T1bzP3eoEbjblg6L2dQ==
+testcontainers@7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-7.0.1.tgz#d5434e0595dbed1d8d90b6b5c5a3c41e6571b5a0"
+  integrity sha512-8uq3eHW+TLlLc7NDRRSiLaCNZ0XX2NVJ2zUYkKEvaT1wt+v9eqRqNWurtHP1risXRXooHbQzrwOQOQlg2PnC4Q==
   dependencies:
     "@types/dockerode" "^3.2.1"
     byline "^5.0.0"
