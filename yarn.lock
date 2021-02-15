@@ -6068,10 +6068,10 @@ test-exclude@^6.0.0:
     glob "^7.1.4"
     minimatch "^3.0.4"
 
-testcontainers@7.3.0:
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-7.3.0.tgz#d5fe9766e46ebebb57637efb4f77b15d68cef4af"
-  integrity sha512-02GyZHWIHSiMB2avsa8dk74/Q8UUFn9nijBFL7+T3TSKBzt9/1qinKt5d7Lu95tHy0zwnSbdw3Jy8xLOKc128Q==
+testcontainers@7.4.0:
+  version "7.4.0"
+  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-7.4.0.tgz#802728a3d2f1f6e3b9ba6c740dc6431c4747804a"
+  integrity sha512-Q2pt3Kix3sdgntVF4mqQq5uN+RU9HT3cdNM4R9T9Zt56/Md2pO3D6krc89DRFqRWZlIvnOWhq4sm1VLPSyOC4Q==
   dependencies:
     "@types/dockerode" "^3.2.1"
     archiver "^5.2.0"
