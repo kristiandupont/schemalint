@@ -1,6 +1,5 @@
 import path from 'path';
 import { indexBy, keys, prop, values } from 'ramda';
-import knex from 'knex';
 import chalk from 'chalk';
 import { extractSchema } from 'extract-pg-schema';
 
@@ -52,10 +51,6 @@ export async function processDatabase({
       connection.host
     }`
   );
-  const knexConfig = {
-    client: 'pg',
-    connection,
-  };
 
   const ignoreMatchers = ignores.map((i) => (rule, identifier) => {
     let ruleMatch;
@@ -90,8 +85,7 @@ export async function processDatabase({
   for (const schema of schemas) {
     const report = createReportFunction(consoleReporter, ignoreMatchers);
 
-    const db = knex(knexConfig);
-    const extractedSchemaObject = await extractSchema(schema.name, db);
+    const extractedSchemaObject = await extractSchema(schema.name, connection);
 
     const schemaObject = {
       name: schema.name,
