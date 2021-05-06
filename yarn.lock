@@ -5821,10 +5821,10 @@ test-exclude@^6.0.0:
     glob "^7.1.4"
     minimatch "^3.0.4"
 
-testcontainers@7.8.0:
-  version "7.8.0"
-  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-7.8.0.tgz#fbddcfa0d212e43384d8ddd3a6beb2d60d781bbb"
-  integrity sha512-ouIGYMdknumAkJQyiGexyFFyLsL/R5aTyHrctgyT/M89PckVMchgb5SddrZaWZh6u2DWXH/o18F81x86Hf6LJQ==
+testcontainers@7.10.0:
+  version "7.10.0"
+  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-7.10.0.tgz#d0306ac9e54c24006e0de0e4505ca7d4a5a0db9e"
+  integrity sha512-xwz1dzRUmaYTNL4qH8//YlJzSGfVmooGtJNc0ynFm0mtUTyYu4HJLpPZB9e7+/ZiQlWp73LSTH/gSwuNtl8FXw==
   dependencies:
     "@types/archiver" "^5.1.0"
     "@types/dockerode" "^3.2.1"
