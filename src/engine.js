@@ -14,24 +14,21 @@ function consoleReporter({ rule, identifier, message }) {
 let anyIssues = false;
 const suggestedMigrations = [];
 
-const createReportFunction = (reporter, ignoreMatchers) => ({
-  rule,
-  identifier,
-  message,
-  suggestedMigration,
-}) => {
-  if (ignoreMatchers.find((im) => im(rule, identifier))) {
-    // This one is ignored.
-    return;
-  }
+const createReportFunction =
+  (reporter, ignoreMatchers) =>
+  ({ rule, identifier, message, suggestedMigration }) => {
+    if (ignoreMatchers.find((im) => im(rule, identifier))) {
+      // This one is ignored.
+      return;
+    }
 
-  reporter({ rule, identifier, message });
+    reporter({ rule, identifier, message });
 
-  if (suggestedMigration) {
-    suggestedMigrations.push(suggestedMigration);
-  }
-  anyIssues = true;
-};
+    if (suggestedMigration) {
+      suggestedMigrations.push(suggestedMigration);
+    }
+    anyIssues = true;
+  };
 
 export async function processDatabase({
   connection,
