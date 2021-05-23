@@ -5,16 +5,18 @@ export const preferJsonbToJson = {
     url: '...',
   },
   process({ schemaObject, report }) {
-    const validator = ({ name: tableName }) => ({ name: columnName, type }) => {
-      if (type === 'json') {
-        report({
-          rule: this.name,
-          identifier: `${schemaObject.name}.${tableName}.${columnName}`,
-          message: 'Prefer JSONB to JSON types',
-          suggestedMigration: `ALTER TABLE "${schemaObject.name}"."${tableName}" ALTER COLUMN "${columnName}" TYPE JSONB;`,
-        });
-      }
-    };
+    const validator =
+      ({ name: tableName }) =>
+      ({ name: columnName, type }) => {
+        if (type === 'json') {
+          report({
+            rule: this.name,
+            identifier: `${schemaObject.name}.${tableName}.${columnName}`,
+            message: 'Prefer JSONB to JSON types',
+            suggestedMigration: `ALTER TABLE "${schemaObject.name}"."${tableName}" ALTER COLUMN "${columnName}" TYPE JSONB;`,
+          });
+        }
+      };
     schemaObject.tables.forEach((table) =>
       table.columns.forEach(validator(table))
     );
@@ -28,16 +30,18 @@ export const preferTextToVarchar = {
     url: '...',
   },
   process({ schemaObject, report }) {
-    const validator = ({ name: tableName }) => ({ name: columnName, type }) => {
-      if (type.startsWith('varchar')) {
-        report({
-          rule: this.name,
-          identifier: `${schemaObject.name}.${tableName}.${columnName}`,
-          message: `Prefer text to ${type} types`,
-          suggestedMigration: `ALTER TABLE "${schemaObject.name}"."${tableName}" ALTER COLUMN "${columnName}" TYPE TEXT;`,
-        });
-      }
-    };
+    const validator =
+      ({ name: tableName }) =>
+      ({ name: columnName, type }) => {
+        if (type.startsWith('varchar')) {
+          report({
+            rule: this.name,
+            identifier: `${schemaObject.name}.${tableName}.${columnName}`,
+            message: `Prefer text to ${type} types`,
+            suggestedMigration: `ALTER TABLE "${schemaObject.name}"."${tableName}" ALTER COLUMN "${columnName}" TYPE TEXT;`,
+          });
+        }
+      };
     schemaObject.tables.forEach((table) =>
       table.columns.forEach(validator(table))
     );
@@ -53,16 +57,18 @@ export const preferTimestamptz = {
     url: 'https://www.postgresqltutorial.com/postgresql-timestamp/',
   },
   process({ schemaObject, report }) {
-    const validator = ({ name: tableName }) => ({ name: columnName, type }) => {
-      if (type === 'timestamp') {
-        report({
-          rule: this.name,
-          identifier: `${schemaObject.name}.${tableName}.${columnName}`,
-          message: 'Prefer TIMESTAMPTZ to type TIMESTAMP',
-          suggestedMigration: `ALTER TABLE "${schemaObject.name}"."${tableName}" ALTER COLUMN "${columnName}" TYPE TIMESTAMPTZ;`,
-        });
-      }
-    };
+    const validator =
+      ({ name: tableName }) =>
+      ({ name: columnName, type }) => {
+        if (type === 'timestamp') {
+          report({
+            rule: this.name,
+            identifier: `${schemaObject.name}.${tableName}.${columnName}`,
+            message: 'Prefer TIMESTAMPTZ to type TIMESTAMP',
+            suggestedMigration: `ALTER TABLE "${schemaObject.name}"."${tableName}" ALTER COLUMN "${columnName}" TYPE TIMESTAMPTZ;`,
+          });
+        }
+      };
     schemaObject.tables.forEach((table) =>
       table.columns.forEach(validator(table))
     );
@@ -77,30 +83,28 @@ export const preferIdentity = {
     url: 'https://www.2ndquadrant.com/en/blog/postgresql-10-identity-columns/',
   },
   process({ schemaObject, report }) {
-    const validator = ({ name: tableName }) => ({
-      name: columnName,
-      rawInfo,
-      defaultValue,
-    }) => {
-      if (
-        rawInfo.is_identity === 'NO' &&
-        defaultValue !== null &&
-        defaultValue.indexOf('nextval') >= 0
-      ) {
-        let sequenceName = defaultValue.match("'(.*)'")[1];
-        sequenceName = sequenceName.replace(/"/g, '');
+    const validator =
+      ({ name: tableName }) =>
+      ({ name: columnName, rawInfo, defaultValue }) => {
+        if (
+          rawInfo.is_identity === 'NO' &&
+          defaultValue !== null &&
+          defaultValue.indexOf('nextval') >= 0
+        ) {
+          let sequenceName = defaultValue.match("'(.*)'")[1];
+          sequenceName = sequenceName.replace(/"/g, '');
 
-        report({
-          rule: this.name,
-          identifier: `${schemaObject.name}.${tableName}.${columnName}`,
-          message: 'Prefer IDENTITY to type SERIAL',
-          suggestedMigration: `ALTER TABLE "${schemaObject.name}"."${tableName}" ALTER "${columnName}" DROP DEFAULT;
+          report({
+            rule: this.name,
+            identifier: `${schemaObject.name}.${tableName}.${columnName}`,
+            message: 'Prefer IDENTITY to type SERIAL',
+            suggestedMigration: `ALTER TABLE "${schemaObject.name}"."${tableName}" ALTER "${columnName}" DROP DEFAULT;
 DROP SEQUENCE "schema"."${sequenceName}";
 ALTER TABLE "${schemaObject.name}"."${tableName}" ALTER "${columnName}" ADD GENERATED BY DEFAULT AS IDENTITY;
 SELECT setval('"${sequenceName}"', max("${columnName}")) FROM "schema"."${tableName}";`,
-        });
-      }
-    };
+          });
+        }
+      };
     schemaObject.tables.forEach((table) =>
       table.columns.forEach(validator(table))
     );

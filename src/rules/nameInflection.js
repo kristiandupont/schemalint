@@ -41,23 +41,24 @@ export const nameInflection = {
   name: 'name-inflection',
   docs: {
     description: 'Enforce singluar or plural naming of tables and views',
-    url:
-      'https://github.com/kristiandupont/schemalint/tree/master/src/rules#name-inflection',
+    url: 'https://github.com/kristiandupont/schemalint/tree/master/src/rules#name-inflection',
   },
   process({ options, schemaObject, report }) {
     const expectedPlurality = (options.length && options[0]) || 'singular';
-    const validator = (entityType) => ({ name: entityName }) => {
-      const plurality = detectInflection(entityName);
-      const matches =
-        plurality === expectedPlurality || plurality === 'unknown';
-      if (!matches) {
-        report({
-          rule: this.name,
-          identifier: `${schemaObject.name}.${entityName}`,
-          message: `Expected ${expectedPlurality} names, but '${entityName}' seems to be ${plurality}`,
-        });
-      }
-    };
+    const validator =
+      (entityType) =>
+      ({ name: entityName }) => {
+        const plurality = detectInflection(entityName);
+        const matches =
+          plurality === expectedPlurality || plurality === 'unknown';
+        if (!matches) {
+          report({
+            rule: this.name,
+            identifier: `${schemaObject.name}.${entityName}`,
+            message: `Expected ${expectedPlurality} names, but '${entityName}' seems to be ${plurality}`,
+          });
+        }
+      };
     schemaObject.tables.forEach(validator('table'));
     schemaObject.views.forEach(validator('view'));
   },
