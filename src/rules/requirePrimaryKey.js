@@ -22,12 +22,11 @@ export const requirePrimaryKey = {
       }
     };
     schemaObject.tables
-      .filter((table) => {
-        return (
+      .filter(
+        (table) =>
           !ignorePatternsMatch ||
           !ignorePatternsMatch.test(`${schemaObject.name}.${table.name}`)
-        );
-      })
+      )
       .forEach(validator);
   },
 };

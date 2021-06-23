@@ -1,7 +1,9 @@
-import path from 'path';
+/* eslint-disable no-console */
 import chalk from 'chalk';
 // @ts-ignore
 import optionator from 'optionator';
+import path from 'path';
+
 import { processDatabase } from './engine';
 // @ts-ignore
 const { version } = require('../package.json');

@@ -23,7 +23,7 @@ describe('nameInflection', () => {
     ${`plural`}   | ${`plural`}   | ${`one_wife`}  | ${`two_jim`}  | ${`one_wives`} | ${`two_jims`}
   `(
     '$type : param of $param applies to table names and requires $expected',
-    ({ param, actual1, actual2, expected1, expected2 }) => {
+    ({ param, actual1, actual2, _expected1, _expected2 }) => {
       const mockReporter = jest.fn();
 
       nameInflection.process({
@@ -68,7 +68,7 @@ describe('nameInflection', () => {
     ${`plural`}   | ${`plural`}   | ${`one_wife`}  | ${`two_jim`}  | ${`one_wives`} | ${`two_jims`}
   `(
     '$type : param of $param applies to view names and requires $expected',
-    ({ param, actual1, actual2, expected1, expected2 }) => {
+    ({ param, actual1, actual2, _expected1, _expected2 }) => {
       const mockReporter = jest.fn();
 
       nameInflection.process({

@@ -45,21 +45,19 @@ export const nameInflection = {
   },
   process({ options, schemaObject, report }) {
     const expectedPlurality = (options.length && options[0]) || 'singular';
-    const validator =
-      (entityType) =>
-      ({ name: entityName }) => {
-        const plurality = detectInflection(entityName);
-        const matches =
-          plurality === expectedPlurality || plurality === 'unknown';
-        if (!matches) {
-          report({
-            rule: this.name,
-            identifier: `${schemaObject.name}.${entityName}`,
-            message: `Expected ${expectedPlurality} names, but '${entityName}' seems to be ${plurality}`,
-          });
-        }
-      };
-    schemaObject.tables.forEach(validator('table'));
-    schemaObject.views.forEach(validator('view'));
+    const validator = ({ name: entityName }) => {
+      const plurality = detectInflection(entityName);
+      const matches =
+        plurality === expectedPlurality || plurality === 'unknown';
+      if (!matches) {
+        report({
+          rule: this.name,
+          identifier: `${schemaObject.name}.${entityName}`,
+          message: `Expected ${expectedPlurality} names, but '${entityName}' seems to be ${plurality}`,
+        });
+      }
+    };
+    schemaObject.tables.forEach(validator);
+    schemaObject.views.forEach(validator);
   },
 };

@@ -1,7 +1,8 @@
-import path from 'path';
-import { indexBy, keys, prop, values } from 'ramda';
+/* eslint-disable no-console */
 import chalk from 'chalk';
 import { extractSchema } from 'extract-pg-schema';
+import path from 'path';
+import { indexBy, keys, prop, values } from 'ramda';
 
 import * as builtinRules from './rules';
 
@@ -38,9 +39,10 @@ export async function processDatabase({
   ignores = [],
 }) {
   const pluginRules = plugins.map((p) => require(path.join(process.cwd(), p)));
-  const allRules = [builtinRules, ...pluginRules].reduce((acc, elem) => {
-    return { ...acc, ...elem };
-  }, {});
+  const allRules = [builtinRules, ...pluginRules].reduce(
+    (acc, elem) => ({ ...acc, ...elem }),
+    {}
+  );
   const registeredRules = indexBy(prop('name'), values(allRules));
 
   console.log(

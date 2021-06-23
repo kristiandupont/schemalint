@@ -24,7 +24,7 @@ describe('nameCasing', () => {
     ${`pascal case`} | ${`pascal`} | ${`ThIsIsNoSnAKECaSE`}           | ${`NeitHeRIsThis`}
   `(
     '$type : param of $param applies to table names and requires $expected',
-    ({ type, param, expected1, expected2 }) => {
+    ({ _type, param, expected1, expected2 }) => {
       const mockReporter = jest.fn();
 
       nameCasing.process({
@@ -73,7 +73,7 @@ describe('nameCasing', () => {
     ${`pascal case`} | ${`pascal`} | ${`ThIsIsNoSnAKECaSE`}           | ${`NeitHeRIsThis`}
   `(
     '$type : param of $param applies to view names and requires $expected',
-    ({ type, param, expected1, expected2 }) => {
+    ({ _type, param, expected1, expected2 }) => {
       const mockReporter = jest.fn();
 
       nameCasing.process({
@@ -122,7 +122,7 @@ describe('nameCasing', () => {
     ${`pascal case`} | ${`pascal`} | ${`ThIsIsNoSnAKECaSE`}           | ${`NeitHeRIsThis`}
   `(
     '$type : param of $param applies to view names and requires $expected',
-    ({ type, param, expected1, expected2 }) => {
+    ({ _type, param, expected1, expected2 }) => {
       const mockReporter = jest.fn();
 
       nameCasing.process({
@@ -179,7 +179,7 @@ describe('nameCasing', () => {
     ${`pascal case`} | ${`pascal`} | ${`ThIsIsNoSnAKECaSE`}           | ${`NeitHeRIsThis`}
   `(
     '$type : param of $param applies to view names and requires $expected',
-    ({ type, param, expected1, expected2 }) => {
+    ({ _type, param, expected1, expected2 }) => {
       const mockReporter = jest.fn();
 
       nameCasing.process({
