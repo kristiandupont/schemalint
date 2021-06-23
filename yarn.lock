@@ -2100,7 +2100,7 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-docker-compose@^0.23.8:
+docker-compose@^0.23.10:
   version "0.23.10"
   resolved "https://registry.yarnpkg.com/docker-compose/-/docker-compose-0.23.10.tgz#369fd2c6429754fb4134d3d29174a8c9569690e8"
   integrity sha512-IzR6LzHrQyUvVwPNZY6F0oszAQLqHKOMNTN43Yu5aE6IBbhN9D/MpHbVUqHXTwzqIWiJM+ImYFjY5RdWWDGgfQ==
@@ -6147,17 +6147,17 @@ test-exclude@^6.0.0:
     glob "^7.1.4"
     minimatch "^3.0.4"
 
-testcontainers@7.11.0:
-  version "7.11.0"
-  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-7.11.0.tgz#47291a7e693b6d8f7a4f03cd0fb2a6a741c53458"
-  integrity sha512-wnTS/foBu3lFjLHRCQLv+nSBnzgp20tWRJVCRXFzU6ivDnFwNbyLMZiHhHZr6hpXtCNAToOlBenlueDA5z1L7g==
+testcontainers@7.11.1:
+  version "7.11.1"
+  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-7.11.1.tgz#b3810badf79433ba02f210683eec1a1c488c107d"
+  integrity sha512-lfZeys5bLkADjOaoXfQy0V0+G8sGKr8ESANz7MhSVBwC+OTTxkP3+FVwP48bW4mwRcQ4Hojwbfw10OYT80QZmQ==
   dependencies:
     "@types/archiver" "^5.1.0"
     "@types/dockerode" "^3.2.1"
     archiver "^5.3.0"
     byline "^5.0.0"
     debug "^4.3.1"
-    docker-compose "^0.23.8"
+    docker-compose "^0.23.10"
     dockerode "^3.2.1"
     get-port "^5.1.1"
     glob "^7.1.7"
