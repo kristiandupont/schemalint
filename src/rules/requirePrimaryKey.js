@@ -9,7 +9,7 @@ export const requirePrimaryKey = {
       options[0] && options[0].ignorePattern
         ? new RegExp(options[0].ignorePattern)
         : null;
-    const validator = ({ tags, columns, name: tableName }) => {
+    const validator = ({ columns, name: tableName }) => {
       const idColumns = columns.filter((c) => c.isPrimary);
 
       if (idColumns.length < 1) {
