@@ -28,6 +28,16 @@ In Postgres when you insert a value into a `timestamptz` column, PostgreSQL conv
 from the database, PostgreSQL converts the UTC value back to the time value of the timezone set by the database server, the user, or the current database connection, whereas `timestamp` does not save any
 timezone data. You can learn more here: [Understanding PostgreSQL Timestamp Data Types](https://www.postgresqltutorial.com/postgresql-timestamp/)
 
+## prefer-jsonb-to-json
+
+`json` data is stored as a copy of the input text which processing functions need to reparse on each execution. `jsonb` data is stored in a binary format which is faster to process, and also supports indexing.
+
+While there are some caveats, the official PostgreSQL documentation states:
+
+> In general, most applications should prefer to store JSON data as jsonb, unless there are quite specialized needs, such as legacy assumptions about ordering of object keys.
+
+You can learn more here: [JSON types](https://www.postgresql.org/docs/current/datatype-json.html)
+
 ## prefer-identity-to-serial
 
 Identity columns are a SQL standard-conforming variant of PostgreSQL's serial columns. They fix a few usability
