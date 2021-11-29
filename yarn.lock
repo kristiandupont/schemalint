@@ -6223,10 +6223,10 @@ test-exclude@^6.0.0:
     glob "^7.1.4"
     minimatch "^3.0.4"
 
-testcontainers@7.22.1:
-  version "7.22.1"
-  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-7.22.1.tgz#3ae0d87facd9b011d948548d1ee1d78009b4bb4b"
-  integrity sha512-htf+uOTiNtX4bcNitlbvXthFa4i6ft3EWMhfSEYmb/+mzzPc8Ty9PCst5SCcWCW/N1MK1to0RLeViPICRwn8NA==
+testcontainers@7.24.0:
+  version "7.24.0"
+  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-7.24.0.tgz#67a9ae756b7fa6a239fead80aaff78e46800808a"
+  integrity sha512-/Hm/iUc2F6cPYh84abVPiy/suW9D9SseKq/RAZpZqYFxJ0VuETnzzZ/KRtf3o9b35G0xOuxSKRISomTXiIUr8Q==
   dependencies:
     "@types/archiver" "^5.1.1"
     "@types/dockerode" "^3.2.5"
