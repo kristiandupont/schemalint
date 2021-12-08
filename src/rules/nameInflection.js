@@ -3,7 +3,7 @@ const irregularPlurals = require('irregular-plurals/irregular-plurals.json');
 
 const singulars = R.keys(irregularPlurals);
 const plurals = R.values(irregularPlurals);
-const trimSeparators = (s) => s.replace(/^(\-|_)+|(\-|_)+$/g, '');
+const trimSeparators = (s) => s.replace(/^(-|_)+|(-|_)+$/g, '');
 
 const detectInflection = (word) => {
   const words = word

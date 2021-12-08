@@ -1,3 +1,5 @@
+/* global assertJSONBReport, assertTextReport, assertIdentityReport */
+
 import * as types from './types';
 
 describe('types', () => {

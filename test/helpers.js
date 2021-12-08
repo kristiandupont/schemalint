@@ -1,3 +1,5 @@
+/* global expect, assertReport */
+
 global.assertReport = (
   mockReporter,
   expectedRule,
