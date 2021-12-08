@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "@kristiandupont/recase": "^1.1.1",
-    "chalk": "^4.1.0",
+    "chalk": "^5.0.0",
     "extract-pg-schema": "^3.0.0",
     "irregular-plurals": "^3.2.0",
     "optionator": "^0.9.1",
