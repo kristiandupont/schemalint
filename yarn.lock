@@ -4466,7 +4466,7 @@ mkdirp-classic@^0.5.2:
   resolved "https://registry.yarnpkg.com/mkdirp-classic/-/mkdirp-classic-0.5.3.tgz#fa10c9115cc6d8865be221ba47ee9bed78601113"
   integrity sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==
 
-mkdirp@1.x:
+mkdirp@1.x, mkdirp@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
@@ -5153,6 +5153,13 @@ prompts@^2.0.1:
   dependencies:
     kleur "^3.0.3"
     sisteransi "^1.0.4"
+
+properties-reader@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/properties-reader/-/properties-reader-2.2.0.tgz#41d837fe143d8d5f2386b6a869a1975c0b2c595c"
+  integrity sha512-CgVcr8MwGoBKK24r9TwHfZkLLaNFHQ6y4wgT9w/XzdpacOOi5ciH4hcuLechSDAwXsfrGQtI2JTutY2djOx2Ow==
+  dependencies:
+    mkdirp "^1.0.4"
 
 psl@^1.1.28:
   version "1.8.0"
@@ -6089,10 +6096,10 @@ test-exclude@^6.0.0:
     glob "^7.1.4"
     minimatch "^3.0.4"
 
-testcontainers@7.24.0:
-  version "7.24.0"
-  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-7.24.0.tgz#67a9ae756b7fa6a239fead80aaff78e46800808a"
-  integrity sha512-/Hm/iUc2F6cPYh84abVPiy/suW9D9SseKq/RAZpZqYFxJ0VuETnzzZ/KRtf3o9b35G0xOuxSKRISomTXiIUr8Q==
+testcontainers@8.2.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-8.2.0.tgz#41a9ff1b9a1fb50654eeec5478c0451a0179bcef"
+  integrity sha512-s+w9WtgAPHkuEo+eLKEynT3EutaHeGsVqdZCe5xLDFzklToBF/jcUcfIFmI4rxDUI1kJqSnjr0dALzETiqnU6w==
   dependencies:
     "@types/archiver" "^5.1.1"
     "@types/dockerode" "^3.2.5"
@@ -6103,6 +6110,7 @@ testcontainers@7.24.0:
     dockerode "^3.3.1"
     get-port "^5.1.1"
     glob "^7.2.0"
+    properties-reader "^2.2.0"
     slash "^3.0.0"
     ssh-remote-port-forward "^1.0.4"
     tar-fs "^2.1.1"
