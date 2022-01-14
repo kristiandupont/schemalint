@@ -832,16 +832,16 @@
     "@types/node" "*"
 
 "@types/ssh2-streams@*":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@types/ssh2-streams/-/ssh2-streams-0.1.7.tgz#bf79349ec85a4dfb5b3fd9f4a05af729121f07e6"
-  integrity sha512-cQNV72C+BOG7G8WNGarTQdB2Ii37cJlWatSpx5zTYxtI2ZvUt2lbq6Nc2XZ4kbge28V7Xe5KYYr82d96/rDMnQ==
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@types/ssh2-streams/-/ssh2-streams-0.1.9.tgz#8ca51b26f08750a780f82ee75ff18d7160c07a87"
+  integrity sha512-I2J9jKqfmvXLR5GomDiCoHrEJ58hAOmFrekfFqmCFd+A6gaEStvWnPykoWUwld1PNg4G5ag1LwdA+Lz1doRJqg==
   dependencies:
     "@types/node" "*"
 
 "@types/ssh2@*", "@types/ssh2@^0.5.48":
-  version "0.5.48"
-  resolved "https://registry.yarnpkg.com/@types/ssh2/-/ssh2-0.5.48.tgz#0d9e8654a76eaaf4cfeaeb88d74c4489cfcf7aea"
-  integrity sha512-cmQu0gp/6RtDXe1r2xXGgi0V0TeCdueDSRMEvBX8cTRT/sSREkUpgCYZLyh+iI8Ql+VNV8Az9toQoYa/IdgHbQ==
+  version "0.5.50"
+  resolved "https://registry.yarnpkg.com/@types/ssh2/-/ssh2-0.5.50.tgz#2ae2a250efd07b9432ee6a70de870cd1fb67ab40"
+  integrity sha512-Eu/rzX4L+GhWIKEFQbaeWKECdy8VRdIYOqjMlFp+v4v7tBhvcl30m34BZzVALn/dNXvcB6dmcMtspIW7iPOlPg==
   dependencies:
     "@types/node" "*"
     "@types/ssh2-streams" "*"
