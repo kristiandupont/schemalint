@@ -1,6 +1,64 @@
-/* global assertJSONBReport, assertTextReport, assertIdentityReport */
-
 import * as types from './types';
+
+const assertReport = (
+  mockReporter,
+  expectedRule,
+  expectedIdentifier,
+  expectedMessage,
+  expectedSuggestedMigration
+) => {
+  expect(mockReporter).toBeCalledWith(
+    expect.objectContaining({
+      rule: expectedRule,
+      identifier: expectedIdentifier,
+      message: expectedMessage,
+      suggestedMigration: expectedSuggestedMigration,
+    })
+  );
+};
+
+const assertJSONBReport = (
+  mockReporter,
+  expectedIdentifier,
+  expectedSuggestedMigration
+) => {
+  assertReport(
+    mockReporter,
+    'prefer-jsonb-to-json',
+    expectedIdentifier,
+    'Prefer JSONB to JSON types',
+    expectedSuggestedMigration
+  );
+};
+
+const assertTextReport = (
+  mockReporter,
+  expectedIdentifier,
+  expectedColumnType,
+  expectedSuggestedMigration
+) => {
+  assertReport(
+    mockReporter,
+    'prefer-text-to-varchar',
+    expectedIdentifier,
+    `Prefer text to ${expectedColumnType} types`,
+    expectedSuggestedMigration
+  );
+};
+
+const assertIdentityReport = (
+  mockReporter,
+  expectedIdentifier,
+  expectedSuggestedMigration
+) => {
+  assertReport(
+    mockReporter,
+    'prefer-identity-to-serial',
+    expectedIdentifier,
+    'Prefer IDENTITY to type SERIAL',
+    expectedSuggestedMigration
+  );
+};
 
 describe('types', () => {
   describe('prefer-jsonb-to-json', () => {
