@@ -67,7 +67,7 @@
     "prettier": "2.6.2",
     "testcontainers": "8.10.1",
     "ts-jest": "26.5.6",
-    "typescript": "4.6.4"
+    "typescript": "4.7.4"
   },
   "np": {
     "tests": false
