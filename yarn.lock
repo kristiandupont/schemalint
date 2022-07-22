@@ -6314,10 +6314,10 @@ test-exclude@^6.0.0:
     glob "^7.1.4"
     minimatch "^3.0.4"
 
-testcontainers@8.11.0:
-  version "8.11.0"
-  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-8.11.0.tgz#f19307557289b7e80c7e1d65b39ab0054a2b2549"
-  integrity sha512-sc9FA40waYXKVTp/Dm9qmcc8I5/TLyZd+JxtnYjIQDp1UvLzAckQPjSlGCDTdM00J2X4KDwG0+jY+8WprZbpnQ==
+testcontainers@8.12.0:
+  version "8.12.0"
+  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-8.12.0.tgz#236dfaec40887348d28bfcd19ebd047eb32f712a"
+  integrity sha512-6qQqKirdURAXH/V6sVnfbgqLAJK/vxP2ED6qcwiLfsZ6McPkF5TGDAPzkVZUmdrx62H3RzuTTdXGoPcLP7KG6g==
   dependencies:
     "@balena/dockerignore" "^1.0.2"
     "@types/archiver" "^5.3.1"
