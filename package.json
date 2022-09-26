@@ -59,7 +59,7 @@
   "devDependencies": {
     "@kristiandupont/eslint-config": "1.2.7",
     "@types/jest": "27.5.2",
-    "@types/node": "16.11.56",
+    "@types/node": "16.11.62",
     "@types/ramda": "0.28.15",
     "eslint": "8.23.0",
     "jest": "26.6.3",
