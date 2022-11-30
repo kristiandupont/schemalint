@@ -1,3 +1,5 @@
+import { describe, expect, it, vi } from 'vitest';
+
 import * as types from './types';
 
 const assertReport = (
@@ -63,7 +65,7 @@ const assertIdentityReport = (
 describe('types', () => {
   describe('prefer-jsonb-to-json', () => {
     it('no tables has no errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = { tables: [] };
 
       types.preferJsonbToJson.process({
@@ -75,7 +77,7 @@ describe('types', () => {
     });
 
     it('one table, json columns has errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = {
         name: 'schema',
         tables: [
@@ -109,7 +111,7 @@ describe('types', () => {
     });
 
     it('one table, no json column has no errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = {
         name: 'schema',
         tables: [
@@ -128,7 +130,7 @@ describe('types', () => {
       expect(mockReporter).toBeCalledTimes(0);
     });
     it('multiple tables with multiple json columns has multiple errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = {
         name: 'schema',
         tables: [
@@ -168,7 +170,7 @@ describe('types', () => {
 
   describe('prefer-text-to-varchar', () => {
     it('no tables has no errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = { tables: [] };
 
       types.preferTextToVarchar.process({
@@ -180,7 +182,7 @@ describe('types', () => {
     });
 
     it('one table, varchar columns has errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = {
         name: 'schema',
         tables: [
@@ -215,7 +217,7 @@ describe('types', () => {
     });
 
     it('one table, no varchar column has no errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = {
         name: 'schema',
         tables: [
@@ -235,7 +237,7 @@ describe('types', () => {
     });
 
     it('multiple tables with multiple varchar columns has multiple errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = {
         name: 'schema',
         tables: [
@@ -277,7 +279,7 @@ describe('types', () => {
 
   describe('prefer-timestamptz-to-timestamp', () => {
     it('no tables has no errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = { tables: [] };
 
       types.preferTimestamptz.process({
@@ -289,7 +291,7 @@ describe('types', () => {
     });
 
     it('one table, timetamp columns has errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = {
         name: 'schema',
         tables: [
@@ -330,7 +332,7 @@ describe('types', () => {
     });
 
     it('one table, no varchar column has no errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = {
         name: 'schema',
         tables: [
@@ -350,7 +352,7 @@ describe('types', () => {
     });
 
     it('multiple tables with multiple varchar columns has multiple errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = {
         name: 'schema',
         tables: [
@@ -398,7 +400,7 @@ describe('types', () => {
 
   describe('prefer-identity-to-serial', () => {
     it('no tables has no errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = { tables: [] };
 
       types.preferIdentity.process({
@@ -410,7 +412,7 @@ describe('types', () => {
     });
 
     it('one table, serial columns has errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = {
         name: 'schema',
         tables: [
@@ -457,7 +459,7 @@ SELECT setval('"table_name_column_2_seq"', max("bad_column2")) FROM "schema"."on
     });
 
     it('one table, no varchar column has no errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = {
         name: 'schema',
         tables: [
@@ -483,7 +485,7 @@ SELECT setval('"table_name_column_2_seq"', max("bad_column2")) FROM "schema"."on
     });
 
     it('multiple tables with multiple varchar columns has multiple errors', () => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
       const schemaObject = {
         name: 'schema',
         tables: [

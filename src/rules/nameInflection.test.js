@@ -1,8 +1,10 @@
+import { describe, expect, it, test, vi } from 'vitest';
+
 import { nameInflection } from './nameInflection';
 
 describe('nameInflection', () => {
   it('no tables or views passed no errors', () => {
-    const mockReporter = jest.fn();
+    const mockReporter = vi.fn();
 
     nameInflection.process({
       options: [],
@@ -24,7 +26,7 @@ describe('nameInflection', () => {
   `(
     '$type : param of $param applies to table names and requires $expected',
     ({ param, actual1, actual2, _expected1, _expected2 }) => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
 
       nameInflection.process({
         options: [param],
@@ -69,7 +71,7 @@ describe('nameInflection', () => {
   `(
     '$type : param of $param applies to view names and requires $expected',
     ({ param, actual1, actual2, _expected1, _expected2 }) => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
 
       nameInflection.process({
         options: [param],

@@ -1,8 +1,10 @@
+import { describe, expect, it, test, vi } from 'vitest';
+
 import { nameCasing } from './nameCasing';
 
 describe('nameCasing', () => {
   it('no tables or views passed no errors', () => {
-    const mockReporter = jest.fn();
+    const mockReporter = vi.fn();
 
     nameCasing.process({
       options: [],
@@ -25,7 +27,7 @@ describe('nameCasing', () => {
   `(
     '$type : param of $param applies to table names and requires $expected',
     ({ _type, param, expected1, expected2 }) => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
 
       nameCasing.process({
         options: [param],
@@ -74,7 +76,7 @@ describe('nameCasing', () => {
   `(
     '$type : param of $param applies to view names and requires $expected',
     ({ _type, param, expected1, expected2 }) => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
 
       nameCasing.process({
         options: [param],
@@ -123,7 +125,7 @@ describe('nameCasing', () => {
   `(
     '$type : param of $param applies to view names and requires $expected',
     ({ _type, param, expected1, expected2 }) => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
 
       nameCasing.process({
         options: [param],
@@ -180,7 +182,7 @@ describe('nameCasing', () => {
   `(
     '$type : param of $param applies to view names and requires $expected',
     ({ _type, param, expected1, expected2 }) => {
-      const mockReporter = jest.fn();
+      const mockReporter = vi.fn();
 
       nameCasing.process({
         options: [param],

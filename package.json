@@ -27,25 +27,12 @@
     "run-example": "node build/src/cli -c ./example/.schemalintrc",
     "start-example-db": "docker run -d --name dvd-rental -p 54321:5432 kristiandupont/dvdrental-image",
     "stop-example-db": "docker stop dvd-rental",
-    "test": "jest",
+    "test": "vitest run",
     "version": "yarn build"
   },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "es5"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "ts"
-    ],
-    "testEnvironment": "node",
-    "testMatch": [
-      "<rootDir>/src/**/*.test.js"
-    ],
-    "transform": {
-      "^.+\\.(ts|js)$": "ts-jest"
-    }
   },
   "dependencies": {
     "@kristiandupont/recase": "^1.1.1",
@@ -58,16 +45,15 @@
   },
   "devDependencies": {
     "@kristiandupont/eslint-config": "1.2.7",
-    "@types/jest": "27.5.2",
     "@types/node": "18.11.9",
     "@types/ramda": "0.28.20",
     "eslint": "8.28.0",
-    "jest": "26.6.3",
     "np": "7.6.2",
     "prettier": "2.8.0",
     "testcontainers": "9.0.0",
-    "ts-jest": "26.5.6",
-    "typescript": "4.8.4"
+    "typescript": "4.8.4",
+    "vite": "^3.2.4",
+    "vitest": "^0.25.3"
   },
   "np": {
     "tests": false
