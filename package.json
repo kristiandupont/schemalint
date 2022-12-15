@@ -44,16 +44,11 @@
     "ramda": "^0.28.0"
   },
   "devDependencies": {
-    "@kristiandupont/eslint-config": "1.3.2",
+    "@kristiandupont/dev-deps": "^1.1.0",
     "@types/node": "18.11.13",
     "@types/ramda": "0.28.20",
-    "eslint": "8.29.0",
     "np": "7.6.2",
-    "prettier": "2.8.1",
-    "testcontainers": "9.0.1",
-    "typescript": "4.9.4",
-    "vite": "^4.0.0",
-    "vitest": "^0.25.3"
+    "testcontainers": "9.0.1"
   },
   "np": {
     "tests": false
