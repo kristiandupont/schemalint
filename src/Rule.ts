@@ -14,7 +14,7 @@ type Rule = {
     url?: string;
   };
   process: (p: {
-    options: any;
+    options?: any;
     schemaObject: Schema;
     report: Reporter;
   }) => void;

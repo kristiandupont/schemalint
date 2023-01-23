@@ -452,7 +452,7 @@ describe('types', () => {
             name: 'three_table',
             columns: [
               {
-                type: { kind: 'base', fullName: 'timestamp' },
+                type: { kind: 'base', fullName: 'pg_catalog.timestamp' },
                 name: 'bad_column3',
               },
             ],
