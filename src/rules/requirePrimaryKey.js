@@ -1,3 +1,6 @@
+/** @typedef {import('../Rule').default} Rule */
+
+/** @type {Rule} */
 export const requirePrimaryKey = {
   name: 'require-primary-key',
   docs: {

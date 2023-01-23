@@ -434,12 +434,12 @@
     eslint-plugin-simple-import-sort "^8.0.0"
     typescript "4.8.3"
 
-"@kristiandupont/recase@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@kristiandupont/recase/-/recase-1.1.1.tgz#c54454ebf23abedb2f37d8fe71f3b785dc87ee5c"
-  integrity sha512-oDt82hNAu3X/bu2BGcrLDdfjrqR2UThwSiJRl+SizjBJT0U9CmWGJ+HYJxDLbo02PpyJCR9nPk26vrNt7xQ7BA==
+"@kristiandupont/recase@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@kristiandupont/recase/-/recase-1.2.0.tgz#17c219bc64fc49afc5a4a3537c47d9858d3514ef"
+  integrity sha512-YlAwuJ1S3SeI5EJxdA9tNkjUt0P95J0C2eF+PhT+x3DEgkXC5vWLNYq09cend68ZTg72MGSqV9WX7MMMF8zfXw==
   dependencies:
-    ramda "^0.27.0"
+    ramda "^0.28.0"
 
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
@@ -3562,11 +3562,6 @@ quick-lru@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-4.0.1.tgz#5b8878f113a58217848c6482026c73e1ba57727f"
   integrity sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==
-
-ramda@^0.27.0:
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.27.0.tgz#915dc29865c0800bf3f69b8fd6c279898b59de43"
-  integrity sha512-pVzZdDpWwWqEVVLshWUHjNwuVP7SfcmPraYuqocJp1yo2U1R7P+5QAfDhdItkuoGqIBnBYrtPp7rEPqDn9HlZA==
 
 ramda@^0.28.0:
   version "0.28.0"

@@ -1,6 +1,14 @@
 import { detectCasing, recase } from '@kristiandupont/recase';
+import {
+  TableColumn,
+  TableDetails,
+  ViewColumn,
+  ViewDetails,
+} from 'extract-pg-schema';
 
-export const nameCasing = {
+import Rule from '../Rule';
+
+export const nameCasing: Rule = {
   name: 'name-casing',
   docs: {
     description: 'Enforce casing style of names',
@@ -9,8 +17,8 @@ export const nameCasing = {
   process({ options, schemaObject, report }) {
     const expectedCasing = (options.length && options[0]) || 'snake';
     const validator =
-      (entityType) =>
-      ({ name: entityName }) => {
+      (entityType: 'table' | 'view') =>
+      ({ name: entityName }: TableDetails | ViewDetails) => {
         const casing = detectCasing(entityName);
         const matches = casing === null || casing === expectedCasing;
         if (!matches) {
@@ -27,9 +35,9 @@ export const nameCasing = {
         }
       };
     const columnValidator =
-      (entityType) =>
-      ({ name: entityName }) =>
-      ({ name: columnName }) => {
+      (entityType: 'table' | 'view') =>
+      ({ name: entityName }: TableDetails | ViewDetails) =>
+      ({ name: columnName }: TableColumn | ViewColumn) => {
         const casing = detectCasing(columnName);
         const matches = casing === null || casing === expectedCasing;
         if (!matches) {

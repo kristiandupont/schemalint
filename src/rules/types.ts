@@ -1,4 +1,8 @@
-export const preferJsonbToJson = {
+import { TableColumn, TableDetails } from 'extract-pg-schema';
+
+import Rule from '../Rule';
+
+export const preferJsonbToJson: Rule = {
   name: 'prefer-jsonb-to-json',
   docs: {
     description: 'Prefer JSONB to JSON types',
@@ -6,9 +10,9 @@ export const preferJsonbToJson = {
   },
   process({ schemaObject, report }) {
     const validator =
-      ({ name: tableName }) =>
-      ({ name: columnName, type }) => {
-        if (type === 'json') {
+      ({ name: tableName }: TableDetails) =>
+      ({ name: columnName, type }: TableColumn) => {
+        if (type.fullName === 'pg_catalog.json') {
           report({
             rule: this.name,
             identifier: `${schemaObject.name}.${tableName}.${columnName}`,
@@ -23,7 +27,7 @@ export const preferJsonbToJson = {
   },
 };
 
-export const preferTextToVarchar = {
+export const preferTextToVarchar: Rule = {
   name: 'prefer-text-to-varchar',
   docs: {
     description: 'Prefer the text type over varchar',
@@ -31,13 +35,13 @@ export const preferTextToVarchar = {
   },
   process({ schemaObject, report }) {
     const validator =
-      ({ name: tableName }) =>
-      ({ name: columnName, type }) => {
-        if (type.startsWith('varchar')) {
+      ({ name: tableName }: TableDetails) =>
+      ({ name: columnName, type }: TableColumn) => {
+        if (type.fullName === 'pg_catalog.varchar') {
           report({
             rule: this.name,
             identifier: `${schemaObject.name}.${tableName}.${columnName}`,
-            message: `Prefer text to ${type} types`,
+            message: `Prefer text to varchar types`,
             suggestedMigration: `ALTER TABLE "${schemaObject.name}"."${tableName}" ALTER COLUMN "${columnName}" TYPE TEXT;`,
           });
         }
@@ -48,7 +52,7 @@ export const preferTextToVarchar = {
   },
 };
 
-export const preferTimestamptz = {
+export const preferTimestamptz: Rule = {
   name: 'prefer-timestamptz-to-timestamp',
   docs: {
     description:
@@ -58,9 +62,9 @@ export const preferTimestamptz = {
   },
   process({ schemaObject, report }) {
     const validator =
-      ({ name: tableName }) =>
-      ({ name: columnName, type }) => {
-        if (type === 'timestamp') {
+      ({ name: tableName }: TableDetails) =>
+      ({ name: columnName, type }: TableColumn) => {
+        if (type.fullName === 'pg_catalog.timestamp') {
           report({
             rule: this.name,
             identifier: `${schemaObject.name}.${tableName}.${columnName}`,
@@ -75,7 +79,7 @@ export const preferTimestamptz = {
   },
 };
 
-export const preferIdentity = {
+export const preferIdentity: Rule = {
   name: 'prefer-identity-to-serial',
   docs: {
     description:
@@ -84,10 +88,10 @@ export const preferIdentity = {
   },
   process({ schemaObject, report }) {
     const validator =
-      ({ name: tableName }) =>
-      ({ name: columnName, rawInfo, defaultValue }) => {
+      ({ name: tableName }: TableDetails) =>
+      ({ name: columnName, defaultValue, isIdentity }: TableColumn) => {
         if (
-          rawInfo.is_identity === 'NO' &&
+          !isIdentity &&
           defaultValue !== null &&
           defaultValue.indexOf('nextval') >= 0
         ) {

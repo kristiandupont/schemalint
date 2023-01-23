@@ -1,3 +1,15 @@
 {
-  "extends": ["@kristiandupont"]
+  "extends": ["@kristiandupont"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "parserOptions": {
+        "createDefaultProgram": true,
+        "project": "./tsconfig.json"
+      }
+    }
+  ],
+  "rules": {
+    "@typescript-eslint/prefer-nullish-coalescing": "off"
+  }
 }

@@ -1,13 +1,12 @@
-/* eslint-disable no-console */
 import chalk from 'chalk';
-import { extractSchema } from 'extract-pg-schema';
+import { extractSchemas } from 'extract-pg-schema';
 import path from 'path';
 import { indexBy, keys, prop, values } from 'ramda';
 
 import * as builtinRules from './rules';
 
 function consoleReporter({ rule, identifier, message }) {
-  console.log(
+  console.error(
     `${chalk.yellow(identifier)}: error ${chalk.red(rule)} : ${message}`
   );
 }
@@ -45,7 +44,7 @@ export async function processDatabase({
   );
   const registeredRules = indexBy(prop('name'), values(allRules));
 
-  console.log(
+  console.info(
     `Connecting to ${chalk.greenBright(connection.database)} on ${
       connection.host
     }`
@@ -81,15 +80,13 @@ export async function processDatabase({
     return ruleMatch && identifierMatch;
   });
 
+  const report = createReportFunction(consoleReporter, ignoreMatchers);
+  const extractedSchemas = await extractSchemas(connection, {
+    schemas: schemas.map((s) => s.name),
+  });
+
   for (const schema of schemas) {
-    const report = createReportFunction(consoleReporter, ignoreMatchers);
-
-    const extractedSchemaObject = await extractSchema(schema.name, connection);
-
-    const schemaObject = {
-      name: schema.name,
-      ...extractedSchemaObject,
-    };
+    const schemaObject = extractedSchemas[schema.name];
 
     const mergedRules = {
       ...rules,
@@ -109,13 +106,13 @@ export async function processDatabase({
 
   if (anyIssues) {
     if (suggestedMigrations.length) {
-      console.log('');
-      console.log('Suggested fix');
-      suggestedMigrations.forEach((sf) => console.log(sf));
+      console.info('');
+      console.info('Suggested fix');
+      suggestedMigrations.forEach((sf) => console.info(sf));
     }
     return 1;
   }
 
-  console.log('No issues detected');
+  console.info('No issues detected');
   return 0;
 }

@@ -23,8 +23,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "lint": "yarn eslint . -f visualstudio --report-unused-disable-directives --ext .js,.ts",
-    "run-example": "node build/src/cli -c ./example/.schemalintrc",
+    "lint": "eslint . -f visualstudio --report-unused-disable-directives --ext .js,.ts",
+    "run-example": "node build/cli -c ./example/.schemalintrc",
     "start-example-db": "docker run -d --name dvd-rental -p 54321:5432 kristiandupont/dvdrental-image",
     "stop-example-db": "docker stop dvd-rental",
     "test": "vitest run",
@@ -35,7 +35,7 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@kristiandupont/recase": "^1.1.1",
+    "@kristiandupont/recase": "^1.2.0",
     "chalk": "4.1.2",
     "extract-pg-schema": "^4.0.0",
     "irregular-plurals": "^3.2.0",

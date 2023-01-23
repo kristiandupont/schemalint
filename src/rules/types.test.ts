@@ -1,13 +1,21 @@
+import { Schema } from 'extract-pg-schema';
 import { describe, expect, it, vi } from 'vitest';
 
+import { Reporter } from '../Rule';
 import * as types from './types';
 
+type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]>;
+    }
+  : T;
+
 const assertReport = (
-  mockReporter,
-  expectedRule,
-  expectedIdentifier,
-  expectedMessage,
-  expectedSuggestedMigration
+  mockReporter: Reporter,
+  expectedRule: string,
+  expectedIdentifier: string,
+  expectedMessage: string,
+  expectedSuggestedMigration: string
 ) => {
   expect(mockReporter).toBeCalledWith(
     expect.objectContaining({
@@ -20,9 +28,9 @@ const assertReport = (
 };
 
 const assertJSONBReport = (
-  mockReporter,
-  expectedIdentifier,
-  expectedSuggestedMigration
+  mockReporter: Reporter,
+  expectedIdentifier: string,
+  expectedSuggestedMigration: string
 ) => {
   assertReport(
     mockReporter,
@@ -34,10 +42,10 @@ const assertJSONBReport = (
 };
 
 const assertTextReport = (
-  mockReporter,
-  expectedIdentifier,
-  expectedColumnType,
-  expectedSuggestedMigration
+  mockReporter: Reporter,
+  expectedIdentifier: string,
+  expectedColumnType: string,
+  expectedSuggestedMigration: string
 ) => {
   assertReport(
     mockReporter,
@@ -49,9 +57,9 @@ const assertTextReport = (
 };
 
 const assertIdentityReport = (
-  mockReporter,
-  expectedIdentifier,
-  expectedSuggestedMigration
+  mockReporter: Reporter,
+  expectedIdentifier: string,
+  expectedSuggestedMigration: string
 ) => {
   assertReport(
     mockReporter,
@@ -66,10 +74,10 @@ describe('types', () => {
   describe('prefer-jsonb-to-json', () => {
     it('no tables has no errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = { tables: [] };
+      const schemaObject: DeepPartial<Schema> = { tables: [] };
 
       types.preferJsonbToJson.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -78,22 +86,31 @@ describe('types', () => {
 
     it('one table, json columns has errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = {
+      const schemaObject: DeepPartial<Schema> = {
         name: 'schema',
         tables: [
           {
             name: 'one_table',
             columns: [
-              { type: 'json', name: 'bad_column' },
-              { type: 'text', name: 'not_relavant' },
-              { type: 'json', name: 'bad_column2' },
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.json' },
+                name: 'bad_column',
+              },
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.text' },
+                name: 'not_relavant',
+              },
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.json' },
+                name: 'bad_column2',
+              },
             ],
           },
         ],
       };
 
       types.preferJsonbToJson.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -112,18 +129,23 @@ describe('types', () => {
 
     it('one table, no json column has no errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = {
+      const schemaObject: DeepPartial<Schema> = {
         name: 'schema',
         tables: [
           {
             name: 'one_table',
-            columns: [{ type: 'varchar', name: 'not_relevant_column' }],
+            columns: [
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.varchar' },
+                name: 'not_relevant_column',
+              },
+            ],
           },
         ],
       };
 
       types.preferJsonbToJson.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -131,26 +153,41 @@ describe('types', () => {
     });
     it('multiple tables with multiple json columns has multiple errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = {
+      const schemaObject: DeepPartial<Schema> = {
         name: 'schema',
         tables: [
           {
             name: 'one_table',
-            columns: [{ type: 'json', name: 'bad_column' }],
+            columns: [
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.json' },
+                name: 'bad_column',
+              },
+            ],
           },
           {
             name: 'two_table',
-            columns: [{ type: 'varchar', name: 'not_relevant_column' }],
+            columns: [
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.varchar' },
+                name: 'not_relevant_column',
+              },
+            ],
           },
           {
             name: 'three_table',
-            columns: [{ type: 'json', name: 'bad_column3' }],
+            columns: [
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.json' },
+                name: 'bad_column3',
+              },
+            ],
           },
         ],
       };
 
       types.preferJsonbToJson.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -171,10 +208,10 @@ describe('types', () => {
   describe('prefer-text-to-varchar', () => {
     it('no tables has no errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = { tables: [] };
+      const schemaObject: DeepPartial<Schema> = { tables: [] };
 
       types.preferTextToVarchar.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -183,21 +220,27 @@ describe('types', () => {
 
     it('one table, varchar columns has errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = {
+      const schemaObject: DeepPartial<Schema> = {
         name: 'schema',
         tables: [
           {
             name: 'one_table',
             columns: [
-              { type: 'varchar(10)', name: 'bad_column' },
-              { type: 'varchar(5)', name: 'bad_column2' },
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.varchar' },
+                name: 'bad_column',
+              },
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.varchar' },
+                name: 'bad_column2',
+              },
             ],
           },
         ],
       };
 
       types.preferTextToVarchar.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -205,31 +248,36 @@ describe('types', () => {
       assertTextReport(
         mockReporter,
         'schema.one_table.bad_column',
-        'varchar(10)',
+        'varchar',
         'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column" TYPE TEXT;'
       );
       assertTextReport(
         mockReporter,
         'schema.one_table.bad_column2',
-        'varchar(5)',
+        'varchar',
         'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column2" TYPE TEXT;'
       );
     });
 
     it('one table, no varchar column has no errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = {
+      const schemaObject: DeepPartial<Schema> = {
         name: 'schema',
         tables: [
           {
             name: 'one_table',
-            columns: [{ type: 'text', name: 'not_relevant_column' }],
+            columns: [
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.text' },
+                name: 'not_relevant_column',
+              },
+            ],
           },
         ],
       };
 
       types.preferTextToVarchar.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -238,26 +286,41 @@ describe('types', () => {
 
     it('multiple tables with multiple varchar columns has multiple errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = {
+      const schemaObject: DeepPartial<Schema> = {
         name: 'schema',
         tables: [
           {
             name: 'one_table',
-            columns: [{ type: 'varchar', name: 'bad_column' }],
+            columns: [
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.varchar' },
+                name: 'bad_column',
+              },
+            ],
           },
           {
             name: 'two_table',
-            columns: [{ type: 'text', name: 'not_relevant_column' }],
+            columns: [
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.text' },
+                name: 'not_relevant_column',
+              },
+            ],
           },
           {
             name: 'three_table',
-            columns: [{ type: 'varchar(1)', name: 'bad_column3' }],
+            columns: [
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.varchar' },
+                name: 'bad_column3',
+              },
+            ],
           },
         ],
       };
 
       types.preferTextToVarchar.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -271,7 +334,7 @@ describe('types', () => {
       assertTextReport(
         mockReporter,
         'schema.three_table.bad_column3',
-        'varchar(1)',
+        'varchar',
         'ALTER TABLE "schema"."three_table" ALTER COLUMN "bad_column3" TYPE TEXT;'
       );
     });
@@ -280,10 +343,10 @@ describe('types', () => {
   describe('prefer-timestamptz-to-timestamp', () => {
     it('no tables has no errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = { tables: [] };
+      const schemaObject: DeepPartial<Schema> = { tables: [] };
 
       types.preferTimestamptz.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -292,21 +355,27 @@ describe('types', () => {
 
     it('one table, timetamp columns has errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = {
+      const schemaObject: DeepPartial<Schema> = {
         name: 'schema',
         tables: [
           {
             name: 'one_table',
             columns: [
-              { type: 'timestamp', name: 'bad_column' },
-              { type: 'timestamp', name: 'bad_column2' },
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.timestamp' },
+                name: 'bad_column',
+              },
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.timestamp' },
+                name: 'bad_column2',
+              },
             ],
           },
         ],
       };
 
       types.preferTimestamptz.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -333,18 +402,23 @@ describe('types', () => {
 
     it('one table, no varchar column has no errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = {
+      const schemaObject: DeepPartial<Schema> = {
         name: 'schema',
         tables: [
           {
             name: 'one_table',
-            columns: [{ type: 'text', name: 'not_relevant_column' }],
+            columns: [
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.text' },
+                name: 'not_relevant_column',
+              },
+            ],
           },
         ],
       };
 
       types.preferTimestamptz.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -353,26 +427,41 @@ describe('types', () => {
 
     it('multiple tables with multiple varchar columns has multiple errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = {
+      const schemaObject: DeepPartial<Schema> = {
         name: 'schema',
         tables: [
           {
             name: 'one_table',
-            columns: [{ type: 'timestamp', name: 'bad_column' }],
+            columns: [
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.timestamp' },
+                name: 'bad_column',
+              },
+            ],
           },
           {
             name: 'two_table',
-            columns: [{ type: 'text', name: 'not_relevant_column' }],
+            columns: [
+              {
+                type: { kind: 'base', fullName: 'pg_catalog.text' },
+                name: 'not_relevant_column',
+              },
+            ],
           },
           {
             name: 'three_table',
-            columns: [{ type: 'timestamp', name: 'bad_column3' }],
+            columns: [
+              {
+                type: { kind: 'base', fullName: 'timestamp' },
+                name: 'bad_column3',
+              },
+            ],
           },
         ],
       };
 
       types.preferTimestamptz.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -401,10 +490,10 @@ describe('types', () => {
   describe('prefer-identity-to-serial', () => {
     it('no tables has no errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = { tables: [] };
+      const schemaObject: DeepPartial<Schema> = { tables: [] };
 
       types.preferIdentity.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -413,7 +502,7 @@ describe('types', () => {
 
     it('one table, serial columns has errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = {
+      const schemaObject: DeepPartial<Schema> = {
         name: 'schema',
         tables: [
           {
@@ -421,12 +510,12 @@ describe('types', () => {
             columns: [
               {
                 name: 'bad_column',
-                rawInfo: { is_identity: 'NO' },
+                isIdentity: false,
                 defaultValue: "nextval('table_name_column_1_seq'::regclass)",
               },
               {
                 name: 'bad_column2',
-                rawInfo: { is_identity: 'NO' },
+                isIdentity: false,
                 defaultValue: "nextval('table_name_column_2_seq'::regclass)",
               },
             ],
@@ -435,7 +524,7 @@ describe('types', () => {
       };
 
       types.preferIdentity.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -460,16 +549,16 @@ SELECT setval('"table_name_column_2_seq"', max("bad_column2")) FROM "schema"."on
 
     it('one table, no varchar column has no errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = {
+      const schemaObject: DeepPartial<Schema> = {
         name: 'schema',
         tables: [
           {
             name: 'one_table',
             columns: [
               {
-                type: 'int',
+                type: { kind: 'base', fullName: 'pg_catalog.int4' },
+                isIdentity: true,
                 name: 'not_relevant_column',
-                rawInfo: { is_identity: 'YES' },
               },
             ],
           },
@@ -477,7 +566,7 @@ SELECT setval('"table_name_column_2_seq"', max("bad_column2")) FROM "schema"."on
       };
 
       types.preferIdentity.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -486,7 +575,7 @@ SELECT setval('"table_name_column_2_seq"', max("bad_column2")) FROM "schema"."on
 
     it('multiple tables with multiple varchar columns has multiple errors', () => {
       const mockReporter = vi.fn();
-      const schemaObject = {
+      const schemaObject: DeepPartial<Schema> = {
         name: 'schema',
         tables: [
           {
@@ -494,7 +583,7 @@ SELECT setval('"table_name_column_2_seq"', max("bad_column2")) FROM "schema"."on
             columns: [
               {
                 name: 'bad_column',
-                rawInfo: { is_identity: 'NO' },
+                isIdentity: false,
                 defaultValue: "nextval('table_name_column_1_seq'::regclass)",
               },
             ],
@@ -503,9 +592,9 @@ SELECT setval('"table_name_column_2_seq"', max("bad_column2")) FROM "schema"."on
             name: 'two_table',
             columns: [
               {
-                type: 'text',
+                type: { kind: 'base', fullName: 'pg_catalog.text' },
                 name: 'not_relevant_column',
-                rawInfo: { is_identity: 'NO' },
+                isIdentity: false,
                 defaultValue: null,
               },
             ],
@@ -515,7 +604,7 @@ SELECT setval('"table_name_column_2_seq"', max("bad_column2")) FROM "schema"."on
             columns: [
               {
                 name: 'bad_column3',
-                rawInfo: { is_identity: 'NO' },
+                isIdentity: false,
                 defaultValue: "nextval('table_name_column_3_seq'::regclass)",
               },
             ],
@@ -524,7 +613,7 @@ SELECT setval('"table_name_column_2_seq"', max("bad_column2")) FROM "schema"."on
       };
 
       types.preferIdentity.process({
-        schemaObject: schemaObject,
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 

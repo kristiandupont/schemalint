@@ -1,11 +1,15 @@
+import { TableDetails, ViewDetails } from 'extract-pg-schema';
+
+import Rule from '../Rule';
+
 const R = require('ramda');
 const irregularPlurals = require('irregular-plurals/irregular-plurals.json');
 
 const singulars = R.keys(irregularPlurals);
 const plurals = R.values(irregularPlurals);
-const trimSeparators = (s) => s.replace(/^(-|_)+|(-|_)+$/g, '');
+const trimSeparators = (s: string) => s.replace(/^(-|_)+|(-|_)+$/g, '');
 
-const detectInflection = (word) => {
+const detectInflection = (word: string) => {
   const words = word
     .split(/(?=[A-Z\-_])/)
     .map(trimSeparators)
@@ -37,7 +41,7 @@ const detectInflection = (word) => {
   return isPlural ? 'plural' : 'singular';
 };
 
-export const nameInflection = {
+export const nameInflection: Rule = {
   name: 'name-inflection',
   docs: {
     description: 'Enforce singluar or plural naming of tables and views',
@@ -45,7 +49,7 @@ export const nameInflection = {
   },
   process({ options, schemaObject, report }) {
     const expectedPlurality = (options.length && options[0]) || 'singular';
-    const validator = ({ name: entityName }) => {
+    const validator = ({ name: entityName }: TableDetails | ViewDetails) => {
       const plurality = detectInflection(entityName);
       const matches =
         plurality === expectedPlurality || plurality === 'unknown';
