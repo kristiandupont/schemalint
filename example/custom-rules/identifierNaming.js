@@ -8,7 +8,7 @@ const identifierNaming = {
   },
   process({ schemaObject, report }) {
     const validator = ({ tags, columns, name: tableName }) => {
-      const idColumns = columns.filter((c) => c.isPrimary);
+      const idColumns = columns.filter((c) => c.isPrimaryKey);
 
       // There might be 2 or more, or there might be 0. In both cases, skip this table.
       if (idColumns.length === 1) {
