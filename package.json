@@ -6,7 +6,11 @@
     "schema",
     "lint"
   ],
-  "repository": "git@github.com:kristiandupont/schemalint.git",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kristiandupont/schemalint.git"
+  },
+  "homepage": "https://github.com/kristiandupont/schemalint",
   "license": "MIT",
   "author": {
     "name": "Kristian Dupont",
