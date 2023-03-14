@@ -15,7 +15,7 @@ export const nameCasing: Rule = {
     url: 'https://github.com/kristiandupont/schemalint/tree/master/src/rules#name-casing',
   },
   process({ options, schemaObject, report }) {
-    const expectedCasing = (options.length && options[0]) || 'snake';
+    const expectedCasing = (options.length > 0 && options[0]) || 'snake';
     const validator =
       (entityType: 'table' | 'view') =>
       ({ name: entityName }: TableDetails | ViewDetails) => {

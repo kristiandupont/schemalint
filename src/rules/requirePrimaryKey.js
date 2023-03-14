@@ -15,7 +15,7 @@ export const requirePrimaryKey = {
     const validator = ({ columns, name: tableName }) => {
       const idColumns = columns.filter((c) => c.isPrimaryKey);
 
-      if (idColumns.length < 1) {
+      if (idColumns.length === 0) {
         report({
           rule: this.name,
           identifier: `${schemaObject.name}.${tableName}`,

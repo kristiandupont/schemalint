@@ -1,9 +1,8 @@
 import { TableDetails, ViewDetails } from 'extract-pg-schema';
+import irregularPlurals from 'irregular-plurals/irregular-plurals.json';
+import * as R from 'ramda';
 
 import Rule from '../Rule';
-
-const R = require('ramda');
-const irregularPlurals = require('irregular-plurals/irregular-plurals.json');
 
 const singulars = R.keys(irregularPlurals);
 const plurals = R.values(irregularPlurals);
@@ -11,22 +10,25 @@ const trimSeparators = (s: string) => s.replace(/^(-|_)+|(-|_)+$/g, '');
 
 const detectInflection = (word: string) => {
   const words = word
-    .split(/(?=[A-Z\-_])/)
+    .split(/(?=[A-Z_-])/)
     .map(trimSeparators)
     .filter(Boolean);
 
   const lastWord = words[words.length - 1].toLowerCase();
 
-  if (lastWord in irregularPlurals && irregularPlurals[lastWord] === lastWord) {
+  if (
+    lastWord in irregularPlurals &&
+    (irregularPlurals as Record<string, string>)[lastWord] === lastWord
+  ) {
     // Irregular and singular = plural.
     return 'unknown';
   }
 
-  if (R.includes(singulars, lastWord)) {
+  if (singulars.includes(lastWord as any)) {
     return 'singular';
   }
 
-  if (R.includes(plurals, lastWord)) {
+  if (plurals.includes(lastWord as any)) {
     return 'plural';
   }
 
@@ -48,7 +50,7 @@ export const nameInflection: Rule = {
     url: 'https://github.com/kristiandupont/schemalint/tree/master/src/rules#name-inflection',
   },
   process({ options, schemaObject, report }) {
-    const expectedPlurality = (options.length && options[0]) || 'singular';
+    const expectedPlurality = (options.length > 0 && options[0]) || 'singular';
     const validator = ({ name: entityName }: TableDetails | ViewDetails) => {
       const plurality = detectInflection(entityName);
       const matches =

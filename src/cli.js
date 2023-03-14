@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/prefer-module */
+/* eslint-disable unicorn/no-process-exit */
 /* eslint-disable no-console */
 import chalk from 'chalk';
 // @ts-ignore
@@ -70,4 +72,5 @@ async function main() {
   }
 }
 
+// eslint-disable-next-line unicorn/prefer-top-level-await
 main();

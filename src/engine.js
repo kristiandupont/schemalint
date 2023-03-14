@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-module */
 import chalk from 'chalk';
 import { extractSchemas } from 'extract-pg-schema';
 import path from 'path';
@@ -17,7 +18,7 @@ const suggestedMigrations = [];
 const createReportFunction =
   (reporter, ignoreMatchers) =>
   ({ rule, identifier, message, suggestedMigration }) => {
-    if (ignoreMatchers.find((im) => im(rule, identifier))) {
+    if (ignoreMatchers.some((im) => im(rule, identifier))) {
       // This one is ignored.
       return;
     }
@@ -90,7 +91,7 @@ export async function processDatabase({
 
     const mergedRules = {
       ...rules,
-      ...(schema.rules || {}),
+      ...schema.rules,
     };
 
     for (const ruleKey of keys(mergedRules)) {
@@ -105,10 +106,10 @@ export async function processDatabase({
   }
 
   if (anyIssues) {
-    if (suggestedMigrations.length) {
+    if (suggestedMigrations.length > 0) {
       console.info('');
       console.info('Suggested fix');
-      suggestedMigrations.forEach((sf) => console.info(sf));
+      for (const sf of suggestedMigrations) console.info(sf);
     }
     return 1;
   }

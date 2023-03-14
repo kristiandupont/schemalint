@@ -11,6 +11,7 @@
     }
   ],
   "rules": {
-    "@typescript-eslint/prefer-nullish-coalescing": "off"
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "unicorn/no-array-for-each": "off"
   }
 }

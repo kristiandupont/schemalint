@@ -93,7 +93,7 @@ export const preferIdentity: Rule = {
         if (
           !isIdentity &&
           defaultValue !== null &&
-          defaultValue.indexOf('nextval') >= 0
+          defaultValue.includes('nextval')
         ) {
           let sequenceName = defaultValue.match("'(.*)'")[1];
           sequenceName = sequenceName.replace(/"/g, '');
