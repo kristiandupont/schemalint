@@ -1,6 +1,9 @@
 {
   "root": true,
   "extends": ["@kristiandupont"],
+  "env": {
+    "node": true
+  },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx"],
