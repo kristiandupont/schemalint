@@ -4371,10 +4371,10 @@ terminal-link@^2.1.1:
     ansi-escapes "^4.2.1"
     supports-hyperlinks "^2.0.0"
 
-testcontainers@9.4.0:
-  version "9.4.0"
-  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-9.4.0.tgz#40bab9e9486afba34b3b692498f47b37323a30b9"
-  integrity sha512-Mg7GMYENWd4U6KavKZ8XUTqYeW7dAJRYxltEmNid+4YcFNanG2qqUhrqIUvW4sZsjuH+kfjtlTUoOaEDavRJYw==
+testcontainers@9.6.0:
+  version "9.6.0"
+  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-9.6.0.tgz#5af58822d27580c90bd92f308b6b9df94f6ab4bd"
+  integrity sha512-f7HWR0dIwDTx46CRX7dAM1oajOHvGwn8aliWVsEiBJDZkSsAII2uYD1qkst8NvHXyzpAgu4+3LP8fnpSVWtLrg==
   dependencies:
     "@balena/dockerignore" "^1.0.2"
     "@types/archiver" "^5.3.2"
