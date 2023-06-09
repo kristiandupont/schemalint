@@ -42,13 +42,13 @@
     "irregular-plurals": "^3.2.0",
     "optionator": "^0.9.1",
     "pg": "^8.3.3",
-    "ramda": "^0.28.0"
+    "ramda": "^0.29.0"
   },
   "devDependencies": {
     "@kristiandupont/dev-deps": "^2.2.0",
-    "@types/ramda": "0.28.23",
-    "np": "7.6.4",
-    "testcontainers": "9.3.0"
+    "@types/ramda": "0.29.2",
+    "np": "8.0.2",
+    "testcontainers": "9.8.0"
   },
   "np": {
     "tests": false
