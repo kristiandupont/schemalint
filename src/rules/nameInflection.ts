@@ -6,7 +6,7 @@ import Rule from '../Rule';
 
 const singulars = R.keys(irregularPlurals);
 const plurals = R.values(irregularPlurals);
-const trimSeparators = (s: string) => s.replace(/^(-|_)+|(-|_)+$/g, '');
+const trimSeparators = (s: string) => s.replaceAll(/^(-|_)+|(-|_)+$/g, '');
 
 const detectInflection = (word: string) => {
   const words = word
@@ -14,7 +14,10 @@ const detectInflection = (word: string) => {
     .map(trimSeparators)
     .filter(Boolean);
 
-  const lastWord = words[words.length - 1].toLowerCase();
+  const lastWord = words.at(-1)?.toLowerCase();
+  if (!lastWord) {
+    return 'unknown';
+  }
 
   if (
     lastWord in irregularPlurals &&
@@ -33,10 +36,10 @@ const detectInflection = (word: string) => {
   }
 
   // Regular plural words end with s
-  const endsWithS = lastWord[lastWord.length - 1] === 's';
+  const endsWithS = lastWord.at(-1) === 's';
 
   // ..but some singular ones do as well. Though they typically have two s's (like kiss, address and fortress)
-  const doubleS = lastWord.length > 1 && lastWord[lastWord.length - 2] === 's';
+  const doubleS = lastWord.length > 1 && lastWord.at(-2) === 's';
 
   const isPlural = endsWithS && !doubleS;
 

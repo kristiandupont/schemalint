@@ -96,7 +96,7 @@ export const preferIdentity: Rule = {
           defaultValue.includes('nextval')
         ) {
           let sequenceName = defaultValue.match("'(.*)'")[1];
-          sequenceName = sequenceName.replace(/"/g, '');
+          sequenceName = sequenceName.replaceAll('"', '');
 
           report({
             rule: this.name,
