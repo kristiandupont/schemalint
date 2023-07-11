@@ -1,6 +1,5 @@
 /* eslint-disable unicorn/prefer-module */
 /* eslint-disable unicorn/no-process-exit */
-/* eslint-disable no-console */
 import chalk from 'chalk';
 // @ts-ignore
 import optionator from 'optionator';
@@ -47,16 +46,16 @@ async function main() {
   }
 
   if (options.help) {
-    console.log(o.generateHelp());
+    console.info(o.generateHelp());
     process.exit(0);
   }
 
   if (options.version) {
-    console.log(version);
+    console.info(version);
     process.exit(0);
   }
 
-  console.log(`${chalk.greenBright('schema-lint')}`);
+  console.info(`${chalk.greenBright('schema-lint')}`);
   const configFile = path.join(
     process.cwd(),
     options.config || '.schemalintrc.js'
