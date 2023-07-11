@@ -5648,10 +5648,10 @@ terminating-newline@^1.2.4:
     detect-newline "^3.1.0"
     ends-with-string "^1.0.0"
 
-testcontainers@9.9.1:
-  version "9.9.1"
-  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-9.9.1.tgz#0af23e56c52eb7cd0e3bc63cc3e059abf3f1705a"
-  integrity sha512-44iDiyK0JzK5FbqdrKjmE/8QSZhvCFxh0d/OfG+R9fkznU5KVCYeeUsPULkVRIi210X4FAitSXra1ZU591Zlqw==
+testcontainers@9.10.0:
+  version "9.10.0"
+  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-9.10.0.tgz#a763f3009f2647b4db7d6e4e8db2a3c8b51087a1"
+  integrity sha512-gU3fU9jNvyhSyFdeVPH3Lxq2l4o09kmIa8edGcB6EJM3M6E8m1vC5aOtqmL1Bj/aC/DNCp0m5FMehm/rRB8lhg==
   dependencies:
     "@balena/dockerignore" "^1.0.2"
     "@types/archiver" "^5.3.2"
