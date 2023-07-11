@@ -2394,15 +2394,15 @@ external-editor@^3.0.3:
     tmp "^0.0.33"
 
 extract-pg-schema@^4.1.1:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/extract-pg-schema/-/extract-pg-schema-4.2.0.tgz#d39585c81ef335f9844f05e41200c30addd888a2"
-  integrity sha512-6ROj1/c9juplMV2Bj0zS6y/ioVd5C8u5jR42zSQxsL/Hg3gnHY4La2NT3Ad4F95tXIKHEqChqrIVPHd2c33N1A==
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/extract-pg-schema/-/extract-pg-schema-4.2.2.tgz#6df2a25bf45ffed9aaab6a9c42587180bb9728c1"
+  integrity sha512-ldQXWUhO967Ba6X/JbqgdwVbRnLo504nQjrkEGpKy2A6nvcaK9OiG43irO49x9QJdGo4NbkMW9CyvP+ryW5sag==
   dependencies:
     jsonpath "^1.1.1"
     knex "2.4.2"
-    pg "8.10.0"
+    pg "8.11.0"
     pg-query-emscripten "^0.1.0"
-    ramda "^0.28.0"
+    ramda "^0.29.0"
     tagged-comment-parser "^1.1.1"
 
 fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
@@ -3148,17 +3148,10 @@ is-ci@^3.0.1:
   dependencies:
     ci-info "^3.2.0"
 
-is-core-module@^2.11.0, is-core-module@^2.5.0, is-core-module@^2.8.1:
+is-core-module@^2.11.0, is-core-module@^2.5.0, is-core-module@^2.8.1, is-core-module@^2.9.0:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.12.1.tgz#0c0b6885b6f80011c71541ce15c8d66cf5a4f9fd"
   integrity sha512-Q4ZuBAe2FUsKtyQJoQHlvP8OvBERxO3jEmy1I7hcRXcJBGGHFh/aJBswbXuS9sgrDH2QUO8ilkwNPHvHMd8clg==
-  dependencies:
-    has "^1.0.3"
-
-is-core-module@^2.9.0:
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.11.0.tgz#ad4cb3e3863e814523c96f3f58d26cc570ff0144"
-  integrity sha512-RRjxlvLDkD1YJwDbroBHMb+cukurkDWNyHx7D3oNB5x9rb5ogcksMC5wHCadcXoo67gVr/+3GFySh3134zi6rw==
   dependencies:
     has "^1.0.3"
 
@@ -4510,7 +4503,7 @@ pathval@^1.1.1:
   resolved "https://registry.yarnpkg.com/pathval/-/pathval-1.1.1.tgz#8534e77a77ce7ac5a2512ea21e0fdb8fcf6c3d8d"
   integrity sha512-Dp6zGqpTdETdR63lehJYPeIOqpiNBNtc7BpWSLrOje7UaIsE5aY92r/AunQA7rsXvet3lrJ3JnZX29UPTKXyKQ==
 
-pg-cloudflare@^1.1.1:
+pg-cloudflare@^1.1.0, pg-cloudflare@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/pg-cloudflare/-/pg-cloudflare-1.1.1.tgz#e6d5833015b170e23ae819e8c5d7eaedb472ca98"
   integrity sha512-xWPagP/4B6BgFO+EKz3JONXv3YDgvkbVrGw2mTo3D6tVDQRh1e7cqVGvyR3BE+eQgAvx1XhW/iEASj4/jCWl3Q==
@@ -4520,12 +4513,7 @@ pg-connection-string@2.5.0:
   resolved "https://registry.yarnpkg.com/pg-connection-string/-/pg-connection-string-2.5.0.tgz#538cadd0f7e603fc09a12590f3b8a452c2c0cf34"
   integrity sha512-r5o/V/ORTA6TmUnyWZR9nCj1klXCO2CEKNRlVuJptZe85QuhFayC7WeMic7ndayT5IRIR0S0xFxFi2ousartlQ==
 
-pg-connection-string@^2.5.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/pg-connection-string/-/pg-connection-string-2.6.0.tgz#12a36cc4627df19c25cc1b9b736cc39ee1f73ae8"
-  integrity sha512-x14ibktcwlHKoHxx9X3uTVW9zIGR41ZB6QNhHb21OPNdCCO3NaRnpJuwKIQSR4u+Yqjx4HCvy7Hh7VSy1U4dGg==
-
-pg-connection-string@^2.6.1:
+pg-connection-string@^2.6.0, pg-connection-string@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/pg-connection-string/-/pg-connection-string-2.6.1.tgz#78c23c21a35dd116f48e12e23c0965e8d9e2cbfb"
   integrity sha512-w6ZzNu6oMmIzEAYVw+RLK0+nqHPt8K3ZnknKi+g48Ak2pr3dtljJW3o+D/n2zzCG07Zoe9VOX3aiKpj+BN0pjg==
@@ -4535,12 +4523,7 @@ pg-int8@1.0.1:
   resolved "https://registry.yarnpkg.com/pg-int8/-/pg-int8-1.0.1.tgz#943bd463bf5b71b4170115f80f8efc9a0c0eb78c"
   integrity sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==
 
-pg-pool@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-3.6.0.tgz#3190df3e4747a0d23e5e9e8045bcd99bda0a712e"
-  integrity sha512-clFRf2ksqd+F497kWFyM21tMjeikn60oGDmqMT8UBrynEwVEX/5R5xd2sdvdo1cZCFlguORNpVuqxIj+aK4cfQ==
-
-pg-pool@^3.6.1:
+pg-pool@^3.6.0, pg-pool@^3.6.1:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-3.6.1.tgz#5a902eda79a8d7e3c928b77abf776b3cb7d351f7"
   integrity sha512-jizsIzhkIitxCGfPRzJn1ZdcosIt3pz9Sh3V01fm1vZnbnCMgmGl5wvGGdNN2EL9Rmb0EcFoCkixH4Pu+sP9Og==
@@ -4566,18 +4549,20 @@ pg-types@^2.1.0:
     postgres-date "~1.0.4"
     postgres-interval "^1.1.0"
 
-pg@8.10.0:
-  version "8.10.0"
-  resolved "https://registry.yarnpkg.com/pg/-/pg-8.10.0.tgz#5b8379c9b4a36451d110fc8cd98fc325fe62ad24"
-  integrity sha512-ke7o7qSTMb47iwzOSaZMfeR7xToFdkE71ifIipOAAaLIM0DYzfOAXlgFFmYUIE2BcJtvnVlGCID84ZzCegE8CQ==
+pg@8.11.0:
+  version "8.11.0"
+  resolved "https://registry.yarnpkg.com/pg/-/pg-8.11.0.tgz#a37e534e94b57a7ed811e926f23a7c56385f55d9"
+  integrity sha512-meLUVPn2TWgJyLmy7el3fQQVwft4gU5NGyvV0XbD41iU9Jbg8lCH4zexhIkihDzVHJStlt6r088G6/fWeNjhXA==
   dependencies:
     buffer-writer "2.0.0"
     packet-reader "1.0.0"
-    pg-connection-string "^2.5.0"
+    pg-connection-string "^2.6.0"
     pg-pool "^3.6.0"
     pg-protocol "^1.6.0"
     pg-types "^2.1.0"
     pgpass "1.x"
+  optionalDependencies:
+    pg-cloudflare "^1.1.0"
 
 pg@^8.3.3:
   version "8.11.1"
@@ -4989,7 +4974,7 @@ resolve-from@^5.0.0:
   resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-5.0.0.tgz#c35225843df8f776df21c57557bc087e9dfdfc69"
   integrity sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==
 
-resolve@^1.10.0, resolve@^1.20.0:
+resolve@^1.10.0:
   version "1.22.1"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.1.tgz#27cb2ebb53f91abb49470a928bba7558066ac177"
   integrity sha512-nBpuuYuY5jFsli/JIs1oldw6fOQCBioohqWZg/2hiaOybXOft4lonv85uDOKXdf8rhyK159cxU5cDcK/NKk8zw==
@@ -4998,7 +4983,7 @@ resolve@^1.10.0, resolve@^1.20.0:
     path-parse "^1.0.7"
     supports-preserve-symlinks-flag "^1.0.0"
 
-resolve@^1.10.1:
+resolve@^1.10.1, resolve@^1.20.0:
   version "1.22.2"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.2.tgz#0ed0943d4e301867955766c9f3e1ae6d01c6845f"
   integrity sha512-Sb+mjNHOULsBv818T40qSPeRiuWLyaGMa5ewydRLFimneixmVy2zdivRl+AF6jaYPC8ERxGDmFSiqui6SfPd+g==
@@ -5570,9 +5555,9 @@ symbol-observable@^4.0.0:
   integrity sha512-b19dMThMV4HVFynSAM1++gBHAbk2Tc/osgLIBZMKsyqh34jb2e8Os7T6ZW/Bt3pJFdBTd2JwAnAAEQV7rSNvcQ==
 
 tagged-comment-parser@^1.1.1:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/tagged-comment-parser/-/tagged-comment-parser-1.3.0.tgz#ef71d4f8dfb06e835f94e1ed9708ec34259fd278"
-  integrity sha512-x5+9RGzUumA/PAcwHNul2w/dDOx05Rmr03h4YXZFBPKXL534yx6gn9fzXew0gB6jY0Wsd/gurBP1u7lPR4J61w==
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/tagged-comment-parser/-/tagged-comment-parser-1.3.2.tgz#94759b14f63deb27df69a190aeb252d0a4e32e19"
+  integrity sha512-eZoVkMGxMtxPIlN07LTVsUiRpOHALHu2iQm+MTMyF4gdsHUrAK2JKT/vefvtwPTKL0oX5YuI8RCliCaC8EA+Sw==
 
 tar-fs@^2.1.1:
   version "2.1.1"
