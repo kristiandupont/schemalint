@@ -32,7 +32,7 @@
     "start-example-db": "docker run -d --name dvd-rental -p 54321:5432 kristiandupont/dvdrental-image",
     "stop-example-db": "docker stop dvd-rental",
     "test": "vitest run",
-    "version": "yarn build"
+    "version": "npm run build"
   },
   "prettier": "@kristiandupont/prettier-config",
   "dependencies": {
