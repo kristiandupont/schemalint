@@ -8,7 +8,7 @@ import * as builtinRules from './rules';
 
 function consoleReporter({ rule, identifier, message }) {
   console.error(
-    `${chalk.yellow(identifier)}: error ${chalk.red(rule)} : ${message}`
+    `${chalk.yellow(identifier)}: error ${chalk.red(rule)} : ${message}`,
   );
 }
 
@@ -41,14 +41,14 @@ export async function processDatabase({
   const pluginRules = plugins.map((p) => require(path.join(process.cwd(), p)));
   const allRules = [builtinRules, ...pluginRules].reduce(
     (acc, elem) => ({ ...acc, ...elem }),
-    {}
+    {},
   );
   const registeredRules = indexBy(prop('name'), values(allRules));
 
   console.info(
     `Connecting to ${chalk.greenBright(connection.database)} on ${
       connection.host
-    }`
+    }`,
   );
 
   const ignoreMatchers = ignores.map((i) => (rule, identifier) => {
@@ -60,8 +60,8 @@ export async function processDatabase({
     } else {
       throw new Error(
         `Ignore object is missing a rule or rulePattern property: ${JSON.stringify(
-          i
-        )}`
+          i,
+        )}`,
       );
     }
 
@@ -73,8 +73,8 @@ export async function processDatabase({
     } else {
       throw new Error(
         `Ignore object is missing an identifier or identifierPattern property: ${JSON.stringify(
-          i
-        )}`
+          i,
+        )}`,
       );
     }
 

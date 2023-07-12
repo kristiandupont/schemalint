@@ -53,7 +53,7 @@ describe('nameCasing', () => {
           identifier: 'schema.Th-IsIsNoSnA_kECaSE',
           message: `The table Th-IsIsNoSnA_kECaSE seems to be mixed-cased rather than ${param}-cased.`,
           suggestedMigration: `ALTER TABLE "Th-IsIsNoSnA_kECaSE" RENAME TO "${expected1}";`,
-        })
+        }),
       );
       expect(mockReporter).toBeCalledWith(
         expect.objectContaining({
@@ -61,9 +61,9 @@ describe('nameCasing', () => {
           identifier: 'schema.neit_he-rIsThis',
           message: `The table neit_he-rIsThis seems to be mixed-cased rather than ${param}-cased.`,
           suggestedMigration: `ALTER TABLE "neit_he-rIsThis" RENAME TO "${expected2}";`,
-        })
+        }),
       );
-    }
+    },
   );
 
   test.each`
@@ -102,7 +102,7 @@ describe('nameCasing', () => {
           identifier: 'schema.Th-IsIsNoSnA_kECaSE',
           message: `The view Th-IsIsNoSnA_kECaSE seems to be mixed-cased rather than ${param}-cased.`,
           suggestedMigration: `ALTER VIEW "Th-IsIsNoSnA_kECaSE" RENAME TO "${expected1}";`,
-        })
+        }),
       );
       expect(mockReporter).toBeCalledWith(
         expect.objectContaining({
@@ -110,9 +110,9 @@ describe('nameCasing', () => {
           identifier: 'schema.neit_he-rIsThis',
           message: `The view neit_he-rIsThis seems to be mixed-cased rather than ${param}-cased.`,
           suggestedMigration: `ALTER VIEW "neit_he-rIsThis" RENAME TO "${expected2}";`,
-        })
+        }),
       );
-    }
+    },
   );
 
   test.each`
@@ -159,7 +159,7 @@ describe('nameCasing', () => {
           identifier: 'schema.one_table.Th-IsIsNoSnA_kECaSE',
           message: `The column Th-IsIsNoSnA_kECaSE on the table one_table seems to be mixed-cased rather than ${param}-cased.`,
           suggestedMigration: `ALTER TABLE "one_table" RENAME COLUMN "Th-IsIsNoSnA_kECaSE" TO "${expected1}";`,
-        })
+        }),
       );
       expect(mockReporter).toBeCalledWith(
         expect.objectContaining({
@@ -167,9 +167,9 @@ describe('nameCasing', () => {
           identifier: 'schema.two_table.neit_he-rIsThis',
           message: `The column neit_he-rIsThis on the table two_table seems to be mixed-cased rather than ${param}-cased.`,
           suggestedMigration: `ALTER TABLE "two_table" RENAME COLUMN "neit_he-rIsThis" TO "${expected2}";`,
-        })
+        }),
       );
-    }
+    },
   );
 
   test.each`
@@ -216,7 +216,7 @@ describe('nameCasing', () => {
           identifier: 'schema.one_view.Th-IsIsNoSnA_kECaSE',
           message: `The column Th-IsIsNoSnA_kECaSE on the view one_view seems to be mixed-cased rather than ${param}-cased.`,
           suggestedMigration: `ALTER VIEW "one_view" RENAME COLUMN "Th-IsIsNoSnA_kECaSE" TO "${expected1}";`,
-        })
+        }),
       );
       expect(mockReporter).toBeCalledWith(
         expect.objectContaining({
@@ -224,8 +224,8 @@ describe('nameCasing', () => {
           identifier: 'schema.two_view.neit_he-rIsThis',
           message: `The column neit_he-rIsThis on the view two_view seems to be mixed-cased rather than ${param}-cased.`,
           suggestedMigration: `ALTER VIEW "two_view" RENAME COLUMN "neit_he-rIsThis" TO "${expected2}";`,
-        })
+        }),
       );
-    }
+    },
   );
 });

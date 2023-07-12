@@ -28,7 +28,7 @@ export const requirePrimaryKey = {
       .filter(
         (table) =>
           !ignorePatternsMatch ||
-          !ignorePatternsMatch.test(`${schemaObject.name}.${table.name}`)
+          !ignorePatternsMatch.test(`${schemaObject.name}.${table.name}`),
       )
       .forEach(validator);
   },

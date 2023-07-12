@@ -52,16 +52,16 @@ describe('nameInflection', () => {
           rule: 'name-inflection',
           identifier: `schema.${actual1}`,
           message: `Expected ${param} names, but '${actual1}' seems to be ${opposite}`,
-        })
+        }),
       );
       expect(mockReporter).toBeCalledWith(
         expect.objectContaining({
           rule: 'name-inflection',
           identifier: `schema.${actual2}`,
           message: `Expected ${param} names, but '${actual2}' seems to be ${opposite}`,
-        })
+        }),
       );
-    }
+    },
   );
   test.each`
     type          | param         | actual1        | actual 2      | expected1      | expected2
@@ -97,15 +97,15 @@ describe('nameInflection', () => {
           rule: 'name-inflection',
           identifier: `schema.${actual1}`,
           message: `Expected ${param} names, but '${actual1}' seems to be ${opposite}`,
-        })
+        }),
       );
       expect(mockReporter).toBeCalledWith(
         expect.objectContaining({
           rule: 'name-inflection',
           identifier: `schema.${actual2}`,
           message: `Expected ${param} names, but '${actual2}' seems to be ${opposite}`,
-        })
+        }),
       );
-    }
+    },
   );
 });

@@ -29,7 +29,7 @@ export const nameCasing: Rule = {
             suggestedMigration: `ALTER ${entityType.toUpperCase()} "${entityName}" RENAME TO "${recase(
               casing,
               expectedCasing,
-              entityName
+              entityName,
             )}";`,
           });
         }
@@ -48,7 +48,7 @@ export const nameCasing: Rule = {
             suggestedMigration: `ALTER ${entityType.toUpperCase()} "${entityName}" RENAME COLUMN "${columnName}" TO "${recase(
               casing,
               expectedCasing,
-              columnName
+              columnName,
             )}";`,
           });
         }

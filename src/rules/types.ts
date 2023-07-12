@@ -22,7 +22,7 @@ export const preferJsonbToJson: Rule = {
         }
       };
     schemaObject.tables.forEach((table) =>
-      table.columns.forEach(validator(table))
+      table.columns.forEach(validator(table)),
     );
   },
 };
@@ -47,7 +47,7 @@ export const preferTextToVarchar: Rule = {
         }
       };
     schemaObject.tables.forEach((table) =>
-      table.columns.forEach(validator(table))
+      table.columns.forEach(validator(table)),
     );
   },
 };
@@ -74,7 +74,7 @@ export const preferTimestamptz: Rule = {
         }
       };
     schemaObject.tables.forEach((table) =>
-      table.columns.forEach(validator(table))
+      table.columns.forEach(validator(table)),
     );
   },
 };
@@ -110,7 +110,7 @@ SELECT setval('"${sequenceName}"', max("${columnName}")) FROM "schema"."${tableN
         }
       };
     schemaObject.tables.forEach((table) =>
-      table.columns.forEach(validator(table))
+      table.columns.forEach(validator(table)),
     );
   },
 };

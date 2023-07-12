@@ -15,7 +15,7 @@ const assertReport = (
   expectedRule: string,
   expectedIdentifier: string,
   expectedMessage: string,
-  expectedSuggestedMigration: string
+  expectedSuggestedMigration: string,
 ) => {
   expect(mockReporter).toBeCalledWith(
     expect.objectContaining({
@@ -23,21 +23,21 @@ const assertReport = (
       identifier: expectedIdentifier,
       message: expectedMessage,
       suggestedMigration: expectedSuggestedMigration,
-    })
+    }),
   );
 };
 
 const assertJSONBReport = (
   mockReporter: Reporter,
   expectedIdentifier: string,
-  expectedSuggestedMigration: string
+  expectedSuggestedMigration: string,
 ) => {
   assertReport(
     mockReporter,
     'prefer-jsonb-to-json',
     expectedIdentifier,
     'Prefer JSONB to JSON types',
-    expectedSuggestedMigration
+    expectedSuggestedMigration,
   );
 };
 
@@ -45,28 +45,28 @@ const assertTextReport = (
   mockReporter: Reporter,
   expectedIdentifier: string,
   expectedColumnType: string,
-  expectedSuggestedMigration: string
+  expectedSuggestedMigration: string,
 ) => {
   assertReport(
     mockReporter,
     'prefer-text-to-varchar',
     expectedIdentifier,
     `Prefer text to ${expectedColumnType} types`,
-    expectedSuggestedMigration
+    expectedSuggestedMigration,
   );
 };
 
 const assertIdentityReport = (
   mockReporter: Reporter,
   expectedIdentifier: string,
-  expectedSuggestedMigration: string
+  expectedSuggestedMigration: string,
 ) => {
   assertReport(
     mockReporter,
     'prefer-identity-to-serial',
     expectedIdentifier,
     'Prefer IDENTITY to type SERIAL',
-    expectedSuggestedMigration
+    expectedSuggestedMigration,
   );
 };
 
@@ -118,12 +118,12 @@ describe('types', () => {
       assertJSONBReport(
         mockReporter,
         'schema.one_table.bad_column',
-        'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column" TYPE JSONB;'
+        'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column" TYPE JSONB;',
       );
       assertJSONBReport(
         mockReporter,
         'schema.one_table.bad_column2',
-        'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column2" TYPE JSONB;'
+        'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column2" TYPE JSONB;',
       );
     });
 
@@ -195,12 +195,12 @@ describe('types', () => {
       assertJSONBReport(
         mockReporter,
         'schema.one_table.bad_column',
-        'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column" TYPE JSONB;'
+        'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column" TYPE JSONB;',
       );
       assertJSONBReport(
         mockReporter,
         'schema.three_table.bad_column3',
-        'ALTER TABLE "schema"."three_table" ALTER COLUMN "bad_column3" TYPE JSONB;'
+        'ALTER TABLE "schema"."three_table" ALTER COLUMN "bad_column3" TYPE JSONB;',
       );
     });
   });
@@ -249,13 +249,13 @@ describe('types', () => {
         mockReporter,
         'schema.one_table.bad_column',
         'varchar',
-        'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column" TYPE TEXT;'
+        'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column" TYPE TEXT;',
       );
       assertTextReport(
         mockReporter,
         'schema.one_table.bad_column2',
         'varchar',
-        'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column2" TYPE TEXT;'
+        'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column2" TYPE TEXT;',
       );
     });
 
@@ -329,13 +329,13 @@ describe('types', () => {
         mockReporter,
         'schema.one_table.bad_column',
         'varchar',
-        'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column" TYPE TEXT;'
+        'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column" TYPE TEXT;',
       );
       assertTextReport(
         mockReporter,
         'schema.three_table.bad_column3',
         'varchar',
-        'ALTER TABLE "schema"."three_table" ALTER COLUMN "bad_column3" TYPE TEXT;'
+        'ALTER TABLE "schema"."three_table" ALTER COLUMN "bad_column3" TYPE TEXT;',
       );
     });
   });
@@ -387,7 +387,7 @@ describe('types', () => {
           message: 'Prefer TIMESTAMPTZ to type TIMESTAMP',
           suggestedMigration:
             'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column" TYPE TIMESTAMPTZ;',
-        })
+        }),
       );
       expect(mockReporter).toBeCalledWith(
         expect.objectContaining({
@@ -396,7 +396,7 @@ describe('types', () => {
           message: 'Prefer TIMESTAMPTZ to type TIMESTAMP',
           suggestedMigration:
             'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column2" TYPE TIMESTAMPTZ;',
-        })
+        }),
       );
     });
 
@@ -473,7 +473,7 @@ describe('types', () => {
           message: 'Prefer TIMESTAMPTZ to type TIMESTAMP',
           suggestedMigration:
             'ALTER TABLE "schema"."one_table" ALTER COLUMN "bad_column" TYPE TIMESTAMPTZ;',
-        })
+        }),
       );
       expect(mockReporter).toBeCalledWith(
         expect.objectContaining({
@@ -482,7 +482,7 @@ describe('types', () => {
           message: 'Prefer TIMESTAMPTZ to type TIMESTAMP',
           suggestedMigration:
             'ALTER TABLE "schema"."three_table" ALTER COLUMN "bad_column3" TYPE TIMESTAMPTZ;',
-        })
+        }),
       );
     });
   });
@@ -535,7 +535,7 @@ describe('types', () => {
         `ALTER TABLE "schema"."one_table" ALTER "bad_column" DROP DEFAULT;
 DROP SEQUENCE "schema"."table_name_column_1_seq";
 ALTER TABLE "schema"."one_table" ALTER "bad_column" ADD GENERATED BY DEFAULT AS IDENTITY;
-SELECT setval('"table_name_column_1_seq"', max("bad_column")) FROM "schema"."one_table";`
+SELECT setval('"table_name_column_1_seq"', max("bad_column")) FROM "schema"."one_table";`,
       );
       assertIdentityReport(
         mockReporter,
@@ -543,7 +543,7 @@ SELECT setval('"table_name_column_1_seq"', max("bad_column")) FROM "schema"."one
         `ALTER TABLE "schema"."one_table" ALTER "bad_column2" DROP DEFAULT;
 DROP SEQUENCE "schema"."table_name_column_2_seq";
 ALTER TABLE "schema"."one_table" ALTER "bad_column2" ADD GENERATED BY DEFAULT AS IDENTITY;
-SELECT setval('"table_name_column_2_seq"', max("bad_column2")) FROM "schema"."one_table";`
+SELECT setval('"table_name_column_2_seq"', max("bad_column2")) FROM "schema"."one_table";`,
       );
     });
 
@@ -624,7 +624,7 @@ SELECT setval('"table_name_column_2_seq"', max("bad_column2")) FROM "schema"."on
         `ALTER TABLE "schema"."one_table" ALTER "bad_column" DROP DEFAULT;
 DROP SEQUENCE "schema"."table_name_column_1_seq";
 ALTER TABLE "schema"."one_table" ALTER "bad_column" ADD GENERATED BY DEFAULT AS IDENTITY;
-SELECT setval('"table_name_column_1_seq"', max("bad_column")) FROM "schema"."one_table";`
+SELECT setval('"table_name_column_1_seq"', max("bad_column")) FROM "schema"."one_table";`,
       );
       assertIdentityReport(
         mockReporter,
@@ -632,7 +632,7 @@ SELECT setval('"table_name_column_1_seq"', max("bad_column")) FROM "schema"."one
         `ALTER TABLE "schema"."three_table" ALTER "bad_column3" DROP DEFAULT;
 DROP SEQUENCE "schema"."table_name_column_3_seq";
 ALTER TABLE "schema"."three_table" ALTER "bad_column3" ADD GENERATED BY DEFAULT AS IDENTITY;
-SELECT setval('"table_name_column_3_seq"', max("bad_column3")) FROM "schema"."three_table";`
+SELECT setval('"table_name_column_3_seq"', max("bad_column3")) FROM "schema"."three_table";`,
       );
     });
   });
