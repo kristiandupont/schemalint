@@ -48,7 +48,7 @@
     "@kristiandupont/dev-deps": "^2.5.0",
     "@types/ramda": "0.29.3",
     "np": "8.0.4",
-    "testcontainers": "9.11.0"
+    "testcontainers": "9.12.0"
   },
   "np": {
     "tests": false
