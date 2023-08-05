@@ -6,30 +6,35 @@ import { indexBy, keys, prop, values } from 'ramda';
 
 import * as builtinRules from './rules';
 
-function consoleReporter({ rule, identifier, message }) {
+interface ReporterArgs {
+  rule: string;
+  identifier: string;
+  message: string;
+}
+
+function consoleReporter({ rule, identifier, message }: ReporterArgs): void {
   console.error(
     `${chalk.yellow(identifier)}: error ${chalk.red(rule)} : ${message}`,
   );
 }
 
 let anyIssues = false;
-const suggestedMigrations = [];
+const suggestedMigrations: string[] = [];
 
-const createReportFunction =
-  (reporter, ignoreMatchers) =>
-  ({ rule, identifier, message, suggestedMigration }) => {
-    if (ignoreMatchers.some((im) => im(rule, identifier))) {
-      // This one is ignored.
-      return;
-    }
+interface IgnoreMatcher {
+  rule?: string;
+  rulePattern?: string;
+  identifier?: string;
+  identifierPattern?: string;
+}
 
-    reporter({ rule, identifier, message });
-
-    if (suggestedMigration) {
-      suggestedMigrations.push(suggestedMigration);
-    }
-    anyIssues = true;
-  };
+interface ProcessDatabaseArgs {
+  connection: any;
+  plugins?: string[];
+  rules: any;
+  schemas: any[];
+  ignores?: IgnoreMatcher[];
+}
 
 export async function processDatabase({
   connection,
@@ -37,7 +42,7 @@ export async function processDatabase({
   rules,
   schemas,
   ignores = [],
-}) {
+}: ProcessDatabaseArgs): Promise<number> {
   const pluginRules = plugins.map((p) => require(path.join(process.cwd(), p)));
   const allRules = [builtinRules, ...pluginRules].reduce(
     (acc, elem) => ({ ...acc, ...elem }),
