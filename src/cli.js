@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import optionator from 'optionator';
 import path from 'path';
 
-import { processDatabase } from './engine';
+import { processDatabase } from './engine.ts';
 // @ts-ignore
 const { version } = require('../package.json');
 
