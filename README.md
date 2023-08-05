@@ -15,13 +15,13 @@ public.actor.first_name: error prefer-text-to-varchar : Prefer text to varchar t
 Install with:
 
 ```
-$ npm i -g schemalint
+$ npm i -D schemalint
 ```
 
 To run, make sure you are in a folder that has a `.schemalintrc.js` configuration file, and type:
 
 ```
-$ schemalint
+$ npx schemalint
 ```
 
 Here is an example configuration file:
