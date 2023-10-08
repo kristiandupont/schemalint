@@ -1,37 +1,37 @@
 /* eslint-disable unicorn/prefer-module */
 /* eslint-disable unicorn/no-process-exit */
-import chalk from 'chalk';
+import chalk from "chalk";
 // @ts-ignore
-import optionator from 'optionator';
-import path from 'path';
+import optionator from "optionator";
+import path from "path";
 
-import { processDatabase } from './engine';
+import { processDatabase } from "./engine";
 // @ts-ignore
-const { version } = require('../package.json');
+const { version } = require("../package.json");
 
 async function main() {
   const o = optionator({
-    prepend: 'Usage: schemalint [options]',
+    prepend: "Usage: schemalint [options]",
     append: `Version ${version}`,
     options: [
       {
-        option: 'help',
-        alias: 'h',
-        type: 'Boolean',
-        description: 'displays help',
+        option: "help",
+        alias: "h",
+        type: "Boolean",
+        description: "displays help",
       },
       {
-        option: 'version',
-        alias: 'v',
-        type: 'Boolean',
-        description: 'displays version',
+        option: "version",
+        alias: "v",
+        type: "Boolean",
+        description: "displays version",
       },
       {
-        option: 'config',
-        alias: 'c',
-        type: 'path::String',
+        option: "config",
+        alias: "c",
+        type: "path::String",
         description:
-          'Use this configuration, overriding .schemalintrc.* config options if present',
+          "Use this configuration, overriding .schemalintrc.* config options if present",
       },
     ],
   });
@@ -55,10 +55,10 @@ async function main() {
     process.exit(0);
   }
 
-  console.info(`${chalk.greenBright('schema-lint')}`);
+  console.info(`${chalk.greenBright("schema-lint")}`);
   const configFile = path.join(
     process.cwd(),
-    options.config || '.schemalintrc.js',
+    options.config || ".schemalintrc.js",
   );
 
   try {

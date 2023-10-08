@@ -1,12 +1,12 @@
-import { TableDetails, ViewDetails } from 'extract-pg-schema';
-import irregularPlurals from 'irregular-plurals/irregular-plurals.json';
-import * as R from 'ramda';
+import { TableDetails, ViewDetails } from "extract-pg-schema";
+import irregularPlurals from "irregular-plurals/irregular-plurals.json";
+import * as R from "ramda";
 
-import Rule from '../Rule';
+import Rule from "../Rule";
 
 const singulars = R.keys(irregularPlurals);
 const plurals = R.values(irregularPlurals);
-const trimSeparators = (s: string) => s.replaceAll(/^(-|_)+|(-|_)+$/g, '');
+const trimSeparators = (s: string) => s.replaceAll(/^(-|_)+|(-|_)+$/g, "");
 
 const detectInflection = (word: string) => {
   const words = word
@@ -16,7 +16,7 @@ const detectInflection = (word: string) => {
 
   const lastWord = words.at(-1)?.toLowerCase();
   if (!lastWord) {
-    return 'unknown';
+    return "unknown";
   }
 
   if (
@@ -24,40 +24,40 @@ const detectInflection = (word: string) => {
     (irregularPlurals as Record<string, string>)[lastWord] === lastWord
   ) {
     // Irregular and singular = plural.
-    return 'unknown';
+    return "unknown";
   }
 
   if (singulars.includes(lastWord as any)) {
-    return 'singular';
+    return "singular";
   }
 
   if (plurals.includes(lastWord as any)) {
-    return 'plural';
+    return "plural";
   }
 
   // Regular plural words end with s
-  const endsWithS = lastWord.at(-1) === 's';
+  const endsWithS = lastWord.at(-1) === "s";
 
   // ..but some singular ones do as well. Though they typically have two s's (like kiss, address and fortress)
-  const doubleS = lastWord.length > 1 && lastWord.at(-2) === 's';
+  const doubleS = lastWord.length > 1 && lastWord.at(-2) === "s";
 
   const isPlural = endsWithS && !doubleS;
 
-  return isPlural ? 'plural' : 'singular';
+  return isPlural ? "plural" : "singular";
 };
 
 export const nameInflection: Rule = {
-  name: 'name-inflection',
+  name: "name-inflection",
   docs: {
-    description: 'Enforce singluar or plural naming of tables and views',
-    url: 'https://github.com/kristiandupont/schemalint/tree/master/src/rules#name-inflection',
+    description: "Enforce singluar or plural naming of tables and views",
+    url: "https://github.com/kristiandupont/schemalint/tree/master/src/rules#name-inflection",
   },
   process({ options, schemaObject, report }) {
-    const expectedPlurality = (options.length > 0 && options[0]) || 'singular';
+    const expectedPlurality = (options.length > 0 && options[0]) || "singular";
     const validator = ({ name: entityName }: TableDetails | ViewDetails) => {
       const plurality = detectInflection(entityName);
       const matches =
-        plurality === expectedPlurality || plurality === 'unknown';
+        plurality === expectedPlurality || plurality === "unknown";
       if (!matches) {
         report({
           rule: this.name,

@@ -1,4 +1,4 @@
-import { Schema } from 'extract-pg-schema';
+import { Schema } from "extract-pg-schema";
 
 export type Reporter = (p: {
   rule: string;

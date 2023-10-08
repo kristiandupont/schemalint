@@ -1,10 +1,10 @@
 /* eslint-disable unicorn/prefer-module */
-import chalk from 'chalk';
-import { extractSchemas } from 'extract-pg-schema';
-import path from 'path';
-import { indexBy, keys, prop, values } from 'ramda';
+import chalk from "chalk";
+import { extractSchemas } from "extract-pg-schema";
+import path from "path";
+import { indexBy, keys, prop, values } from "ramda";
 
-import * as builtinRules from './rules';
+import * as builtinRules from "./rules";
 
 function consoleReporter({ rule, identifier, message }) {
   console.error(
@@ -43,7 +43,7 @@ export async function processDatabase({
     (acc, elem) => ({ ...acc, ...elem }),
     {},
   );
-  const registeredRules = indexBy(prop('name'), values(allRules));
+  const registeredRules = indexBy(prop("name"), values(allRules));
 
   console.info(
     `Connecting to ${chalk.greenBright(connection.database)} on ${
@@ -99,7 +99,7 @@ export async function processDatabase({
         throw new Error(`Unknown rule: "${ruleKey}"`);
       }
       const [state, ...options] = mergedRules[ruleKey];
-      if (state === 'error') {
+      if (state === "error") {
         registeredRules[ruleKey].process({ schemaObject, report, options });
       }
     }
@@ -107,13 +107,13 @@ export async function processDatabase({
 
   if (anyIssues) {
     if (suggestedMigrations.length > 0) {
-      console.info('');
-      console.info('Suggested fix');
+      console.info("");
+      console.info("Suggested fix");
       for (const sf of suggestedMigrations) console.info(sf);
     }
     return 1;
   }
 
-  console.info('No issues detected');
+  console.info("No issues detected");
   return 0;
 }

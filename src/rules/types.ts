@@ -1,22 +1,22 @@
-import { TableColumn, TableDetails } from 'extract-pg-schema';
+import { TableColumn, TableDetails } from "extract-pg-schema";
 
-import Rule from '../Rule';
+import Rule from "../Rule";
 
 export const preferJsonbToJson: Rule = {
-  name: 'prefer-jsonb-to-json',
+  name: "prefer-jsonb-to-json",
   docs: {
-    description: 'Prefer JSONB to JSON types',
-    url: '...',
+    description: "Prefer JSONB to JSON types",
+    url: "...",
   },
   process({ schemaObject, report }) {
     const validator =
       ({ name: tableName }: TableDetails) =>
       ({ name: columnName, type }: TableColumn) => {
-        if (type.fullName === 'pg_catalog.json') {
+        if (type.fullName === "pg_catalog.json") {
           report({
             rule: this.name,
             identifier: `${schemaObject.name}.${tableName}.${columnName}`,
-            message: 'Prefer JSONB to JSON types',
+            message: "Prefer JSONB to JSON types",
             suggestedMigration: `ALTER TABLE "${schemaObject.name}"."${tableName}" ALTER COLUMN "${columnName}" TYPE JSONB;`,
           });
         }
@@ -28,16 +28,16 @@ export const preferJsonbToJson: Rule = {
 };
 
 export const preferTextToVarchar: Rule = {
-  name: 'prefer-text-to-varchar',
+  name: "prefer-text-to-varchar",
   docs: {
-    description: 'Prefer the text type over varchar',
-    url: '...',
+    description: "Prefer the text type over varchar",
+    url: "...",
   },
   process({ schemaObject, report }) {
     const validator =
       ({ name: tableName }: TableDetails) =>
       ({ name: columnName, type }: TableColumn) => {
-        if (type.fullName === 'pg_catalog.varchar') {
+        if (type.fullName === "pg_catalog.varchar") {
           report({
             rule: this.name,
             identifier: `${schemaObject.name}.${tableName}.${columnName}`,
@@ -53,22 +53,22 @@ export const preferTextToVarchar: Rule = {
 };
 
 export const preferTimestamptz: Rule = {
-  name: 'prefer-timestamptz-to-timestamp',
+  name: "prefer-timestamptz-to-timestamp",
   docs: {
     description:
-      'Prefer TIMESTAMPTZ to type TIMESTAMP because when you insert a value into a timestamptz column, PostgreSQL converts the timestamptz value into a UTC value and stores the UTC value in the table,\n' +
-      'and when you query timestamptz from the database, PostgreSQL converts the UTC value back to the time value of the timezone set by the database server, the user, or the current database connection',
-    url: 'https://www.postgresqltutorial.com/postgresql-timestamp/',
+      "Prefer TIMESTAMPTZ to type TIMESTAMP because when you insert a value into a timestamptz column, PostgreSQL converts the timestamptz value into a UTC value and stores the UTC value in the table,\n" +
+      "and when you query timestamptz from the database, PostgreSQL converts the UTC value back to the time value of the timezone set by the database server, the user, or the current database connection",
+    url: "https://www.postgresqltutorial.com/postgresql-timestamp/",
   },
   process({ schemaObject, report }) {
     const validator =
       ({ name: tableName }: TableDetails) =>
       ({ name: columnName, type }: TableColumn) => {
-        if (type.fullName === 'pg_catalog.timestamp') {
+        if (type.fullName === "pg_catalog.timestamp") {
           report({
             rule: this.name,
             identifier: `${schemaObject.name}.${tableName}.${columnName}`,
-            message: 'Prefer TIMESTAMPTZ to type TIMESTAMP',
+            message: "Prefer TIMESTAMPTZ to type TIMESTAMP",
             suggestedMigration: `ALTER TABLE "${schemaObject.name}"."${tableName}" ALTER COLUMN "${columnName}" TYPE TIMESTAMPTZ;`,
           });
         }
@@ -80,11 +80,11 @@ export const preferTimestamptz: Rule = {
 };
 
 export const preferIdentity: Rule = {
-  name: 'prefer-identity-to-serial',
+  name: "prefer-identity-to-serial",
   docs: {
     description:
-      'The serial types have some weird behaviors that make schema, dependency, and permission management unnecessarily cumbersome.',
-    url: 'https://www.2ndquadrant.com/en/blog/postgresql-10-identity-columns/',
+      "The serial types have some weird behaviors that make schema, dependency, and permission management unnecessarily cumbersome.",
+    url: "https://www.2ndquadrant.com/en/blog/postgresql-10-identity-columns/",
   },
   process({ schemaObject, report }) {
     const validator =
@@ -93,15 +93,15 @@ export const preferIdentity: Rule = {
         if (
           !isIdentity &&
           defaultValue !== null &&
-          defaultValue.includes('nextval')
+          defaultValue.includes("nextval")
         ) {
           let sequenceName = defaultValue.match("'(.*)'")[1];
-          sequenceName = sequenceName.replaceAll('"', '');
+          sequenceName = sequenceName.replaceAll('"', "");
 
           report({
             rule: this.name,
             identifier: `${schemaObject.name}.${tableName}.${columnName}`,
-            message: 'Prefer IDENTITY to type SERIAL',
+            message: "Prefer IDENTITY to type SERIAL",
             suggestedMigration: `ALTER TABLE "${schemaObject.name}"."${tableName}" ALTER "${columnName}" DROP DEFAULT;
 DROP SEQUENCE "schema"."${sequenceName}";
 ALTER TABLE "${schemaObject.name}"."${tableName}" ALTER "${columnName}" ADD GENERATED BY DEFAULT AS IDENTITY;

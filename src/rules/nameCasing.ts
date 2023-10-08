@@ -1,23 +1,23 @@
-import { detectCasing, recase } from '@kristiandupont/recase';
+import { detectCasing, recase } from "@kristiandupont/recase";
 import {
   TableColumn,
   TableDetails,
   ViewColumn,
   ViewDetails,
-} from 'extract-pg-schema';
+} from "extract-pg-schema";
 
-import Rule from '../Rule';
+import Rule from "../Rule";
 
 export const nameCasing: Rule = {
-  name: 'name-casing',
+  name: "name-casing",
   docs: {
-    description: 'Enforce casing style of names',
-    url: 'https://github.com/kristiandupont/schemalint/tree/master/src/rules#name-casing',
+    description: "Enforce casing style of names",
+    url: "https://github.com/kristiandupont/schemalint/tree/master/src/rules#name-casing",
   },
   process({ options, schemaObject, report }) {
-    const expectedCasing = (options.length > 0 && options[0]) || 'snake';
+    const expectedCasing = (options.length > 0 && options[0]) || "snake";
     const validator =
-      (entityType: 'table' | 'view') =>
+      (entityType: "table" | "view") =>
       ({ name: entityName }: TableDetails | ViewDetails) => {
         const casing = detectCasing(entityName);
         const matches = casing === null || casing === expectedCasing;
@@ -35,7 +35,7 @@ export const nameCasing: Rule = {
         }
       };
     const columnValidator =
-      (entityType: 'table' | 'view') =>
+      (entityType: "table" | "view") =>
       ({ name: entityName }: TableDetails | ViewDetails) =>
       ({ name: columnName }: TableColumn | ViewColumn) => {
         const casing = detectCasing(columnName);
@@ -54,12 +54,12 @@ export const nameCasing: Rule = {
         }
       };
     schemaObject.tables.forEach((entity) => {
-      validator('table')(entity);
-      entity.columns.forEach(columnValidator('table')(entity));
+      validator("table")(entity);
+      entity.columns.forEach(columnValidator("table")(entity));
     });
     schemaObject.views.forEach((entity) => {
-      validator('view')(entity);
-      entity.columns.forEach(columnValidator('view')(entity));
+      validator("view")(entity);
+      entity.columns.forEach(columnValidator("view")(entity));
     });
   },
 };

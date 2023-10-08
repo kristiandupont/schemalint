@@ -2,10 +2,10 @@
 
 /** @type {Rule} */
 export const requirePrimaryKey = {
-  name: 'require-primary-key',
+  name: "require-primary-key",
   docs: {
-    description: 'Enforce primary key definition',
-    url: 'https://github.com/kristiandupont/schemalint/tree/master/src/rules#require-primary-key',
+    description: "Enforce primary key definition",
+    url: "https://github.com/kristiandupont/schemalint/tree/master/src/rules#require-primary-key",
   },
   process({ options, schemaObject, report }) {
     const ignorePatternsMatch =

@@ -29,26 +29,26 @@ Here is an example configuration file:
 ```javascript
 module.exports = {
   connection: {
-    host: 'localhost',
-    user: 'postgres',
-    password: 'postgres',
-    database: 'acme',
-    charset: 'utf8',
+    host: "localhost",
+    user: "postgres",
+    password: "postgres",
+    database: "acme",
+    charset: "utf8",
   },
 
-  plugins: ['./custom-rules'],
+  plugins: ["./custom-rules"],
 
   rules: {
-    'name-casing': ['error', 'snake'],
-    'name-inflection': ['error', 'singular'],
-    'prefer-jsonb-to-json': ['error'],
-    'prefer-text-to-varchar': ['error'],
+    "name-casing": ["error", "snake"],
+    "name-inflection": ["error", "singular"],
+    "prefer-jsonb-to-json": ["error"],
+    "prefer-text-to-varchar": ["error"],
   },
 
-  schemas: [{ name: 'public' }],
+  schemas: [{ name: "public" }],
 
   ignores: [
-    { identifierPattern: 'public\\.knex_migrations.*', rulePattern: '.*' },
+    { identifierPattern: "public\\.knex_migrations.*", rulePattern: ".*" },
   ],
 };
 ```
