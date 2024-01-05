@@ -56,3 +56,9 @@ module.exports = {
 ## Rules
 
 Schemalint includes a number of built-in rules, which you can read about [here](/src/rules). However, writing rules is easy and you will probably see the real value by doing so. The [example](/example) folder shows how to write these.
+
+## Sponsors
+
+Thank you so much to the sponsors of Schemalint:
+
+[![Seam](https://avatars.githubusercontent.com/u/63884939?s=200&v=4)](https://github.com/seamapi)
