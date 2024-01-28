@@ -54,16 +54,16 @@ export const nameCasing: Rule = {
         }
       };
     if (Array.isArray(schemaObject.tables)) {
-        schemaObject.tables.forEach((entity) => {
-      validator("table")(entity);
-          entity.columns.forEach(columnValidator("table")(entity));
-        });
+      schemaObject.tables.forEach((entity) => {
+        validator("table")(entity);
+        entity.columns.forEach(columnValidator("table")(entity));
+      });
     }
     if (Array.isArray(schemaObject.views)) {
-        schemaObject.views.forEach((entity) => {
-      validator("view")(entity);
-          entity.columns.forEach(columnValidator("view")(entity));
-        });
+      schemaObject.views.forEach((entity) => {
+        validator("view")(entity);
+        entity.columns.forEach(columnValidator("view")(entity));
+      });
     }
   },
 };

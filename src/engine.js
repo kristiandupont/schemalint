@@ -87,11 +87,13 @@ export async function processDatabase({
   });
 
   for (const schema of schemas) {
-      const schemaObject = extractedSchemas[schema.name];
+    const schemaObject = extractedSchemas[schema.name];
 
     if (!schemaObject) {
       console.info(
-        `${chalk.yellow(schema.name)}: warning : No tables or views were found in the schema. Skipping rules processing.`,
+        `${chalk.yellow(
+          schema.name,
+        )}: warning : No tables or views were found in the schema. Skipping rules processing.`,
       );
       continue;
     }
