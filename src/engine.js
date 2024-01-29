@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prefer-module */
 import chalk from "chalk";
 import { extractSchemas } from "extract-pg-schema";
 import path from "path";

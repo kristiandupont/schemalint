@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/prefer-module */
-/* eslint-disable unicorn/no-process-exit */
 import chalk from "chalk";
 // @ts-ignore
 import optionator from "optionator";
