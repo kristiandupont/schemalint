@@ -4,10 +4,13 @@ Run linting rules on your database schema. Read the intro to this idea in [this 
 
 _Works with Postgres databases._
 
-This will give you errors like these:
+This will give you errors and suggestions like these:
 
 ```
 public.actor.first_name: error prefer-text-to-varchar : Prefer text to varchar types
+
+Suggested fix
+ALTER TABLE "public"."actor" ALTER COLUMN "first_name" TYPE TEXT;
 ```
 
 ## Usage
@@ -28,6 +31,7 @@ Here is an example configuration file:
 
 ```javascript
 module.exports = {
+  // Connection configuration. See: https://node-postgres.com/apis/client
   connection: {
     host: "localhost",
     user: "postgres",
@@ -36,8 +40,12 @@ module.exports = {
     charset: "utf8",
   },
 
-  plugins: ["./custom-rules"],
+  // Schemas to lint.
+  schemas: [{ name: "public" }],
 
+  // Rules to be checked. The key is the rule name and the value is an array
+  // whose first value is the severity (only "error" is supported) and the
+  // rest are rule-specific parameters.
   rules: {
     "name-casing": ["error", "snake"],
     "name-inflection": ["error", "singular"],
@@ -45,17 +53,24 @@ module.exports = {
     "prefer-text-to-varchar": ["error"],
   },
 
-  schemas: [{ name: "public" }],
-
+  // (Optional) Use the `ignores` array to exclude specific targets and
+  // rules. The targets are identified by the `identifier` (exact) or the
+  // `identifierPattern` (regex). For the rules, use the `rule` (exact) or
+  // the `rulePattern` (regex).
   ignores: [
+    { identifier: "public.sessions", rule: "name-inflection" },
     { identifierPattern: "public\\.knex_migrations.*", rulePattern: ".*" },
   ],
+
+  // (Optional)　Use the `plugins` array to load custom rules. The paths are
+  // `require`d as Node.js modules from the current working directory.
+  plugins: ["./custom-rules"],
 };
 ```
 
 ## Rules
 
-Schemalint includes a number of built-in rules, which you can read about [here](/src/rules). However, writing rules is easy and you will probably see the real value by doing so. The [example](/example) folder shows how to write these.
+Schemalint includes a number of built-in rules, which you can read about [here](/src/rules). However, writing custom rules is easy and you will probably see the real value by doing so. The [example](/example) folder shows how to write these.
 
 ## Sponsors
 

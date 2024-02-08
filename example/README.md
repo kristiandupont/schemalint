@@ -1,5 +1,9 @@
 # Example
 
+This folder contains an example configuration file and custom rules for Schemalint.
+
+## Usage
+
 If you want to try this, you can run it on the [Sample Database](https://www.postgresqltutorial.com/postgresql-sample-database/) from www.postgresqltutorial.com.
 
 I've created a Docker image that hosts it so if you have Docker installed, you can easily set up such a database locally by running
@@ -63,3 +67,12 @@ error Command failed with exit code 1.
 ```
 
 You can play around with the configuration options in `.schemalintrc.js` file to experiment.
+
+## Custom Rules
+
+Example custom rules are included in the [custom-rules](./custom-rules) folder. The folder contains the following files:
+
+- [identifierNaming.js](./custom-rules/identifierNaming.js): Defines the custom rule `identifier-naming`.
+- [index.js](./custom-rules/index.js): Exports the custom rules.
+
+You can use these as a starting point to create your own custom rules. The type definition of the [Rule](/src/Rule.ts) object and the [Schema](https://kristiandupont.github.io/extract-pg-schema/api/extract-pg-schema.schema.html) object passed to the custom rules will help you understand how to write custom rules.
