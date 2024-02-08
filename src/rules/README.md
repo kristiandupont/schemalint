@@ -20,7 +20,7 @@ The reasoning for this is outlined in the Postgres wiki: [Don't use varchar(n) b
 ## name-inflection
 
 If you want to enforce singular or plural naming for your tables, this rule can enforce it.
-Which one to choose is a matter of great debate but in the end it comes down to personal preference. You can choose `'singular'` or `'plural'`.
+Which one to choose is a matter of great debate but in the end it comes down to personal preference. You can choose `'singular'` (default) or `'plural'`.
 
 ## prefer-timestamptz-to-timestamp
 
