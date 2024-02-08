@@ -4,10 +4,13 @@ Run linting rules on your database schema. Read the intro to this idea in [this 
 
 _Works with Postgres databases._
 
-This will give you errors like these:
+This will give you errors and suggestions like these:
 
 ```
 public.actor.first_name: error prefer-text-to-varchar : Prefer text to varchar types
+
+Suggested fix
+ALTER TABLE "public"."actor" ALTER COLUMN "first_name" TYPE TEXT;
 ```
 
 ## Usage
