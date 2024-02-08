@@ -55,7 +55,7 @@ You can learn more here: [Identity Columns Explained](https://www.2ndquadrant.co
 
 Identity tables that do not have a primary key defined. Tables can be ignored by passing the `ignorePattern` rule argument.
 
-```json
+```js
  rules: {
     'require-primary-key': ['error', {
       ignorePattern: 'information_schema.*'
