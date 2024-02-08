@@ -67,7 +67,7 @@ module.exports = {
 
 ## Rules
 
-Schemalint includes a number of built-in rules, which you can read about [here](/src/rules). However, writing rules is easy and you will probably see the real value by doing so. The [example](/example) folder shows how to write these.
+Schemalint includes a number of built-in rules, which you can read about [here](/src/rules). However, writing custom rules is easy and you will probably see the real value by doing so. The [example](/example) folder shows how to write these.
 
 ## Sponsors
 
