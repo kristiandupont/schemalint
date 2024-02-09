@@ -1,7 +1,8 @@
-/** @typedef {import('../Rule').default} Rule */
+import { TableDetails } from "extract-pg-schema";
 
-/** @type {Rule} */
-export const requirePrimaryKey = {
+import Rule from "../Rule";
+
+export const requirePrimaryKey: Rule = {
   name: "require-primary-key",
   docs: {
     description: "Enforce primary key definition",
@@ -12,7 +13,7 @@ export const requirePrimaryKey = {
       options[0] && options[0].ignorePattern
         ? new RegExp(options[0].ignorePattern)
         : null;
-    const validator = ({ columns, name: tableName }) => {
+    const validator = ({ columns, name: tableName }: TableDetails) => {
       const idColumns = columns.filter((c) => c.isPrimaryKey);
 
       if (idColumns.length === 0) {
