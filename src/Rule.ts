@@ -1,11 +1,13 @@
 import { Schema } from "extract-pg-schema";
 
-export type Reporter = (p: {
+export type Issue = {
   rule: string;
   identifier: string;
   message: string;
   suggestedMigration?: string;
-}) => void;
+};
+
+export type Reporter = (p: Issue) => void;
 
 type Rule = {
   name: string;
