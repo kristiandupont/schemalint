@@ -4,7 +4,7 @@ import optionator from "optionator";
 import path from "path";
 
 import { processDatabase } from "./engine";
-// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { version } = require("../package.json");
 
 async function main() {
@@ -38,7 +38,7 @@ async function main() {
 
   try {
     options = o.parseArgv(process.argv);
-  } catch (error) {
+  } catch (error: any) {
     console.error(error.message);
     process.exit(1);
   }
@@ -60,6 +60,7 @@ async function main() {
   );
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const config = require(configFile);
     const exitCode = await processDatabase(config);
     process.exit(exitCode);
