@@ -1,5 +1,6 @@
 // This example rule will enforce primary key columns be named like this: tablename_id
 
+/** @type {import('schemalint').Rule} */
 const identifierNaming = {
   name: 'identifier-naming',
   docs: {

@@ -1,3 +1,4 @@
+/** @type {import('schemalint').Config } */
 module.exports = {
   connection: {
     host: 'localhost',
