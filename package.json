@@ -16,8 +16,8 @@
     "name": "Kristian Dupont",
     "url": "http://www.kristiandupont.com"
   },
-  "main": "build/engine.js",
-  "types": "build/engine.d.ts",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "bin": {
     "schemalint": "./bin/schemalint"
   },
