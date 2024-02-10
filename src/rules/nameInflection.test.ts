@@ -1,17 +1,20 @@
+import { Schema } from "extract-pg-schema";
 import { describe, expect, it, test, vi } from "vitest";
 
+import DeepPartial from "../tests/DeepPartial";
 import { nameInflection } from "./nameInflection";
 
 describe("nameInflection", () => {
   it("no tables or views passed no errors", () => {
     const mockReporter = vi.fn();
+    const schemaObject: DeepPartial<Schema> = {
+      tables: [],
+      views: [],
+    };
 
     nameInflection.process({
       options: [],
-      schemaObject: {
-        tables: [],
-        views: [],
-      },
+      schemaObject: schemaObject as Schema,
       report: mockReporter,
     });
 
@@ -27,17 +30,18 @@ describe("nameInflection", () => {
     "$type : param of $param applies to table names and requires $expected",
     ({ param, actual1, actual2, _expected1, _expected2 }) => {
       const mockReporter = vi.fn();
+      const schemaObject: DeepPartial<Schema> = {
+        name: "schema",
+        tables: [
+          { name: `${actual1}`, columns: [] },
+          { name: `${actual2}`, columns: [] },
+        ],
+        views: [],
+      };
 
       nameInflection.process({
         options: [param],
-        schemaObject: {
-          name: "schema",
-          tables: [
-            { name: `${actual1}`, columns: [] },
-            { name: `${actual2}`, columns: [] },
-          ],
-          views: [],
-        },
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -72,17 +76,18 @@ describe("nameInflection", () => {
     "$type : param of $param applies to view names and requires $expected",
     ({ param, actual1, actual2, _expected1, _expected2 }) => {
       const mockReporter = vi.fn();
+      const schemaObject: DeepPartial<Schema> = {
+        name: "schema",
+        views: [
+          { name: `${actual1}`, columns: [] },
+          { name: `${actual2}`, columns: [] },
+        ],
+        tables: [],
+      };
 
       nameInflection.process({
         options: [param],
-        schemaObject: {
-          name: "schema",
-          views: [
-            { name: `${actual1}`, columns: [] },
-            { name: `${actual2}`, columns: [] },
-          ],
-          tables: [],
-        },
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
