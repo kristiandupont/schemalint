@@ -2,13 +2,8 @@ import { Schema } from "extract-pg-schema";
 import { describe, expect, it, vi } from "vitest";
 
 import { Reporter } from "../Rule";
+import DeepPartial from "../tests/DeepPartial";
 import * as types from "./types";
-
-type DeepPartial<T> = T extends object
-  ? {
-      [P in keyof T]?: DeepPartial<T[P]>;
-    }
-  : T;
 
 const assertReport = (
   mockReporter: Reporter,
