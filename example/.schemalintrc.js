@@ -8,7 +8,7 @@ module.exports = {
     port: 54321,
   },
 
-  plugins: ['./example/custom-rules'],
+  plugins: ['./custom-rules'],
 
   rules: {
     'identifier-naming': ['error'],
