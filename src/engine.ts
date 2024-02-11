@@ -60,7 +60,7 @@ export async function processDatabase({
   const ignoreMatchers = ignores.map(
     (i): IgnoreMatcher =>
       (rule, identifier) => {
-        let ruleMatch;
+        let ruleMatch: boolean;
         if (i.rule) {
           ruleMatch = rule === i.rule;
         } else if (i.rulePattern) {
@@ -73,7 +73,7 @@ export async function processDatabase({
           );
         }
 
-        let identifierMatch;
+        let identifierMatch: boolean;
         if (i.identifier) {
           identifierMatch = identifier === i.identifier;
         } else if (i.identifierPattern) {

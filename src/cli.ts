@@ -34,7 +34,7 @@ async function main() {
     ],
   });
 
-  let options;
+  let options: any;
 
   try {
     options = o.parseArgv(process.argv);
