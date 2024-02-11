@@ -3,9 +3,8 @@ import chalk from "chalk";
 import optionator from "optionator";
 import path from "path";
 
+import { version } from "../package.json";
 import { processDatabase } from "./engine";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { version } = require("../package.json");
 
 async function main() {
   const o = optionator({
