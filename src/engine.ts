@@ -4,7 +4,7 @@ import path from "path";
 import { indexBy, keys, prop, values } from "ramda";
 
 import Config from "./Config";
-import { Issue, Reporter } from "./Rule";
+import Rule, { Issue, Reporter } from "./Rule";
 import * as builtinRules from "./rules";
 
 type IgnoreMatcher = (rule: string, identifier: string) => boolean;
@@ -41,7 +41,10 @@ export async function processDatabase({
   schemas,
   ignores = [],
 }: Config): Promise<number> {
-  const pluginRules = plugins.map((p) => require(path.join(process.cwd(), p)));
+  const pluginRules = plugins.map(
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    (p) => require(path.join(process.cwd(), p)) as Record<string, Rule>,
+  );
   const allRules = [builtinRules, ...pluginRules].reduce(
     (acc, elem) => ({ ...acc, ...elem }),
     {},
