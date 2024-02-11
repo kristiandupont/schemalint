@@ -20,16 +20,43 @@ describe("nameCasing", () => {
 
     expect(mockReporter).toBeCalledTimes(0);
   });
-  test.each`
-    type             | param       | expected1                        | expected2
-    ${`default`}     | ${null}     | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`snake-case`}  | ${`snake`}  | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`dash case`}   | ${`dash`}   | ${`th-is-is-no-sn-a-k-e-ca-s-e`} | ${`neit-he-r-is-this`}
-    ${`camel case`}  | ${`camel`}  | ${`thIsIsNoSnAKECaSE`}           | ${`neitHeRIsThis`}
-    ${`pascal case`} | ${`pascal`} | ${`ThIsIsNoSnAKECaSE`}           | ${`NeitHeRIsThis`}
-  `(
-    "$type : param of $param applies to table names and requires $expected",
-    ({ _type, param, expected1, expected2 }) => {
+
+  const testCases = [
+    {
+      type: "default",
+      param: null,
+      expected1: "th_is_is_no_sn_a_k_e_ca_s_e",
+      expected2: "neit_he_r_is_this",
+    },
+    {
+      type: "snake-case",
+      param: "snake",
+      expected1: "th_is_is_no_sn_a_k_e_ca_s_e",
+      expected2: "neit_he_r_is_this",
+    },
+    {
+      type: "dash case",
+      param: "dash",
+      expected1: "th-is-is-no-sn-a-k-e-ca-s-e",
+      expected2: "neit-he-r-is-this",
+    },
+    {
+      type: "camel case",
+      param: "camel",
+      expected1: "thIsIsNoSnAKECaSE",
+      expected2: "neitHeRIsThis",
+    },
+    {
+      type: "pascal case",
+      param: "pascal",
+      expected1: "ThIsIsNoSnAKECaSE",
+      expected2: "NeitHeRIsThis",
+    },
+  ];
+
+  test.each(testCases)(
+    "$type : param of $param applies to table names and requires $expected1 and $expected2",
+    ({ param, expected1, expected2 }) => {
       const mockReporter = vi.fn();
       const schemaObject: DeepPartial<Schema> = {
         name: "schema",
@@ -70,16 +97,9 @@ describe("nameCasing", () => {
     },
   );
 
-  test.each`
-    type             | param       | expected1                        | expected2
-    ${`default`}     | ${null}     | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`snake-case`}  | ${`snake`}  | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`dash case`}   | ${`dash`}   | ${`th-is-is-no-sn-a-k-e-ca-s-e`} | ${`neit-he-r-is-this`}
-    ${`camel case`}  | ${`camel`}  | ${`thIsIsNoSnAKECaSE`}           | ${`neitHeRIsThis`}
-    ${`pascal case`} | ${`pascal`} | ${`ThIsIsNoSnAKECaSE`}           | ${`NeitHeRIsThis`}
-  `(
-    "$type : param of $param applies to view names and requires $expected",
-    ({ _type, param, expected1, expected2 }) => {
+  test.each(testCases)(
+    "$type : param of $param applies to view names and requires $expected1 and $expected2",
+    ({ param, expected1, expected2 }) => {
       const mockReporter = vi.fn();
       const schemaObject: DeepPartial<Schema> = {
         name: "schema",
@@ -120,16 +140,9 @@ describe("nameCasing", () => {
     },
   );
 
-  test.each`
-    type             | param       | expected1                        | expected2
-    ${`default`}     | ${null}     | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`snake-case`}  | ${`snake`}  | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`dash case`}   | ${`dash`}   | ${`th-is-is-no-sn-a-k-e-ca-s-e`} | ${`neit-he-r-is-this`}
-    ${`camel case`}  | ${`camel`}  | ${`thIsIsNoSnAKECaSE`}           | ${`neitHeRIsThis`}
-    ${`pascal case`} | ${`pascal`} | ${`ThIsIsNoSnAKECaSE`}           | ${`NeitHeRIsThis`}
-  `(
-    "$type : param of $param applies to view names and requires $expected",
-    ({ _type, param, expected1, expected2 }) => {
+  test.each(testCases)(
+    "$type : param of $param applies to view names and requires $expected1 and $expected2",
+    ({ param, expected1, expected2 }) => {
       const mockReporter = vi.fn();
       const schemaObject: DeepPartial<Schema> = {
         name: "schema",
@@ -175,16 +188,9 @@ describe("nameCasing", () => {
     },
   );
 
-  test.each`
-    type             | param       | expected1                        | expected2
-    ${`default`}     | ${null}     | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`snake-case`}  | ${`snake`}  | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`dash case`}   | ${`dash`}   | ${`th-is-is-no-sn-a-k-e-ca-s-e`} | ${`neit-he-r-is-this`}
-    ${`camel case`}  | ${`camel`}  | ${`thIsIsNoSnAKECaSE`}           | ${`neitHeRIsThis`}
-    ${`pascal case`} | ${`pascal`} | ${`ThIsIsNoSnAKECaSE`}           | ${`NeitHeRIsThis`}
-  `(
-    "$type : param of $param applies to view names and requires $expected",
-    ({ _type, param, expected1, expected2 }) => {
+  test.each(testCases)(
+    "$type : param of $param applies to view names and requires $expected1 and $expected2",
+    ({ param, expected1, expected2 }) => {
       const mockReporter = vi.fn();
       const schemaObject: DeepPartial<Schema> = {
         name: "schema",
