@@ -12,16 +12,16 @@ I've created a Docker image that hosts it so if you have Docker installed, you c
 npm run start-example-db
 ```
 
-First, run the build script in this folder with:
+First, run the install command in this folder with:
 
 ```
-npm run build
+npm install
 ```
 
-Then, run the config file in this folder with:
+Then, run the schemalint using the config file `schemalintrc.js` in this folder with:
 
 ```
-npm run run-example
+npm run lint:schema  # or just `npx schemalint`
 ```
 
 You should see output like this:
