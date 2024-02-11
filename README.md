@@ -30,6 +30,7 @@ $ npx schemalint
 Here is an example configuration file:
 
 ```javascript
+/** @type {import("schemalint").Config } */
 module.exports = {
   // Connection configuration. See: https://node-postgres.com/apis/client
   connection: {
@@ -40,12 +41,12 @@ module.exports = {
     charset: "utf8",
   },
 
-  // Schemas to lint.
+  // Schemas to be linted.
   schemas: [{ name: "public" }],
 
   // Rules to be checked. The key is the rule name and the value is an array
-  // whose first value is the severity (only "error" is supported) and the
-  // rest are rule-specific parameters.
+  // whose first value is the severity ("error" to enable the rule, "off" to
+  // disable it) and the rest are rule-specific parameters.
   rules: {
     "name-casing": ["error", "snake"],
     "name-inflection": ["error", "singular"],
