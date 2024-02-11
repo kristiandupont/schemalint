@@ -3,19 +3,23 @@ import { extractSchemas } from "extract-pg-schema";
 import path from "path";
 import { indexBy, keys, prop, values } from "ramda";
 
+import Config from "./Config";
+import Rule, { Issue, Reporter } from "./Rule";
 import * as builtinRules from "./rules";
 
-function consoleReporter({ rule, identifier, message }) {
+type IgnoreMatcher = (rule: string, identifier: string) => boolean;
+
+function consoleReporter({ rule, identifier, message }: Issue) {
   console.error(
     `${chalk.yellow(identifier)}: error ${chalk.red(rule)} : ${message}`,
   );
 }
 
 let anyIssues = false;
-const suggestedMigrations = [];
+const suggestedMigrations: string[] = [];
 
 const createReportFunction =
-  (reporter, ignoreMatchers) =>
+  (reporter: Reporter, ignoreMatchers: IgnoreMatcher[]): Reporter =>
   ({ rule, identifier, message, suggestedMigration }) => {
     if (ignoreMatchers.some((im) => im(rule, identifier))) {
       // This one is ignored.
@@ -36,8 +40,11 @@ export async function processDatabase({
   rules,
   schemas,
   ignores = [],
-}) {
-  const pluginRules = plugins.map((p) => require(path.join(process.cwd(), p)));
+}: Config): Promise<number> {
+  const pluginRules = plugins.map(
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    (p) => require(path.join(process.cwd(), p)) as Record<string, Rule>,
+  );
   const allRules = [builtinRules, ...pluginRules].reduce(
     (acc, elem) => ({ ...acc, ...elem }),
     {},
@@ -50,35 +57,38 @@ export async function processDatabase({
     }`,
   );
 
-  const ignoreMatchers = ignores.map((i) => (rule, identifier) => {
-    let ruleMatch;
-    if (i.rule) {
-      ruleMatch = rule === i.rule;
-    } else if (i.rulePattern) {
-      ruleMatch = new RegExp(i.rulePattern).test(rule);
-    } else {
-      throw new Error(
-        `Ignore object is missing a rule or rulePattern property: ${JSON.stringify(
-          i,
-        )}`,
-      );
-    }
+  const ignoreMatchers = ignores.map(
+    (i): IgnoreMatcher =>
+      (rule, identifier) => {
+        let ruleMatch: boolean;
+        if (i.rule) {
+          ruleMatch = rule === i.rule;
+        } else if (i.rulePattern) {
+          ruleMatch = new RegExp(i.rulePattern).test(rule);
+        } else {
+          throw new Error(
+            `Ignore object is missing a rule or rulePattern property: ${JSON.stringify(
+              i,
+            )}`,
+          );
+        }
 
-    let identifierMatch;
-    if (i.identifier) {
-      identifierMatch = identifier === i.identifier;
-    } else if (i.identifierPattern) {
-      identifierMatch = new RegExp(i.identifierPattern).test(identifier);
-    } else {
-      throw new Error(
-        `Ignore object is missing an identifier or identifierPattern property: ${JSON.stringify(
-          i,
-        )}`,
-      );
-    }
+        let identifierMatch: boolean;
+        if (i.identifier) {
+          identifierMatch = identifier === i.identifier;
+        } else if (i.identifierPattern) {
+          identifierMatch = new RegExp(i.identifierPattern).test(identifier);
+        } else {
+          throw new Error(
+            `Ignore object is missing an identifier or identifierPattern property: ${JSON.stringify(
+              i,
+            )}`,
+          );
+        }
 
-    return ruleMatch && identifierMatch;
-  });
+        return ruleMatch && identifierMatch;
+      },
+  );
 
   const report = createReportFunction(consoleReporter, ignoreMatchers);
   const extractedSchemas = await extractSchemas(connection, {

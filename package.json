@@ -16,8 +16,8 @@
     "name": "Kristian Dupont",
     "url": "http://www.kristiandupont.com"
   },
-  "main": "build/engine.js",
-  "types": "build/engine.d.ts",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "bin": {
     "schemalint": "./bin/schemalint"
   },
@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@kristiandupont/dev-deps": "^2.20.0",
+    "@types/pg": "^8.11.0",
     "@types/ramda": "0.29.10",
     "np": "9.2.0",
     "testcontainers": "10.7.1"

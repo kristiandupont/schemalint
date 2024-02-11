@@ -1,44 +1,75 @@
+import { Schema } from "extract-pg-schema";
 import { describe, expect, it, test, vi } from "vitest";
 
+import DeepPartial from "../tests/DeepPartial";
 import { nameCasing } from "./nameCasing";
 
 describe("nameCasing", () => {
   it("no tables or views passed no errors", () => {
     const mockReporter = vi.fn();
+    const schemaObject: DeepPartial<Schema> = {
+      tables: [],
+      views: [],
+    };
 
     nameCasing.process({
       options: [],
-      schemaObject: {
-        tables: [],
-        views: [],
-      },
+      schemaObject: schemaObject as Schema,
       report: mockReporter,
     });
 
     expect(mockReporter).toBeCalledTimes(0);
   });
-  test.each`
-    type             | param       | expected1                        | expected2
-    ${`default`}     | ${null}     | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`snake-case`}  | ${`snake`}  | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`dash case`}   | ${`dash`}   | ${`th-is-is-no-sn-a-k-e-ca-s-e`} | ${`neit-he-r-is-this`}
-    ${`camel case`}  | ${`camel`}  | ${`thIsIsNoSnAKECaSE`}           | ${`neitHeRIsThis`}
-    ${`pascal case`} | ${`pascal`} | ${`ThIsIsNoSnAKECaSE`}           | ${`NeitHeRIsThis`}
-  `(
-    "$type : param of $param applies to table names and requires $expected",
-    ({ _type, param, expected1, expected2 }) => {
+
+  const testCases = [
+    {
+      type: "default",
+      param: null,
+      expected1: "th_is_is_no_sn_a_k_e_ca_s_e",
+      expected2: "neit_he_r_is_this",
+    },
+    {
+      type: "snake-case",
+      param: "snake",
+      expected1: "th_is_is_no_sn_a_k_e_ca_s_e",
+      expected2: "neit_he_r_is_this",
+    },
+    {
+      type: "dash case",
+      param: "dash",
+      expected1: "th-is-is-no-sn-a-k-e-ca-s-e",
+      expected2: "neit-he-r-is-this",
+    },
+    {
+      type: "camel case",
+      param: "camel",
+      expected1: "thIsIsNoSnAKECaSE",
+      expected2: "neitHeRIsThis",
+    },
+    {
+      type: "pascal case",
+      param: "pascal",
+      expected1: "ThIsIsNoSnAKECaSE",
+      expected2: "NeitHeRIsThis",
+    },
+  ];
+
+  test.each(testCases)(
+    "$type : param of $param applies to table names and requires $expected1 and $expected2",
+    ({ param, expected1, expected2 }) => {
       const mockReporter = vi.fn();
+      const schemaObject: DeepPartial<Schema> = {
+        name: "schema",
+        tables: [
+          { name: "Th-IsIsNoSnA_kECaSE", columns: [] },
+          { name: "neit_he-rIsThis", columns: [] },
+        ],
+        views: [],
+      };
 
       nameCasing.process({
         options: [param],
-        schemaObject: {
-          name: "schema",
-          tables: [
-            { name: "Th-IsIsNoSnA_kECaSE", columns: [] },
-            { name: "neit_he-rIsThis", columns: [] },
-          ],
-          views: [],
-        },
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -66,28 +97,22 @@ describe("nameCasing", () => {
     },
   );
 
-  test.each`
-    type             | param       | expected1                        | expected2
-    ${`default`}     | ${null}     | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`snake-case`}  | ${`snake`}  | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`dash case`}   | ${`dash`}   | ${`th-is-is-no-sn-a-k-e-ca-s-e`} | ${`neit-he-r-is-this`}
-    ${`camel case`}  | ${`camel`}  | ${`thIsIsNoSnAKECaSE`}           | ${`neitHeRIsThis`}
-    ${`pascal case`} | ${`pascal`} | ${`ThIsIsNoSnAKECaSE`}           | ${`NeitHeRIsThis`}
-  `(
-    "$type : param of $param applies to view names and requires $expected",
-    ({ _type, param, expected1, expected2 }) => {
+  test.each(testCases)(
+    "$type : param of $param applies to view names and requires $expected1 and $expected2",
+    ({ param, expected1, expected2 }) => {
       const mockReporter = vi.fn();
+      const schemaObject: DeepPartial<Schema> = {
+        name: "schema",
+        tables: [],
+        views: [
+          { name: "Th-IsIsNoSnA_kECaSE", columns: [] },
+          { name: "neit_he-rIsThis", columns: [] },
+        ],
+      };
 
       nameCasing.process({
         options: [param],
-        schemaObject: {
-          name: "schema",
-          tables: [],
-          views: [
-            { name: "Th-IsIsNoSnA_kECaSE", columns: [] },
-            { name: "neit_he-rIsThis", columns: [] },
-          ],
-        },
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -115,37 +140,28 @@ describe("nameCasing", () => {
     },
   );
 
-  test.each`
-    type             | param       | expected1                        | expected2
-    ${`default`}     | ${null}     | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`snake-case`}  | ${`snake`}  | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`dash case`}   | ${`dash`}   | ${`th-is-is-no-sn-a-k-e-ca-s-e`} | ${`neit-he-r-is-this`}
-    ${`camel case`}  | ${`camel`}  | ${`thIsIsNoSnAKECaSE`}           | ${`neitHeRIsThis`}
-    ${`pascal case`} | ${`pascal`} | ${`ThIsIsNoSnAKECaSE`}           | ${`NeitHeRIsThis`}
-  `(
-    "$type : param of $param applies to view names and requires $expected",
-    ({ _type, param, expected1, expected2 }) => {
+  test.each(testCases)(
+    "$type : param of $param applies to table column names and requires $expected1 and $expected2",
+    ({ param, expected1, expected2 }) => {
       const mockReporter = vi.fn();
+      const schemaObject: DeepPartial<Schema> = {
+        name: "schema",
+        tables: [
+          {
+            name: "one_table",
+            columns: [{ name: "Th-IsIsNoSnA_kECaSE" }, { name: "snake_case" }],
+          },
+          {
+            name: "two_table",
+            columns: [{ name: "neit_he-rIsThis" }, { name: "snake_case" }],
+          },
+        ],
+        views: [],
+      };
 
       nameCasing.process({
         options: [param],
-        schemaObject: {
-          name: "schema",
-          tables: [
-            {
-              name: "one_table",
-              columns: [
-                { name: "Th-IsIsNoSnA_kECaSE" },
-                { name: "snake_case" },
-              ],
-            },
-            {
-              name: "two_table",
-              columns: [{ name: "neit_he-rIsThis" }, { name: "snake_case" }],
-            },
-          ],
-          views: [],
-        },
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -172,37 +188,28 @@ describe("nameCasing", () => {
     },
   );
 
-  test.each`
-    type             | param       | expected1                        | expected2
-    ${`default`}     | ${null}     | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`snake-case`}  | ${`snake`}  | ${`th_is_is_no_sn_a_k_e_ca_s_e`} | ${`neit_he_r_is_this`}
-    ${`dash case`}   | ${`dash`}   | ${`th-is-is-no-sn-a-k-e-ca-s-e`} | ${`neit-he-r-is-this`}
-    ${`camel case`}  | ${`camel`}  | ${`thIsIsNoSnAKECaSE`}           | ${`neitHeRIsThis`}
-    ${`pascal case`} | ${`pascal`} | ${`ThIsIsNoSnAKECaSE`}           | ${`NeitHeRIsThis`}
-  `(
-    "$type : param of $param applies to view names and requires $expected",
-    ({ _type, param, expected1, expected2 }) => {
+  test.each(testCases)(
+    "$type : param of $param applies to view column names and requires $expected1 and $expected2",
+    ({ param, expected1, expected2 }) => {
       const mockReporter = vi.fn();
+      const schemaObject: DeepPartial<Schema> = {
+        name: "schema",
+        tables: [],
+        views: [
+          {
+            name: "one_view",
+            columns: [{ name: "Th-IsIsNoSnA_kECaSE" }, { name: "snake_case" }],
+          },
+          {
+            name: "two_view",
+            columns: [{ name: "neit_he-rIsThis" }, { name: "snake_case" }],
+          },
+        ],
+      };
 
       nameCasing.process({
         options: [param],
-        schemaObject: {
-          name: "schema",
-          views: [
-            {
-              name: "one_view",
-              columns: [
-                { name: "Th-IsIsNoSnA_kECaSE" },
-                { name: "snake_case" },
-              ],
-            },
-            {
-              name: "two_view",
-              columns: [{ name: "neit_he-rIsThis" }, { name: "snake_case" }],
-            },
-          ],
-          tables: [],
-        },
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 

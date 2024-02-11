@@ -1,43 +1,68 @@
+import { Schema } from "extract-pg-schema";
 import { describe, expect, it, test, vi } from "vitest";
 
+import DeepPartial from "../tests/DeepPartial";
 import { nameInflection } from "./nameInflection";
 
 describe("nameInflection", () => {
   it("no tables or views passed no errors", () => {
     const mockReporter = vi.fn();
+    const schemaObject: DeepPartial<Schema> = {
+      tables: [],
+      views: [],
+    };
 
     nameInflection.process({
       options: [],
-      schemaObject: {
-        tables: [],
-        views: [],
-      },
+      schemaObject: schemaObject as Schema,
       report: mockReporter,
     });
 
     expect(mockReporter).toBeCalledTimes(0);
   });
 
-  test.each`
-    type          | param         | actual1        | actual 2      | expected1      | expected2
-    ${`default`}  | ${null}       | ${`one_wives`} | ${`two_jims`} | ${`one_wife`}  | ${`two_jim`}
-    ${`singular`} | ${`singular`} | ${`one_wives`} | ${`two_jims`} | ${`one_wife`}  | ${`two_jim`}
-    ${`plural`}   | ${`plural`}   | ${`one_wife`}  | ${`two_jim`}  | ${`one_wives`} | ${`two_jims`}
-  `(
-    "$type : param of $param applies to table names and requires $expected",
-    ({ param, actual1, actual2, _expected1, _expected2 }) => {
+  const testCases = [
+    {
+      type: "default",
+      param: null,
+      actual1: "one_wives",
+      actual2: "two_jims",
+      expected1: "one_wife",
+      expected2: "two_jim",
+    },
+    {
+      type: "singular",
+      param: "singular",
+      actual1: "one_wives",
+      actual2: "two_jims",
+      expected1: "one_wife",
+      expected2: "two_jim",
+    },
+    {
+      type: "plural",
+      param: "plural",
+      actual1: "one_wife",
+      actual2: "two_jim",
+      expected1: "one_wives",
+      expected2: "two_jims",
+    },
+  ];
+  test.each(testCases)(
+    "$type : param of $param applies to table names and requires $expected1 and $expected2",
+    ({ param, actual1, actual2 }) => {
       const mockReporter = vi.fn();
+      const schemaObject: DeepPartial<Schema> = {
+        name: "schema",
+        tables: [
+          { name: `${actual1}`, columns: [] },
+          { name: `${actual2}`, columns: [] },
+        ],
+        views: [],
+      };
 
       nameInflection.process({
         options: [param],
-        schemaObject: {
-          name: "schema",
-          tables: [
-            { name: `${actual1}`, columns: [] },
-            { name: `${actual2}`, columns: [] },
-          ],
-          views: [],
-        },
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
@@ -63,26 +88,22 @@ describe("nameInflection", () => {
       );
     },
   );
-  test.each`
-    type          | param         | actual1        | actual 2      | expected1      | expected2
-    ${`default`}  | ${null}       | ${`one_wives`} | ${`two_jims`} | ${`one_wife`}  | ${`two_jim`}
-    ${`singular`} | ${`singular`} | ${`one_wives`} | ${`two_jims`} | ${`one_wife`}  | ${`two_jim`}
-    ${`plural`}   | ${`plural`}   | ${`one_wife`}  | ${`two_jim`}  | ${`one_wives`} | ${`two_jims`}
-  `(
-    "$type : param of $param applies to view names and requires $expected",
-    ({ param, actual1, actual2, _expected1, _expected2 }) => {
+  test.each(testCases)(
+    "$type : param of $param applies to view names and requires $expected1 and $expected2",
+    ({ param, actual1, actual2 }) => {
       const mockReporter = vi.fn();
+      const schemaObject: DeepPartial<Schema> = {
+        name: "schema",
+        views: [
+          { name: `${actual1}`, columns: [] },
+          { name: `${actual2}`, columns: [] },
+        ],
+        tables: [],
+      };
 
       nameInflection.process({
         options: [param],
-        schemaObject: {
-          name: "schema",
-          views: [
-            { name: `${actual1}`, columns: [] },
-            { name: `${actual2}`, columns: [] },
-          ],
-          tables: [],
-        },
+        schemaObject: schemaObject as Schema,
         report: mockReporter,
       });
 
