@@ -141,7 +141,7 @@ describe("nameCasing", () => {
   );
 
   test.each(testCases)(
-    "$type : param of $param applies to view names and requires $expected1 and $expected2",
+    "$type : param of $param applies to table column names and requires $expected1 and $expected2",
     ({ param, expected1, expected2 }) => {
       const mockReporter = vi.fn();
       const schemaObject: DeepPartial<Schema> = {
@@ -189,7 +189,7 @@ describe("nameCasing", () => {
   );
 
   test.each(testCases)(
-    "$type : param of $param applies to view names and requires $expected1 and $expected2",
+    "$type : param of $param applies to view column names and requires $expected1 and $expected2",
     ({ param, expected1, expected2 }) => {
       const mockReporter = vi.fn();
       const schemaObject: DeepPartial<Schema> = {
