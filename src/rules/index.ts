@@ -1,4 +1,5 @@
 export * from "./nameCasing";
 export * from "./nameInflection";
+export * from "./references";
 export * from "./requirePrimaryKey";
 export * from "./types";
