@@ -90,6 +90,7 @@ describe("rowLevelSecurity", () => {
             rule: "row-level-security",
             identifier: `schema.test`,
             message: `Row-level security is disabled`,
+            suggestedMigration: `ALTER TABLE "schema"."test" ENABLE ROW LEVEL SECURITY;`,
           }),
         );
       },
@@ -144,6 +145,7 @@ describe("rowLevelSecurity", () => {
           rule: "row-level-security",
           identifier: `schema.test`,
           message: `Row-level security is disabled`,
+          suggestedMigration: `ALTER TABLE "schema"."test" ENABLE ROW LEVEL SECURITY;`,
         }),
       );
       expect(mockReporter).toBeCalledWith(
@@ -151,6 +153,7 @@ describe("rowLevelSecurity", () => {
           rule: "row-level-security",
           identifier: `schema.test`,
           message: `Row-level security is not enforced`,
+          suggestedMigration: `ALTER TABLE "schema"."test" FORCE ROW LEVEL SECURITY;`,
         }),
       );
     });
@@ -180,6 +183,7 @@ describe("rowLevelSecurity", () => {
           rule: "row-level-security",
           identifier: `schema.test`,
           message: `Row-level security is disabled`,
+          suggestedMigration: `ALTER TABLE "schema"."test" ENABLE ROW LEVEL SECURITY;`,
         }),
       );
     });
@@ -209,6 +213,7 @@ describe("rowLevelSecurity", () => {
           rule: "row-level-security",
           identifier: `schema.test`,
           message: `Row-level security is not enforced`,
+          suggestedMigration: `ALTER TABLE "schema"."test" FORCE ROW LEVEL SECURITY;`,
         }),
       );
     });

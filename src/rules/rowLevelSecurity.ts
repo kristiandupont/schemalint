@@ -20,6 +20,7 @@ export const rowLevelSecurity: Rule = {
           rule: this.name,
           identifier: `${schemaObject.name}.${tableName}`,
           message: `Row-level security is disabled`,
+          suggestedMigration: `ALTER TABLE "${schemaObject.name}"."${tableName}" ENABLE ROW LEVEL SECURITY;`,
         });
       }
       if (enforced === true && !isRowLevelSecurityEnforced) {
@@ -27,6 +28,7 @@ export const rowLevelSecurity: Rule = {
           rule: this.name,
           identifier: `${schemaObject.name}.${tableName}`,
           message: `Row-level security is not enforced`,
+          suggestedMigration: `ALTER TABLE "${schemaObject.name}"."${tableName}" FORCE ROW LEVEL SECURITY;`,
         });
       }
     };
