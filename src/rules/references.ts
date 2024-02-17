@@ -76,10 +76,10 @@ function buildTableReferences(columns: TableColumn[]): TableReference[] {
   const columnReferencePairsByName = R.groupBy(
     (p) => p.reference.name,
     columnReferencePairs,
-  );
+  ) as Record<string, ColumnReferencePair[]>;
   return Object.entries(columnReferencePairsByName).map(([_, pairs]) => {
-    const columns = pairs!.map((p) => p.column);
-    const { columnName: __, ...rest } = pairs![0].reference;
+    const columns = pairs.map((p) => p.column);
+    const { columnName: __, ...rest } = pairs[0].reference;
     return { columns, ...rest };
   });
 }
