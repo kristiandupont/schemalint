@@ -81,9 +81,9 @@ function buildTableReferences(columns: TableColumn[]): TableReference[] {
     (p) => p.reference.name,
     columnReferencePairs,
   ) as Record<string, ColumnReferencePair[]>;
-  return Object.entries(columnReferencePairsByName).map(([_, pairs]) => {
+  return Object.values(columnReferencePairsByName).map((pairs) => {
     const referencingColumnNames = pairs.map((p) => p.referncingColumnName);
-    const { columnName: __, ...rest } = pairs[0].reference;
+    const { columnName: _, ...rest } = pairs[0].reference;
     return { referencingColumnNames, ...rest };
   });
 }
