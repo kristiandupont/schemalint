@@ -269,38 +269,56 @@ describe("referenceActions", () => {
     test.each([
       {
         option: { onUpdate: "CASCADE" }, // [onUpdate, onDelete] = [wrong, skipped]
-        expectedMessages: [
-          `Reference action ON UPDATE expected to be "CASCADE" but got "NO ACTION"`,
+        expectedIssues: [
+          {
+            message: `Reference action ON UPDATE expected to be "CASCADE" but got "NO ACTION"`,
+            suggestedMigration: `ALTER TABLE "test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE CASCADE ON DELETE CASCADE;`,
+          },
         ],
       },
       {
         option: { onUpdate: "CASCADE", onDelete: "CASCADE" }, // [wrong, correct]
-        expectedMessages: [
-          `Reference action ON UPDATE expected to be "CASCADE" but got "NO ACTION"`,
+        expectedIssues: [
+          {
+            message: `Reference action ON UPDATE expected to be "CASCADE" but got "NO ACTION"`,
+            suggestedMigration: `ALTER TABLE "test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE CASCADE ON DELETE CASCADE;`,
+          },
         ],
       },
       {
         option: { onDelete: "NO ACTION" }, // [skipped, wrong]
-        expectedMessages: [
-          `Reference action ON DELETE expected to be "NO ACTION" but got "CASCADE"`,
+        expectedIssues: [
+          {
+            message: `Reference action ON DELETE expected to be "NO ACTION" but got "CASCADE"`,
+            suggestedMigration: `ALTER TABLE "test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE NO ACTION ON DELETE NO ACTION;`,
+          },
         ],
       },
       {
         option: { onUpdate: "NO ACTION", onDelete: "NO ACTION" }, // [correct, wrong]
-        expectedMessages: [
-          `Reference action ON DELETE expected to be "NO ACTION" but got "CASCADE"`,
+        expectedIssues: [
+          {
+            message: `Reference action ON DELETE expected to be "NO ACTION" but got "CASCADE"`,
+            suggestedMigration: `ALTER TABLE "test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE NO ACTION ON DELETE NO ACTION;`,
+          },
         ],
       },
       {
         option: { onUpdate: "CASCADE", onDelete: "NO ACTION" }, // [wrong, wrong]
-        expectedMessages: [
-          `Reference action ON UPDATE expected to be "CASCADE" but got "NO ACTION"`,
-          `Reference action ON DELETE expected to be "NO ACTION" but got "CASCADE"`,
+        expectedIssues: [
+          {
+            message: `Reference action ON UPDATE expected to be "CASCADE" but got "NO ACTION"`,
+            suggestedMigration: `ALTER TABLE "test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE CASCADE ON DELETE NO ACTION;`,
+          },
+          {
+            message: `Reference action ON DELETE expected to be "NO ACTION" but got "CASCADE"`,
+            suggestedMigration: `ALTER TABLE "test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE CASCADE ON DELETE NO ACTION;`,
+          },
         ],
       },
     ])(
       "should report when specified value is not undefined and differs: $option",
-      ({ option, expectedMessages }) => {
+      ({ option, expectedIssues }) => {
         const mockReporter = vi.fn();
         const schemaObject: DeepPartial<Schema> = {
           name: "schema",
@@ -313,6 +331,8 @@ describe("referenceActions", () => {
                   references: [
                     {
                       name: "test_id_fkey",
+                      tableName: "other_table",
+                      columnName: "test_id",
                       onUpdate: "NO ACTION",
                       onDelete: "CASCADE",
                     },
@@ -329,13 +349,14 @@ describe("referenceActions", () => {
           report: mockReporter,
         });
 
-        expect(mockReporter).toBeCalledTimes(expectedMessages.length);
-        expectedMessages.forEach((expectedMessage) => {
+        expect(mockReporter).toBeCalledTimes(expectedIssues.length);
+        expectedIssues.forEach((expectedIssue) => {
           expect(mockReporter).toBeCalledWith(
             expect.objectContaining({
               rule: "reference-actions",
               identifier: `schema.test.test_id_fkey`,
-              message: expectedMessage,
+              message: expectedIssue.message,
+              suggestedMigration: expectedIssue.suggestedMigration,
             }),
           );
         });
@@ -357,6 +378,8 @@ describe("referenceActions", () => {
                 references: [
                   {
                     name: "test_id_sub_id_fkey",
+                    tableName: "other_table",
+                    columnName: "test_id",
                     onUpdate: "NO ACTION",
                     onDelete: "CASCADE",
                   },
@@ -367,6 +390,8 @@ describe("referenceActions", () => {
                 references: [
                   {
                     name: "test_id_sub_id_fkey",
+                    tableName: "other_table",
+                    columnName: "test_sub_id",
                     onUpdate: "NO ACTION",
                     onDelete: "CASCADE",
                   },
@@ -389,6 +414,7 @@ describe("referenceActions", () => {
           rule: "reference-actions",
           identifier: `schema.test.test_id_sub_id_fkey`,
           message: `Reference action ON UPDATE expected to be "CASCADE" but got "NO ACTION"`,
+          suggestedMigration: `ALTER TABLE "test" DROP CONSTRAINT "test_id_sub_id_fkey", ADD CONSTRAINT "test_id_sub_id_fkey" FOREIGN KEY ("id", "sub_id") REFERENCES "other_table"("test_id", "test_sub_id") ON UPDATE CASCADE ON DELETE CASCADE;`,
         }),
       );
     });

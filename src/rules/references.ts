@@ -42,12 +42,21 @@ export const referenceActions: Rule = {
   process({ options: [{ onUpdate, onDelete }], schemaObject, report }) {
     const validator = ({ columns, name: tableName }: TableDetails) => {
       const tableReferences = buildTableReferences(columns);
+      function suggestedMigration(tableReference: TableReference): string {
+        return (
+          `ALTER TABLE ${quote(tableName)} DROP CONSTRAINT ${quote(tableReference.name)}, ` +
+          `ADD CONSTRAINT ${quote(tableReference.name)} FOREIGN KEY (${tableReference.referencingColumnNames.map(quote).join(", ")}) ` +
+          `REFERENCES ${quote(tableReference.tableName)}(${tableReference.columnNames.map(quote).join(", ")}) ` +
+          `ON UPDATE ${onUpdate ?? tableReference.onUpdate} ON DELETE ${onDelete ?? tableReference.onDelete};`
+        );
+      }
       tableReferences.forEach((tableReference) => {
         if (onUpdate !== undefined && tableReference.onUpdate !== onUpdate) {
           report({
             rule: this.name,
             identifier: `${schemaObject.name}.${tableName}.${tableReference.name}`,
             message: `Reference action ON UPDATE expected to be "${onUpdate}" but got "${tableReference.onUpdate}"`,
+            suggestedMigration: suggestedMigration(tableReference),
           });
         }
         if (onDelete !== undefined && tableReference.onDelete !== onDelete) {
@@ -55,6 +64,7 @@ export const referenceActions: Rule = {
             rule: this.name,
             identifier: `${schemaObject.name}.${tableName}.${tableReference.name}`,
             message: `Reference action ON DELETE expected to be "${onDelete}" but got "${tableReference.onDelete}"`,
+            suggestedMigration: suggestedMigration(tableReference),
           });
         }
       });
