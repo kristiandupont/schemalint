@@ -64,6 +64,7 @@ export const referenceActions: Rule = {
 };
 
 type TableReference = Omit<ColumnReference, "columnName"> & {
+  columnNames: string[];
   referencingColumnNames: string[];
 };
 
@@ -82,9 +83,10 @@ function buildTableReferences(columns: TableColumn[]): TableReference[] {
     columnReferencePairs,
   ) as Record<string, ColumnReferencePair[]>;
   return Object.values(columnReferencePairsByName).map((pairs) => {
+    const columnNames = pairs.map((p) => p.reference.columnName);
     const referencingColumnNames = pairs.map((p) => p.referncingColumnName);
     const { columnName: _, ...rest } = pairs[0].reference;
-    return { referencingColumnNames, ...rest };
+    return { columnNames, referencingColumnNames, ...rest };
   });
 }
 
