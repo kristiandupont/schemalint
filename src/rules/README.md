@@ -114,3 +114,16 @@ rules: {
   'index-referencing-column': ['error'],
 }
 ```
+
+## reference-actions
+
+This rule enforces that foreign key constraints have specific `ON UPDATE` and `ON DELETE` actions. Available actions are: `NO ACTION`, `RESTRICT`, `CASCADE`, `SET NULL`, `SET DEFAULT`. When `onUpdate` or `onDelete` is not specified, the rule allows any action for the unspecified action.
+
+```js
+rules: {
+  'reference-actions': ['error', {
+    onUpdate: 'NO ACTION',
+    onDelete: 'CASCADE',
+  }],
+}
+```
