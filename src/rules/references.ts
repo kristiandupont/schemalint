@@ -1,4 +1,9 @@
-import { TableColumn, TableDetails, TableIndex } from "extract-pg-schema";
+import {
+  ColumnReference,
+  TableColumn,
+  TableDetails,
+  TableIndex,
+} from "extract-pg-schema";
 import * as R from "ramda";
 
 import Rule from "../Rule";
@@ -26,28 +31,26 @@ export const indexReferencingColumn: Rule = {
   },
 };
 
-type TableReference = {
-  name: string;
+type TableReference = Omit<ColumnReference, "columnName"> & {
   columns: string[];
 };
 
 function buildTableReferences(columns: TableColumn[]): TableReference[] {
   type ColumnReferencePair = {
     column: string;
-    reference: string;
+    reference: ColumnReference;
   };
   const columnReferencePairs: ColumnReferencePair[] = columns
-    .map((c) =>
-      c.references.map((r) => ({ column: c.name, reference: r.name })),
-    )
+    .map((c) => c.references.map((r) => ({ column: c.name, reference: r })))
     .flat();
   const columnReferencePairsByName = R.groupBy(
-    (p) => p.reference,
+    (p) => p.reference.name,
     columnReferencePairs,
   );
-  return Object.entries(columnReferencePairsByName).map(([name, pairs]) => {
+  return Object.entries(columnReferencePairsByName).map(([_, pairs]) => {
     const columns = pairs!.map((p) => p.column);
-    return { name, columns };
+    const { columnName: __, ...rest } = pairs![0].reference;
+    return { columns, ...rest };
   });
 }
 
