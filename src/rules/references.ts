@@ -17,12 +17,14 @@ export const indexReferencingColumn: Rule = {
     const validator = ({ columns, name: tableName, indices }: TableDetails) => {
       const tableReferences = buildTableReferences(columns);
       tableReferences.forEach((tableReference) => {
-        if (!columnsCoveredByIndex(tableReference.columns, indices)) {
+        if (
+          !columnsCoveredByIndex(tableReference.referencingColumnNames, indices)
+        ) {
           report({
             rule: this.name,
             identifier: `${schemaObject.name}.${tableName}.${tableReference.name}`,
-            message: `No index found on referencing column(s) ${tableReference.columns.join(", ")}`,
-            suggestedMigration: `CREATE INDEX ON ${quote(tableName)}(${tableReference.columns.map(quote).join(", ")});`,
+            message: `No index found on referencing column(s) ${tableReference.referencingColumnNames.join(", ")}`,
+            suggestedMigration: `CREATE INDEX ON ${quote(tableName)}(${tableReference.referencingColumnNames.map(quote).join(", ")});`,
           });
         }
       });
@@ -62,25 +64,27 @@ export const referenceActions: Rule = {
 };
 
 type TableReference = Omit<ColumnReference, "columnName"> & {
-  columns: string[];
+  referencingColumnNames: string[];
 };
 
 function buildTableReferences(columns: TableColumn[]): TableReference[] {
   type ColumnReferencePair = {
-    column: string;
+    referncingColumnName: string;
     reference: ColumnReference;
   };
   const columnReferencePairs: ColumnReferencePair[] = columns
-    .map((c) => c.references.map((r) => ({ column: c.name, reference: r })))
+    .map((c) =>
+      c.references.map((r) => ({ referncingColumnName: c.name, reference: r })),
+    )
     .flat();
   const columnReferencePairsByName = R.groupBy(
     (p) => p.reference.name,
     columnReferencePairs,
   ) as Record<string, ColumnReferencePair[]>;
   return Object.entries(columnReferencePairsByName).map(([_, pairs]) => {
-    const columns = pairs.map((p) => p.column);
+    const referencingColumnNames = pairs.map((p) => p.referncingColumnName);
     const { columnName: __, ...rest } = pairs[0].reference;
-    return { columns, ...rest };
+    return { referencingColumnNames, ...rest };
   });
 }
 
