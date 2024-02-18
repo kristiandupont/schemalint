@@ -98,3 +98,32 @@ Identity tables that do not have a primary key defined. Tables can be ignored by
     }],
   },
 ```
+
+## index-referencing-column
+
+PostgreSQL does not automatically create an index on the referencing column (not the referenced column) of a foreign key constraint. This rule can enforce that you create an index on the referencing column.
+
+As the official PostgreSQL documentation states, it is not always needed to index the referencing columns, but it is often a good idea to do so.
+
+> Since a DELETE of a row from the referenced table or an UPDATE of a referenced column will require a scan of the referencing table for rows matching the old value, it is often a good idea to index the referencing columns too. Because this is not always needed, and there are many choices available on how to index, the declaration of a foreign key constraint does not automatically create an index on the referencing columns.
+
+You can learn more here: [Foreign Keys](https://www.postgresql.org/docs/current/ddl-constraints.html#DDL-CONSTRAINTS-FK)
+
+```js
+rules: {
+  'index-referencing-column': ['error'],
+}
+```
+
+## reference-actions
+
+This rule enforces that foreign key constraints have specific `ON UPDATE` and `ON DELETE` actions. Available actions are: `NO ACTION`, `RESTRICT`, `CASCADE`, `SET NULL`, `SET DEFAULT`. When `onUpdate` or `onDelete` is not specified, the rule allows any action for the unspecified action.
+
+```js
+rules: {
+  'reference-actions': ['error', {
+    onUpdate: 'NO ACTION',
+    onDelete: 'CASCADE',
+  }],
+}
+```
