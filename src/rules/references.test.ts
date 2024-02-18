@@ -81,7 +81,7 @@ describe("indexReferencingColumn", () => {
           rule: "index-referencing-column",
           identifier: `schema.test.test_id_fkey`,
           message: `No index found on referencing column(s) id`,
-          suggestedMigration: `CREATE INDEX ON "test"("id");`,
+          suggestedMigration: `CREATE INDEX ON "schema"."test" ("id");`,
         }),
       );
     });
@@ -125,7 +125,7 @@ describe("indexReferencingColumn", () => {
           rule: "index-referencing-column",
           identifier: `schema.test.test_id_fkey`,
           message: `No index found on referencing column(s) id`,
-          suggestedMigration: `CREATE INDEX ON "test"("id");`,
+          suggestedMigration: `CREATE INDEX ON "schema"."test" ("id");`,
         }),
       );
     });
@@ -199,7 +199,7 @@ describe("indexReferencingColumn", () => {
           rule: "index-referencing-column",
           identifier: `schema.test.test_id_sub_id_fkey`,
           message: `No index found on referencing column(s) id, sub_id`,
-          suggestedMigration: `CREATE INDEX ON "test"("id", "sub_id");`,
+          suggestedMigration: `CREATE INDEX ON "schema"."test" ("id", "sub_id");`,
         }),
       );
     });
@@ -272,7 +272,7 @@ describe("referenceActions", () => {
         expectedIssues: [
           {
             message: `Reference action ON UPDATE expected to be "CASCADE" but got "NO ACTION"`,
-            suggestedMigration: `ALTER TABLE "test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE CASCADE ON DELETE CASCADE;`,
+            suggestedMigration: `ALTER TABLE "schema"."test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE CASCADE ON DELETE CASCADE;`,
           },
         ],
       },
@@ -281,7 +281,7 @@ describe("referenceActions", () => {
         expectedIssues: [
           {
             message: `Reference action ON UPDATE expected to be "CASCADE" but got "NO ACTION"`,
-            suggestedMigration: `ALTER TABLE "test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE CASCADE ON DELETE CASCADE;`,
+            suggestedMigration: `ALTER TABLE "schema"."test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE CASCADE ON DELETE CASCADE;`,
           },
         ],
       },
@@ -290,7 +290,7 @@ describe("referenceActions", () => {
         expectedIssues: [
           {
             message: `Reference action ON DELETE expected to be "NO ACTION" but got "CASCADE"`,
-            suggestedMigration: `ALTER TABLE "test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE NO ACTION ON DELETE NO ACTION;`,
+            suggestedMigration: `ALTER TABLE "schema"."test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE NO ACTION ON DELETE NO ACTION;`,
           },
         ],
       },
@@ -299,7 +299,7 @@ describe("referenceActions", () => {
         expectedIssues: [
           {
             message: `Reference action ON DELETE expected to be "NO ACTION" but got "CASCADE"`,
-            suggestedMigration: `ALTER TABLE "test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE NO ACTION ON DELETE NO ACTION;`,
+            suggestedMigration: `ALTER TABLE "schema"."test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE NO ACTION ON DELETE NO ACTION;`,
           },
         ],
       },
@@ -308,11 +308,11 @@ describe("referenceActions", () => {
         expectedIssues: [
           {
             message: `Reference action ON UPDATE expected to be "CASCADE" but got "NO ACTION"`,
-            suggestedMigration: `ALTER TABLE "test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE CASCADE ON DELETE NO ACTION;`,
+            suggestedMigration: `ALTER TABLE "schema"."test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE CASCADE ON DELETE NO ACTION;`,
           },
           {
             message: `Reference action ON DELETE expected to be "NO ACTION" but got "CASCADE"`,
-            suggestedMigration: `ALTER TABLE "test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE CASCADE ON DELETE NO ACTION;`,
+            suggestedMigration: `ALTER TABLE "schema"."test" DROP CONSTRAINT "test_id_fkey", ADD CONSTRAINT "test_id_fkey" FOREIGN KEY ("id") REFERENCES "other_table"("test_id") ON UPDATE CASCADE ON DELETE NO ACTION;`,
           },
         ],
       },
@@ -414,7 +414,7 @@ describe("referenceActions", () => {
           rule: "reference-actions",
           identifier: `schema.test.test_id_sub_id_fkey`,
           message: `Reference action ON UPDATE expected to be "CASCADE" but got "NO ACTION"`,
-          suggestedMigration: `ALTER TABLE "test" DROP CONSTRAINT "test_id_sub_id_fkey", ADD CONSTRAINT "test_id_sub_id_fkey" FOREIGN KEY ("id", "sub_id") REFERENCES "other_table"("test_id", "test_sub_id") ON UPDATE CASCADE ON DELETE CASCADE;`,
+          suggestedMigration: `ALTER TABLE "schema"."test" DROP CONSTRAINT "test_id_sub_id_fkey", ADD CONSTRAINT "test_id_sub_id_fkey" FOREIGN KEY ("id", "sub_id") REFERENCES "other_table"("test_id", "test_sub_id") ON UPDATE CASCADE ON DELETE CASCADE;`,
         }),
       );
     });

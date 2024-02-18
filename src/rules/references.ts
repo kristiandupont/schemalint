@@ -24,7 +24,7 @@ export const indexReferencingColumn: Rule = {
             rule: this.name,
             identifier: `${schemaObject.name}.${tableName}.${tableReference.name}`,
             message: `No index found on referencing column(s) ${tableReference.referencingColumnNames.join(", ")}`,
-            suggestedMigration: `CREATE INDEX ON ${quote(tableName)}(${tableReference.referencingColumnNames.map(quote).join(", ")});`,
+            suggestedMigration: `CREATE INDEX ON ${quote(schemaObject.name)}.${quote(tableName)} (${tableReference.referencingColumnNames.map(quote).join(", ")});`,
           });
         }
       });
@@ -44,7 +44,7 @@ export const referenceActions: Rule = {
       const tableReferences = buildTableReferences(columns);
       function suggestedMigration(tableReference: TableReference): string {
         return (
-          `ALTER TABLE ${quote(tableName)} DROP CONSTRAINT ${quote(tableReference.name)}, ` +
+          `ALTER TABLE ${quote(schemaObject.name)}.${quote(tableName)} DROP CONSTRAINT ${quote(tableReference.name)}, ` +
           `ADD CONSTRAINT ${quote(tableReference.name)} FOREIGN KEY (${tableReference.referencingColumnNames.map(quote).join(", ")}) ` +
           `REFERENCES ${quote(tableReference.tableName)}(${tableReference.columnNames.map(quote).join(", ")}) ` +
           `ON UPDATE ${onUpdate ?? tableReference.onUpdate} ON DELETE ${onDelete ?? tableReference.onDelete};`
