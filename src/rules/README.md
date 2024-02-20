@@ -127,3 +127,13 @@ rules: {
   }],
 }
 ```
+
+## row-level-security
+
+[Row-level security](https://www.postgresql.org/docs/current/ddl-rowsecurity.html) (RLS) is a feature that enables you to control which rows in a table are visible to different users. This rule checks that tables have row-level security enabled. You can also check that it is enforced by setting the `enforced` option to `true`.
+
+```js
+rules: {
+    'row-level-security': ['error', {enforced: true}],
+}
+```
