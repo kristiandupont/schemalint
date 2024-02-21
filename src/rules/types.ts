@@ -1,6 +1,6 @@
-import { TableColumn, TableDetails } from "extract-pg-schema";
+import type { TableColumn, TableDetails } from "extract-pg-schema";
 
-import Rule from "../Rule";
+import type Rule from "../Rule";
 
 export const preferJsonbToJson: Rule = {
   name: "prefer-jsonb-to-json",

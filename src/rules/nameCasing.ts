@@ -1,12 +1,12 @@
 import { detectCasing, recase } from "@kristiandupont/recase";
-import {
+import type {
   TableColumn,
   TableDetails,
   ViewColumn,
   ViewDetails,
 } from "extract-pg-schema";
 
-import Rule from "../Rule";
+import type Rule from "../Rule";
 
 export const nameCasing: Rule = {
   name: "name-casing",

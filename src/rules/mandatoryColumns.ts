@@ -1,7 +1,7 @@
-import { TableColumn, TableDetails } from "extract-pg-schema";
+import type { TableColumn, TableDetails } from "extract-pg-schema";
 import * as R from "ramda";
 
-import Rule from "../Rule";
+import type Rule from "../Rule";
 
 export const mandatoryColumns: Rule = {
   name: "mandatory-columns",

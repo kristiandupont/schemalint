@@ -1,6 +1,6 @@
-import { TableDetails } from "extract-pg-schema";
+import type { TableDetails } from "extract-pg-schema";
 
-import Rule from "../Rule";
+import type Rule from "../Rule";
 
 export const rowLevelSecurity: Rule = {
   name: "row-level-security",

@@ -3,8 +3,9 @@ import { extractSchemas } from "extract-pg-schema";
 import path from "path";
 import { indexBy, keys, prop, values } from "ramda";
 
-import Config from "./Config";
-import Rule, { Issue, Reporter } from "./Rule";
+import type Config from "./Config";
+import type { Issue, Reporter } from "./Rule";
+import type Rule from "./Rule";
 import * as builtinRules from "./rules";
 
 type IgnoreMatcher = (rule: string, identifier: string) => boolean;
