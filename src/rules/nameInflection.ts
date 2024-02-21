@@ -1,8 +1,8 @@
-import { TableDetails, ViewDetails } from "extract-pg-schema";
+import type { TableDetails, ViewDetails } from "extract-pg-schema";
 import irregularPlurals from "irregular-plurals/irregular-plurals.json";
 import * as R from "ramda";
 
-import Rule from "../Rule";
+import type Rule from "../Rule";
 
 const singulars = R.keys(irregularPlurals);
 const plurals = R.values(irregularPlurals);

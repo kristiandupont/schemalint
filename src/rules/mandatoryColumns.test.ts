@@ -1,7 +1,7 @@
-import { Schema } from "extract-pg-schema";
+import type { Schema } from "extract-pg-schema";
 import { describe, expect, it, vi } from "vitest";
 
-import DeepPartial from "../tests/DeepPartial";
+import type DeepPartial from "../tests/DeepPartial";
 import { mandatoryColumns } from "./mandatoryColumns";
 
 describe("mandatoryColumns", () => {

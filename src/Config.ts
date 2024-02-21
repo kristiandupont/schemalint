@@ -1,4 +1,4 @@
-import { ClientConfig } from "pg";
+import type { ClientConfig } from "pg";
 
 /**
  * The configuration for schemalint.

@@ -1,4 +1,4 @@
-import {
+import type {
   ColumnReference,
   TableColumn,
   TableDetails,
@@ -6,7 +6,7 @@ import {
 } from "extract-pg-schema";
 import * as R from "ramda";
 
-import Rule from "../Rule";
+import type Rule from "../Rule";
 
 export const indexReferencingColumn: Rule = {
   name: "index-referencing-column",
