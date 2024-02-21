@@ -137,3 +137,18 @@ rules: {
     'row-level-security': ['error', {enforced: true}],
 }
 ```
+
+## mandatory-columns
+
+This rule enforces that a table has certain columns. The option is an object, where the key is the column name and the value is the object representing the required properties. Any property of the [TableColumn](https://kristiandupont.github.io/extract-pg-schema/api/extract-pg-schema.tablecolumn.html) object can be used as a required property. For example, you can specify `ordinalPosition` to ensure that the column is in the expected position, but note that PostgreSQL always adds a new column to the very back.
+
+```js
+rules: {
+  'mandatory-columns': ['error', {
+    created_at: {
+      expandedType: 'pg_catalog.timestamptz',
+      isNullable: false,
+    }
+  }],
+}
+```

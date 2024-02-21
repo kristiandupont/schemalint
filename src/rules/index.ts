@@ -1,3 +1,4 @@
+export * from "./mandatoryColumns";
 export * from "./nameCasing";
 export * from "./nameInflection";
 export * from "./references";
