@@ -95,7 +95,7 @@ You can learn more here: [Identity Columns Explained](https://www.2ndquadrant.co
 
 ### require-primary-key
 
-Identity tables that do not have a primary key defined. Tables can be ignored by passing the `ignorePattern` rule argument.
+Identify tables that do not have a primary key defined. Tables can be ignored by passing the `ignorePattern` rule argument.
 
 ```js
   rules: {
