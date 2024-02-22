@@ -98,7 +98,7 @@ You can learn more here: [Identity Columns Explained](https://www.2ndquadrant.co
 Identity tables that do not have a primary key defined. Tables can be ignored by passing the `ignorePattern` rule argument.
 
 ```js
- rules: {
+  rules: {
     'require-primary-key': ['error', {
       ignorePattern: 'information_schema.*'
     }],
@@ -116,9 +116,9 @@ As the official PostgreSQL documentation states, it is not always needed to inde
 You can learn more here: [Foreign Keys](https://www.postgresql.org/docs/current/ddl-constraints.html#DDL-CONSTRAINTS-FK)
 
 ```js
-rules: {
-  'index-referencing-column': ['error'],
-}
+  rules: {
+    'index-referencing-column': ['error'],
+  }
 ```
 
 ### reference-actions
@@ -126,12 +126,12 @@ rules: {
 This rule enforces that foreign key constraints have specific `ON UPDATE` and `ON DELETE` actions. Available actions are: `NO ACTION`, `RESTRICT`, `CASCADE`, `SET NULL`, `SET DEFAULT`. When `onUpdate` or `onDelete` is not specified, the rule allows any action for the unspecified action.
 
 ```js
-rules: {
-  'reference-actions': ['error', {
-    onUpdate: 'NO ACTION',
-    onDelete: 'CASCADE',
-  }],
-}
+  rules: {
+    'reference-actions': ['error', {
+      onUpdate: 'NO ACTION',
+      onDelete: 'CASCADE',
+    }],
+  }
 ```
 
 ### mandatory-columns
@@ -139,14 +139,14 @@ rules: {
 This rule enforces that a table has certain columns. The option is an object, where the key is the column name and the value is the object representing the required properties. Any property of the [TableColumn](https://kristiandupont.github.io/extract-pg-schema/api/extract-pg-schema.tablecolumn.html) object can be used as a required property. For example, you can specify `ordinalPosition` to ensure that the column is in the expected position, but note that PostgreSQL always adds a new column to the very back.
 
 ```js
-rules: {
-  'mandatory-columns': ['error', {
-    created_at: {
-      expandedType: 'pg_catalog.timestamptz',
-      isNullable: false,
-    }
-  }],
-}
+  rules: {
+    'mandatory-columns': ['error', {
+      created_at: {
+        expandedType: 'pg_catalog.timestamptz',
+        isNullable: false,
+      }
+    }],
+  }
 ```
 
 ## Security
@@ -156,7 +156,7 @@ rules: {
 [Row-level security](https://www.postgresql.org/docs/current/ddl-rowsecurity.html) (RLS) is a feature that enables you to control which rows in a table are visible to different users. This rule checks that tables have row-level security enabled. You can also check that it is enforced by setting the `enforced` option to `true`.
 
 ```js
-rules: {
-    'row-level-security': ['error', {enforced: true}],
-}
+  rules: {
+      'row-level-security': ['error', {enforced: true}],
+  }
 ```
