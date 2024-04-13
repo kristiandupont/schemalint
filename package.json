@@ -43,7 +43,7 @@
   "devDependencies": {
     "@kristiandupont/dev-deps": "^2.20.0",
     "@types/pg": "^8.11.0",
-    "@types/ramda": "0.29.10",
+    "@types/ramda": "0.29.12",
     "np": "10.0.3",
     "testcontainers": "10.8.2"
   },
