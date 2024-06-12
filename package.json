@@ -38,12 +38,12 @@
     "irregular-plurals": "^3.2.0",
     "optionator": "^0.9.1",
     "pg": "^8.3.3",
-    "ramda": "^0.29.0"
+    "ramda": "^0.30.0"
   },
   "devDependencies": {
     "@kristiandupont/dev-deps": "^2.20.0",
     "@types/pg": "^8.11.0",
-    "@types/ramda": "0.29.12",
+    "@types/ramda": "0.30.0",
     "np": "10.0.5",
     "testcontainers": "10.8.2"
   },
