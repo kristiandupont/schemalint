@@ -1,5 +1,5 @@
 import type { TableDetails, ViewDetails } from "extract-pg-schema";
-import irregularPlurals from "irregular-plurals";
+import irregularPlurals from "irregular-plurals/irregular-plurals.json";
 import * as R from "ramda";
 
 import type Rule from "../Rule";
@@ -21,7 +21,7 @@ const detectInflection = (word: string) => {
 
   if (
     lastWord in irregularPlurals &&
-    irregularPlurals.get(lastWord) === lastWord
+    (irregularPlurals as Record<string, string>)[lastWord] === lastWord
   ) {
     // Irregular and singular = plural.
     return "unknown";
