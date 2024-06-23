@@ -73,6 +73,18 @@ module.exports = {
 
 Schemalint includes a number of built-in rules, which you can read about [here](/src/rules). However, writing custom rules is easy and you will probably see the real value by doing so. The [example](/example) folder shows how to write these.
 
+---
+
+## Course
+
+If you want to learn about how I use this, check out my course on Newline:
+
+<a href="https://www.newline.co/courses/fullstack-typescript-with-tailwindcss-and-trpc-using-modern-features-of-postgresql" title="Fullstack Typescript with TailwindCSS and tRPC Using Modern Features of PostgreSQL">
+   <img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/0*BczW_oS58IoZ2ejf" />
+</a>
+
+---
+
 ## Sponsors
 
 Thank you so much to the sponsors of Schemalint:
