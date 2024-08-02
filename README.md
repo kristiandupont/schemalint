@@ -75,9 +75,13 @@ Schemalint includes a number of built-in rules, which you can read about [here](
 
 ---
 
-## Course
+## Learning Material
 
-If you want to learn about how I use this, check out my course on Newline:
+Here is a brief introduction video:
+
+[![Schemalint introduction](http://img.youtube.com/vi/tIuhwZ8M27E/0.jpg)](http://www.youtube.com/watch?v=tIuhwZ8M27E "Schemalint Introduction")
+
+If you want to learn about how I use this in conjunction with [Kanel](https://github.com/kristiandupont/kanel) and [tRPC](https://trpc.io) to create end-to-end type safety, check out my course on Newline:
 
 <a href="https://www.newline.co/courses/fullstack-typescript-with-tailwindcss-and-trpc-using-modern-features-of-postgresql" title="Fullstack Typescript with TailwindCSS and tRPC Using Modern Features of PostgreSQL">
    <img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/0*BczW_oS58IoZ2ejf" />
