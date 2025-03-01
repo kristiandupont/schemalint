@@ -27,7 +27,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "lint": "eslint . -f visualstudio --report-unused-disable-directives --ext .js,.ts",
+    "lint": "eslint . --report-unused-disable-directives",
     "test": "vitest run",
     "version": "npm run build"
   },
@@ -41,6 +41,7 @@
     "ramda": "^0.30.0"
   },
   "devDependencies": {
+    "@eslint/compat": "^1.2.7",
     "@kristiandupont/dev-deps": "^2.30.0",
     "@types/pg": "^8.11.0",
     "@types/ramda": "0.30.2",

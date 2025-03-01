@@ -1,5 +1,0 @@
-{
-  "rules": {
-    "unicorn/no-array-callback-reference": "off"
-  }
-}
