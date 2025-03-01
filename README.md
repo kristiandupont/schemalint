@@ -73,6 +73,16 @@ module.exports = {
 
 Schemalint includes a number of built-in rules, which you can read about [here](/src/rules). However, writing custom rules is easy and you will probably see the real value by doing so. The [example](/example) folder shows how to write these.
 
+---
+
+## Learning Material
+
+Here is a brief introduction video:
+
+[![Schemalint introduction](http://img.youtube.com/vi/tIuhwZ8M27E/0.jpg)](http://www.youtube.com/watch?v=tIuhwZ8M27E "Schemalint Introduction")
+
+---
+
 ## Sponsors
 
 Thank you so much to the sponsors of Schemalint:

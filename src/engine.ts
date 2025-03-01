@@ -43,7 +43,7 @@ export async function processDatabase({
   ignores = [],
 }: Config): Promise<number> {
   const pluginRules = plugins.map(
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     (p) => require(path.join(process.cwd(), p)) as Record<string, Rule>,
   );
   const allRules = [builtinRules, ...pluginRules].reduce(

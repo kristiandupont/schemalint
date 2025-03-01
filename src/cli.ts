@@ -59,7 +59,7 @@ async function main() {
   );
 
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const config = require(configFile);
     const exitCode = await processDatabase(config);
     process.exit(exitCode);
