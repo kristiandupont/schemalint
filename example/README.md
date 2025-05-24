@@ -73,6 +73,7 @@ You can play around with the configuration options in `.schemalintrc.js` file to
 Example custom rules are included in the [custom-rules](./custom-rules) folder. The folder contains the following files:
 
 - [identifierNaming.js](./custom-rules/identifierNaming.js): Defines the custom rule `identifier-naming`.
+- [lastUpdated.js](./custom-rules/lastUpdated.js): Defines the custom rule `last-updated`.
 - [index.js](./custom-rules/index.js): Exports the custom rules.
 
 You can use these as a starting point to create your own custom rules. The type definition of the [Rule](/src/Rule.ts) object and the [Schema](https://kristiandupont.github.io/extract-pg-schema/api/extract-pg-schema.schema.html) object passed to the custom rules will help you understand how to write custom rules.

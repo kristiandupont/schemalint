@@ -19,6 +19,7 @@ module.exports = {
     'prefer-timestamptz-to-timestamp': ['error'],
     'prefer-identity-to-serial': ['error'],
     'name-inflection': ['error', 'singular'],
+    'last-updated': ['error'],
   },
 
   schemas: [
