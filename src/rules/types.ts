@@ -114,3 +114,30 @@ SELECT setval('"${sequenceName}"', max("${columnName}")) FROM "${schemaObject.na
     );
   },
 };
+
+export const preferTextWithCheckToEnum: Rule = {
+  name: "prefer-text-with-check-to-enum",
+  docs: {
+    description: "Prefer TEXT with CHECK constraints over ENUM types",
+    url: "...",
+  },
+  process({ schemaObject, report }) {
+    const validator =
+      ({ name: tableName }: TableDetails) =>
+      ({ name: columnName, type }: TableColumn) => {
+        if (type.kind === "enum") {
+          report({
+            rule: this.name,
+            identifier: `${schemaObject.name}.${tableName}.${columnName}`,
+            message: "Prefer TEXT with CHECK constraints over ENUM types",
+            suggestedMigration: `-- Drop the enum column and replace with TEXT + CHECK constraint
+ALTER TABLE "${schemaObject.name}"."${tableName}" DROP COLUMN "${columnName}";
+ALTER TABLE "${schemaObject.name}"."${tableName}" ADD COLUMN "${columnName}" TEXT CHECK ("${columnName}" IN (/* Add your enum values here */));`,
+          });
+        }
+      };
+    schemaObject.tables.forEach((table) =>
+      table.columns.forEach(validator(table)),
+    );
+  },
+};
