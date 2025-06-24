@@ -38,7 +38,7 @@
     "irregular-plurals": "^3.2.0",
     "optionator": "^0.9.1",
     "pg": "^8.3.3",
-    "ramda": "^0.30.0"
+    "ramda": "^0.31.0"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.7",
