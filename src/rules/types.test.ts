@@ -632,3 +632,144 @@ SELECT setval('"table_name_column_3_seq"', max("bad_column3")) FROM "public"."th
     });
   });
 });
+
+describe("preferTextWithCheckToEnum", () => {
+  it("no tables has no errors", () => {
+    const mockReporter = vi.fn();
+    const schemaObject: DeepPartial<Schema> = { tables: [] };
+
+    types.preferTextWithCheckToEnum.process({
+      schemaObject: schemaObject as Schema,
+      report: mockReporter,
+    });
+
+    expect(mockReporter).toBeCalledTimes(0);
+  });
+
+  it("one table, enum column has error", () => {
+    const mockReporter = vi.fn();
+    const schemaObject: DeepPartial<Schema> = {
+      name: "schema",
+      tables: [
+        {
+          name: "user_table",
+          columns: [
+            {
+              type: { kind: "enum", fullName: "public.user_status_enum" },
+              name: "status",
+            },
+          ],
+        },
+      ],
+    };
+
+    types.preferTextWithCheckToEnum.process({
+      schemaObject: schemaObject as Schema,
+      report: mockReporter,
+    });
+
+    expect(mockReporter).toBeCalledTimes(1);
+    expect(mockReporter).toBeCalledWith(
+      expect.objectContaining({
+        rule: "prefer-text-with-check-to-enum",
+        identifier: "schema.user_table.status",
+        message: "Prefer TEXT with CHECK constraints over ENUM types",
+        suggestedMigration: `-- Drop the enum column and replace with TEXT + CHECK constraint
+ALTER TABLE "schema"."user_table" DROP COLUMN "status";
+ALTER TABLE "schema"."user_table" ADD COLUMN "status" TEXT CHECK ("status" IN (/* Add your enum values here */));`,
+      }),
+    );
+  });
+
+  it("one table, no enum column has no errors", () => {
+    const mockReporter = vi.fn();
+    const schemaObject: DeepPartial<Schema> = {
+      name: "schema",
+      tables: [
+        {
+          name: "user_table",
+          columns: [
+            {
+              type: { kind: "base", fullName: "pg_catalog.text" },
+              name: "name",
+            },
+            {
+              type: { kind: "base", fullName: "pg_catalog.int4" },
+              name: "id",
+            },
+          ],
+        },
+      ],
+    };
+
+    types.preferTextWithCheckToEnum.process({
+      schemaObject: schemaObject as Schema,
+      report: mockReporter,
+    });
+
+    expect(mockReporter).toBeCalledTimes(0);
+  });
+
+  it("multiple tables with multiple enum columns has multiple errors", () => {
+    const mockReporter = vi.fn();
+    const schemaObject: DeepPartial<Schema> = {
+      name: "schema",
+      tables: [
+        {
+          name: "user_table",
+          columns: [
+            {
+              type: { kind: "enum", fullName: "public.user_status_enum" },
+              name: "status",
+            },
+            {
+              type: { kind: "base", fullName: "pg_catalog.text" },
+              name: "name",
+            },
+          ],
+        },
+        {
+          name: "product_table",
+          columns: [
+            {
+              type: { kind: "base", fullName: "pg_catalog.text" },
+              name: "name",
+            },
+          ],
+        },
+        {
+          name: "order_table",
+          columns: [
+            {
+              type: { kind: "enum", fullName: "public.priority_level_enum" },
+              name: "priority",
+            },
+          ],
+        },
+      ],
+    };
+
+    types.preferTextWithCheckToEnum.process({
+      schemaObject: schemaObject as Schema,
+      report: mockReporter,
+    });
+
+    expect(mockReporter).toBeCalledTimes(2);
+    expect(mockReporter).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        rule: "prefer-text-with-check-to-enum",
+        identifier: "schema.user_table.status",
+        message: "Prefer TEXT with CHECK constraints over ENUM types",
+      }),
+    );
+    expect(mockReporter).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        rule: "prefer-text-with-check-to-enum",
+        identifier: "schema.order_table.priority",
+        message: "Prefer TEXT with CHECK constraints over ENUM types",
+      }),
+    );
+  });
+});

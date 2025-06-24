@@ -91,6 +91,16 @@ You can learn more here: [Identity Columns Explained](https://www.2ndquadrant.co
   },
 ```
 
+### prefer-text-with-check-to-enum
+
+Prefer TEXT columns with CHECK constraints over ENUM types. While PostgreSQL enums provide type safety, they have significant limitations: enum values can only be added, not removed or reordered; removing values requires complex workarounds that can break indexes; schema changes require DDL migrations rather than simple data updates; and enums reduce flexibility compared to foreign key relationships with lookup tables.
+
+```js
+  rules: {
+    'prefer-text-with-check-to-enum': ['error'],
+  },
+```
+
 ## Table Structures
 
 ### require-primary-key
