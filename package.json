@@ -46,7 +46,7 @@
     "@types/pg": "^8.11.0",
     "@types/ramda": "0.30.2",
     "np": "10.2.0",
-    "testcontainers": "11.0.3"
+    "testcontainers": "11.5.1"
   },
   "np": {
     "tests": false
