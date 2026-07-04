@@ -45,7 +45,7 @@
     "@kristiandupont/dev-deps": "^2.30.0",
     "@types/pg": "^8.11.0",
     "@types/ramda": "0.31.1",
-    "np": "10.2.0",
+    "np": "10.3.0",
     "testcontainers": "11.14.0"
   },
   "np": {
