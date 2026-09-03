@@ -41,7 +41,7 @@
     "ramda": "^0.31.0"
   },
   "devDependencies": {
-    "@eslint/compat": "^1.2.7",
+    "@eslint/compat": "^2.0.0",
     "@kristiandupont/dev-deps": "^2.30.0",
     "@types/pg": "^8.11.0",
     "@types/ramda": "0.31.1",
