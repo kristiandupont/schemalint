@@ -27,31 +27,26 @@
   ],
   "scripts": {
     "build": "tsc",
-    "lint": "eslint . --report-unused-disable-directives",
+    "lint": "prettier --check .",
     "test": "vitest run",
-    "version": "npm run build"
+    "version": "npm run build",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@kristiandupont/recase": "^1.2.1",
-    "chalk": "4.1.2",
     "extract-pg-schema": "^5.7.2",
     "irregular-plurals": "^3.2.0",
-    "optionator": "^0.9.1",
-    "pg": "^8.3.3",
-    "ramda": "^0.31.0"
+    "pg": "^8.3.3"
   },
   "devDependencies": {
-    "@eslint/compat": "^1.2.7",
-    "@kristiandupont/dev-deps": "^2.30.0",
+    "@types/node": "^18.19.130",
     "@types/pg": "^8.11.0",
-    "@types/ramda": "0.30.2",
-    "np": "10.2.0",
-    "testcontainers": "11.0.3"
-  },
-  "np": {
-    "tests": false
+    "prettier": "^3.10.0",
+    "testcontainers": "11.0.3",
+    "typescript": "^5.7.3",
+    "vitest": "^3.2.7"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18.3.0"
   }
 }
