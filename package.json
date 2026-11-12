@@ -33,7 +33,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@kristiandupont/recase": "^1.2.1",
+    "@kristiandupont/recase": "^1.4.2",
     "extract-pg-schema": "^5.7.2",
     "irregular-plurals": "^3.2.0",
     "pg": "^8.3.3"
