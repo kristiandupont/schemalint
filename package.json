@@ -39,7 +39,7 @@
     "pg": "^8.3.3"
   },
   "devDependencies": {
-    "@types/node": "^18.19.130",
+    "@types/node": "^26.0.0",
     "@types/pg": "^8.11.0",
     "prettier": "^3.10.0",
     "typescript": "^5.7.3",
