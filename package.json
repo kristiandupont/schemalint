@@ -35,7 +35,7 @@
   "dependencies": {
     "@kristiandupont/recase": "^1.4.2",
     "extract-pg-schema": "^5.8.3",
-    "irregular-plurals": "^3.2.0",
+    "irregular-plurals": "^4.0.0",
     "pg": "^8.3.3"
   },
   "devDependencies": {
