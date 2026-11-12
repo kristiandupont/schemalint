@@ -1,8 +1,7 @@
-import chalk from "chalk";
 import { extractSchemas } from "extract-pg-schema";
 import path from "path";
-import { indexBy, keys, prop, values } from "ramda";
 
+import { stderr, stdout } from "./colors";
 import type Config from "./Config";
 import type { Issue, Reporter } from "./Rule";
 import type Rule from "./Rule";
@@ -12,7 +11,7 @@ type IgnoreMatcher = (rule: string, identifier: string) => boolean;
 
 function consoleReporter({ rule, identifier, message }: Issue) {
   console.error(
-    `${chalk.yellow(identifier)}: error ${chalk.red(rule)} : ${message}`,
+    `${stderr.yellow(identifier)}: error ${stderr.red(rule)} : ${message}`,
   );
 }
 
@@ -43,17 +42,18 @@ export async function processDatabase({
   ignores = [],
 }: Config): Promise<number> {
   const pluginRules = plugins.map(
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
     (p) => require(path.resolve(p)) as Record<string, Rule>,
   );
   const allRules = [builtinRules, ...pluginRules].reduce(
     (acc, elem) => ({ ...acc, ...elem }),
     {},
   );
-  const registeredRules = indexBy(prop("name"), values(allRules));
+  const registeredRules: Record<string, Rule> = Object.fromEntries(
+    Object.values(allRules).map((rule) => [rule.name, rule]),
+  );
 
   console.info(
-    `Connecting to ${chalk.greenBright(connection.database)} on ${
+    `Connecting to ${stdout.greenBright(connection.database)} on ${
       connection.host
     }`,
   );
@@ -101,9 +101,7 @@ export async function processDatabase({
 
     if (!schemaObject) {
       console.info(
-        `${chalk.yellow(
-          schema.name,
-        )}: warning : No tables or views were found in the schema. Skipping rules processing.`,
+        `${stdout.yellow(schema.name)}: warning : No tables or views were found in the schema. Skipping rules processing.`,
       );
       continue;
     }
@@ -113,7 +111,7 @@ export async function processDatabase({
       ...schema.rules,
     };
 
-    for (const ruleKey of keys(mergedRules)) {
+    for (const ruleKey of Object.keys(mergedRules)) {
       if (!(ruleKey in registeredRules)) {
         throw new Error(`Unknown rule: "${ruleKey}"`);
       }

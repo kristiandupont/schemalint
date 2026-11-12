@@ -1,5 +1,6 @@
+import { isDeepStrictEqual } from "node:util";
+
 import type { TableColumn, TableDetails } from "extract-pg-schema";
-import * as R from "ramda";
 
 import type Rule from "../Rule";
 
@@ -12,7 +13,9 @@ export const mandatoryColumns: Rule = {
   process({ options: [option], schemaObject, report }) {
     const expectedColumns: Record<string, Partial<TableColumn>> = option ?? {};
     const validator = ({ name: tableName, columns }: TableDetails) => {
-      const columnsByName = R.indexBy(R.prop("name"), columns);
+      const columnsByName = Object.fromEntries(
+        columns.map((column) => [column.name, column]),
+      );
       Object.entries(expectedColumns).forEach(([name, expectedProps]) => {
         const column = columnsByName[name];
         if (!column) {
@@ -22,11 +25,12 @@ export const mandatoryColumns: Rule = {
             message: `Mandatory column "${name}" is missing`,
           });
         } else {
-          const partialColumnProps = R.pick(
-            Object.keys(expectedProps) as (keyof TableColumn)[],
-            column,
+          const partialColumnProps = Object.fromEntries(
+            Object.keys(expectedProps)
+              .filter((key) => key in column)
+              .map((key) => [key, column[key as keyof TableColumn]]),
           );
-          if (!R.equals(partialColumnProps, expectedProps)) {
+          if (!isDeepStrictEqual(partialColumnProps, expectedProps)) {
             report({
               rule: this.name,
               identifier: `${schemaObject.name}.${tableName}.${column.name}`,

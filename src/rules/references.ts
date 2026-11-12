@@ -4,7 +4,6 @@ import type {
   TableDetails,
   TableIndex,
 } from "extract-pg-schema";
-import * as R from "ramda";
 
 import type Rule from "../Rule";
 
@@ -88,10 +87,10 @@ function buildTableReferences(columns: TableColumn[]): TableReference[] {
       c.references.map((r) => ({ referncingColumnName: c.name, reference: r })),
     )
     .flat();
-  const columnReferencePairsByName = R.groupBy(
-    (p) => p.reference.name,
-    columnReferencePairs,
-  ) as Record<string, ColumnReferencePair[]>;
+  const columnReferencePairsByName: Record<string, ColumnReferencePair[]> = {};
+  for (const pair of columnReferencePairs) {
+    (columnReferencePairsByName[pair.reference.name] ??= []).push(pair);
+  }
   return Object.values(columnReferencePairsByName).map((pairs) => {
     const columnNames = pairs.map((p) => p.reference.columnName);
     const referencingColumnNames = pairs.map((p) => p.referncingColumnName);

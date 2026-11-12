@@ -1,11 +1,10 @@
 import type { TableDetails, ViewDetails } from "extract-pg-schema";
 import irregularPlurals from "irregular-plurals/irregular-plurals.json";
-import * as R from "ramda";
 
 import type Rule from "../Rule";
 
-const singulars = R.keys(irregularPlurals);
-const plurals = R.values(irregularPlurals);
+const singulars = Object.keys(irregularPlurals);
+const plurals = Object.values(irregularPlurals);
 const trimSeparators = (s: string) => s.replaceAll(/^(-|_)+|(-|_)+$/g, "");
 
 const detectInflection = (word: string) => {
